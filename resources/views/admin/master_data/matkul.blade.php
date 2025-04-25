@@ -1,10 +1,10 @@
 <x-layout>
   <div class="relative">
     <h1 class="font-bold text-gray-800 text-2xl">{{ $title }}</h1>
-    <p>Lihat data Tahun Ajaran</p>
+    <p>Lihat data Mata Kuliah</p>
     <div x-data="{openImport: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white rounded-sm shadow-xl">
       <div class="mt-2 mb-5 flex gap-4">
-        <a href="/admin/masterdata/form-tahunAjaran">
+        <a href="/admin/masterdata/form-matkul">
           <button class="flex items-center px-4 py-2.5 text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold cursor-pointer">
             <i class="bi bi-plus-square-fill mr-2"></i>
             <span>Tambah</span>
@@ -30,7 +30,7 @@
           
           <div @click.outside="openImport = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[380px] max-w-full p-6" >
             <div class="flex justify-between items-center mb-4">
-              <h1 class="text-gray-600 text-2xl font-semibold">Import Data Tahun Ajaran</h1>
+              <h1 class="text-gray-600 text-2xl font-semibold">Import Data Mata Kuliah</h1>
               <button @click="openImport = false"><i class="bi bi-x-lg text-2xl mb-4 cursor-pointer"></i></button>
             </div>
             <div class="flex flex-col items-center justify-center w-full h-50 border-4 border-gray-400 border-dashed mb-4">
@@ -53,22 +53,22 @@
           <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
             <tr>
               <th class="border border-gray-300 px-4 py-2">No</th>
-              <th class="border border-gray-300 px-4 py-2">Tahun Mulai</th>
-              <th class="border border-gray-300 px-4 py-2">Tahun Selesai</th>
-              <th class="border border-gray-300 px-4 py-2">Semester</th>
-              <th class="border border-gray-300 px-4 py-2">Status</th>
-              <th class="border border-gray-300 px-4 py-2">Tahun Ajaran</th>
+              <th class="border border-gray-300 px-4 py-2">Kode Matkul</th>
+              <th class="border border-gray-300 px-4 py-2">Nama Mata Kuliah</th>
+              <th class="border border-gray-300 px-4 py-2">SKS</th>
+              <th class="border border-gray-300 px-4 py-2">Jenis Mata Kuliah</th>
+              <th class="border border-gray-300 px-4 py-2">Dosen Pengampu</th>
               <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
             </tr>
           </thead>
           <tbody class="text-center">
             <tr class="hover:bg-gray-50">
               <td class="border border-gray-300 px-4 py-2">1</td>
-              <td class="border border-gray-300 px-4 py-2">2023</td>
-              <td class="border border-gray-300 px-4 py-2">2024</td>
-              <td class="border border-gray-300 px-4 py-2">Ganjil</td>
-              <td class="border border-gray-300 px-4 py-2">0</td>
-              <td class="border border-gray-300 px-4 py-2">2023/2024</td>
+              <td class="border border-gray-300 px-4 py-2">E213</td>
+              <td class="border border-gray-300 px-4 py-2">English</td>
+              <td class="border border-gray-300 px-4 py-2">14</td>
+              <td class="border border-gray-300 px-4 py-2">Wajib</td>
+              <td class="border border-gray-300 px-4 py-2">Drs. Sebastian</td>
               <td class="border border-gray-300 px-4 py-2 text-center">
                 <div class="flex justify-center gap-2">
                   <button class="px-2 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md">

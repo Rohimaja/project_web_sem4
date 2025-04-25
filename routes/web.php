@@ -28,7 +28,7 @@ Route::post('/login', function (Request $request) {
 });
 
 Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard', ['title' => 'Dahboard', 'rute' => 'admin -> dashboard']);
+    return view('admin.dashboard', ['title' => 'Dahboard Admin', 'rute' => 'admin -> dashboard']);
 });
 
 Route::get('/admin/jadwal', function () {
@@ -44,23 +44,51 @@ Route::get('/admin/presensi', function () {
 });
 
 Route::get('/admin/masterdata/admin', function () {
-    return view('admin.master_data/admin', ['title' => 'Master Data Admin', 'rute' => 'admin -> jadwal']);
+    return view('admin.master_data/admin', ['title' => 'Master Data Admin', 'import' => 'Import Data Admin']);
+});
+
+Route::get('/admin/masterdata/form-admin', function () {
+    return view('admin.master_data/form-admin', ['title' => 'Tambah Data Admin',]);
+});
+
+Route::get('/admin/masterdata/form-dosen', function () {
+    return view('admin.master_data/form-dosen', ['title' => 'Tambah Data Dosen',]);
 });
 
 Route::get('/admin/masterdata/dosen', function () {
-    return view('admin.master_data/dosen', ['title' => 'Master Data Dosen', 'rute' => 'admin -> jadwal']);
+    return view('admin.master_data/dosen', ['title' => 'Master Data Dosen',]);
 });
 
 Route::get('/admin/masterdata/mahasiswa', function () {
-    return view('admin.master_data/mahasiswa', ['title' => 'Master Data Mahasiswa', 'rute' => 'admin -> jadwal']);
+    return view('admin.master_data/mahasiswa', ['title' => 'Master Data Mahasiswa', ]);
+});
+
+Route::get('/admin/masterdata/form-mahasiswa', function () {
+    return view('admin.master_data/form-mahasiswa', ['title' => 'Tambah Data Mahasiswa',]);
 });
 
 Route::get('/admin/masterdata/prodi', function () {
-    return view('admin.master_data/prodi', ['title' => 'Master Data Program Studi', 'rute' => 'admin -> jadwal']);
+    return view('admin.master_data/prodi', ['title' => 'Master Data Program Studi', ]);
+});
+
+Route::get('/admin/masterdata/form-prodi', function () {
+    return view('admin.master_data/form-prodi', ['title' => 'Tambah Data Prodi',]);
 });
 
 Route::get('/admin/masterdata/tahunAjaran', function () {
-    return view('admin.master_data/tahunAjaran', ['title' => 'Master Data Tahun Ajaran', 'rute' => 'admin -> jadwal']);
+    return view('admin.master_data/tahunAjaran', ['title' => 'Master Data Tahun Ajaran', ]);
+});
+
+Route::get('/admin/masterdata/form-tahunAjaran', function () {
+    return view('admin.master_data/form-tahunAjaran', ['title' => 'Tambah Tahun Ajaran',]);
+});
+
+Route::get('/admin/masterdata/matkul', function () {
+    return view('admin.master_data/matkul', ['title' => 'Master Data Mata Kuliah', ]);
+});
+
+Route::get('/admin/masterdata/form-matkul', function () {
+    return view('admin.master_data/form-matkul', ['title' => 'Tambah Mata Kuliah',]);
 });
 
 Route::get('/admin/profil', function () {

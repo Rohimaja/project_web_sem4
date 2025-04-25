@@ -1,8 +1,11 @@
-<nav class="fixed xl:sticky top-0 w-full border-b border-gray-500 bg-gray-900 p-4 px-4 z-10">
+<nav class="fixed z-50 xl:sticky top-0 w-full border-b border-gray-500 bg-gray-900 p-4 px-4 z-10">
   <div class="flex justify-between items-center">
     <div class="text-white">
       <button @click="isSideMenuOpen = !isSideMenuOpen" class="cursor-pointer block xl:hidden px-2 py-1 border-2 hover:bg-slate-800 border:bg-slate-400 rounded-sm"><i class="bi bi-list font-bold text-2xl"></i></button>
-      <h1 class="text-lg font-semibold text-white hidden xl:block">Admin -> Dashboard</h1>
+      <div class="p-2.5 flex items-center rounded-md px-4 bg-gray-700 cursor-pointer duration-300 text-white hidden xl:flex">
+        <i class="bi bi-search text-sm"></i>
+        <input type="text" placeholder="Search" class="text-[15px] ml-4 w-full bg-transparent focus:outline-none">
+      </div>
     </div>
     <div x-data="{open: false}" class="flex items-center gap-3">
       <button id="toggle-dark-mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
