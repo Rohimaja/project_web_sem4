@@ -3,6 +3,113 @@
     <h1 class="font-bold text-gray-800 text-2xl">{{ $title }}</h1>
     <p>Lihat data Mahasiswa hari ini</p>
     <div x-data="{openImport: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white rounded-sm shadow-xl">
+      <div class="flex flex-col md:flex-row">
+        <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8" 
+             x-data="{ 
+                open: false, 
+                search: '', 
+                selected: '', 
+                loading: false, 
+                options: ['Teknik Informatika', 'Sistem Informasi', 'Teknik Elektro', 'Manajemen', 'Akuntansi'],
+                get filtered() { 
+                  return this.options.filter(o => o.toLowerCase().includes(this.search.toLowerCase())); 
+                }
+             }">
+          <label class="mb-1 font-semibold">Filter Program Studi:</label>
+    
+          <div class="relative">
+            <input 
+              type="text"
+              x-model="search"
+              @click="open = true"
+              @input="loading = true; setTimeout(() => loading = false, 300)" 
+              placeholder="Pilih Program Studi"
+              class="p-2 py-[8px] w-full border-2 border-gray-700 rounded-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-400 pr-10"
+            />
+            
+            <div class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+
+            <div 
+              x-show="open" 
+              @click.outside="open = false" 
+              class="absolute mt-1 w-full bg-white border border-gray-300 rounded shadow-lg z-50 max-h-60 overflow-auto"
+            >
+              <template x-if="loading">
+                <div class="p-2 text-gray-500 text-sm text-center">Loading...</div>
+              </template>
+    
+              <template x-if="!loading && filtered.length === 0">
+                <div class="p-2 text-gray-500 text-sm text-center">Tidak ditemukan</div>
+              </template>
+    
+              <template x-for="option in filtered" :key="option">
+                <div 
+                  @click="search = option; selected = option; open = false"
+                  class="cursor-pointer p-2 hover:bg-blue-100"
+                  x-text="option"
+                ></div>
+              </template>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col w-full mb-4 md:w-1/2 " 
+             x-data="{ 
+                open: false, 
+                search: '', 
+                selected: '', 
+                loading: false, 
+                options: ['Teknik Informatika', 'Sistem Informasi', 'Teknik Elektro', 'Manajemen', 'Akuntansi'],
+                get filtered() { 
+                  return this.options.filter(o => o.toLowerCase().includes(this.search.toLowerCase())); 
+                }
+             }">
+          <label class="mb-1 font-semibold">Filter Semester:</label>
+    
+          <div class="relative">
+            <input 
+              type="text"
+              x-model="search"
+              @click="open = true"
+              @input="loading = true; setTimeout(() => loading = false, 300)" 
+              placeholder="Pilih Semester"
+              class="p-2 py-[8px] w-full border-2 border-gray-700 rounded-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-400 pr-10"
+            />
+            
+            <div class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+
+            <div 
+              x-show="open" 
+              @click.outside="open = false" 
+              class="absolute mt-1 w-full bg-white border border-gray-300 rounded shadow-lg z-50 max-h-60 overflow-auto"
+            >
+              <template x-if="loading">
+                <div class="p-2 text-gray-500 text-sm text-center">Loading...</div>
+              </template>
+    
+              <template x-if="!loading && filtered.length === 0">
+                <div class="p-2 text-gray-500 text-sm text-center">Tidak ditemukan</div>
+              </template>
+    
+              <template x-for="option in filtered" :key="option">
+                <div 
+                  @click="search = option; selected = option; open = false"
+                  class="cursor-pointer p-2 hover:bg-blue-100"
+                  x-text="option"
+                ></div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="mt-2 mb-5 flex gap-4">
         <a href="/admin/masterdata/form-mahasiswa">
           <button class="flex items-center px-4 py-2.5 text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold cursor-pointer">
@@ -24,7 +131,7 @@
         </button>        
 
         {{-- tampilan import file --}}
-        <div x-show="openImport" class="fixed inset-0 z-50 flex justify-center items-center">
+        <div x-show="openImport" x-transition class="fixed inset-0 z-50 flex justify-center items-center">
           
           <div class="absolute inset-0 bg-black opacity-50"></div>
           
@@ -75,38 +182,141 @@
               <td class="border border-gray-300 px-4 py-2">IzzulGanteng@gmail.com</td>
               <td class="border border-gray-300 px-4 py-2 text-center">
                 <div class="flex justify-center gap-2">
-                  <button class="px-2 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md">
-                    <i class="bi bi-pencil-square text-lg"></i>
-                  </button>
-                  <button class="px-2 py-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-md">
-                    <i class="bi bi-trash text-lg"></i>
-                  </button>
-                </div>
+                  <div x-data="{openView: false}">
+                    <button @click="openView = !openView" class="cursor-pointer px-2 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md">
+                      <i class="bi bi-eye text-lg"></i>
+                    </button>
+                    <div x-show="openView" x-transition class="shadow-xl fixed inset-0 z-50 flex justify-center items-center">
+                      <div class="absolute inset-0 bg-black opacity-50"></div>
+                      <div @click.outside="openView = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[305px] h-[600px] max-w-full p-6 overflow-y-scroll">
+                        <div class="flex justify-between items-center mb-4">
+                          <h1 class="text-gray-600 text-xl font-semibold">View Data Mahasiswa</h1>
+                          <button @click="openView = false"><i class="bi bi-x-lg text-2xl mb-4 cursor-pointer"></i></button>
+                        </div>
+  
+                        <div class="flex w-full justify-center items-center">
+                          <div  class="w-25 h-25 bg-red-200 rounded-full overflow-hidden cursor-pointer mb-3">
+                            <img src="/images/profil.jpg" class="w-full h-full object-cover" alt="">
+                          </div>
+                        </div>
+  
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Edwin kurniawan">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">NIP:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="DI908387234729387">
+                          </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Jenis Kelamin:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Laki-laki">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">Agama:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Islam">
+                          </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Jember">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">Tanggal Lahir:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="29-02-2004">
+                          </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Email:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="edwinkurniawan2004@gmail.com">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">Nomor Telepon:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="+6281515173887">
+                          </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Provinsi:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Jawa Tengah">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Jember">
+                          </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Jenjang Studi:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="D4">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">Program Studi:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="MIK">
+                          </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Semester Tempuh:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="8">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">Status Akademik:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Aktif">
+                          </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row">
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                            <label for="" class="mb-1 font-semibold">Angkatan:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="2023">
+                          </div>
+                          <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                            <label for="" class="mb-1 font-semibold">Dosen Wali:</label>
+                            <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="Mulyono">
+                          </div>
+                        </div>    
+                      </div>
+                    </div>
+                  </div>
+
+                  <a href="/admin/masterdata/form-mahasiswa">
+                    <button class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">
+                      <i class="bi bi-pencil-square text-lg"></i>
+                    </button>
+                  </a>
+
+                  <div x-data="{confirmDel: false}" class="relative">
+                    <button @click="confirmDel = true" class="cursor-pointer px-2 py-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-md">
+                      <i class="bi bi-trash text-lg"></i>
+                    </button>
+                  
+                    <div x-show="confirmDel" x-transition class="fixed inset-0 z-50 flex justify-center items-center">
+                      <div class="absolute inset-0 bg-black opacity-50"></div>
+                      <div @click.outside="confirmDel = false" class="relative z-10 bg-white rounded-lg shadow-2xl w-[90%] max-w-md p-6 flex flex-col items-center">
+                        <div class="bg-red-100 rounded-full p-4 mb-4">
+                          <i class="bi bi-exclamation-triangle text-4xl text-red-600"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Konfirmasi Hapus</h2>
+                        <p class="text-center text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</p>
+                        <div class="flex gap-4">
+                          <button @click="confirmDel = false" class="px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold">
+                            Batal
+                          </button>
+                          <button @click="confirmDel = false" class="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-white font-semibold">
+                            Hapus
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
               </td>              
             </tr>
-            <tr class="hover:bg-gray-50">
-              <td class="border border-gray-300 px-4 py-2">2</td>
-              <td class="border border-gray-300 px-4 py-2">
-                <div  class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
-                  <img src="/images/profil.jpg" class="w-full h-full object-cover" alt="">
-                </div>
-              </td>
-              <td class="border border-gray-300 px-4 py-2">E41231291</td>
-              <td class="border border-gray-300 px-4 py-2">Diega Islam R</td>
-              <td class="border border-gray-300 px-4 py-2">Laki-laki</td>
-              <td class="border border-gray-300 px-4 py-2">degaaja@gmail.com</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">
-                <div class="flex justify-center gap-2">
-                  <button class="px-2 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md">
-                    <i class="bi bi-pencil-square text-lg"></i>
-                  </button>
-                  <button class="px-2 py-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-md">
-                    <i class="bi bi-trash text-lg"></i>
-                  </button>
-                </div>
-              </td>              
-            </tr>
-            
           </tbody>
         </table>
       </div>

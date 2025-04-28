@@ -24,7 +24,7 @@
         </div>
         
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
             <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" placeholder="Masukkan nama lengkap">
           </div>
@@ -35,7 +35,7 @@
         </div>
         
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Jenis Kelamin:</lab>
             <select type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm">
               <option value="" hidden selected>Pilih jenis kelamin</option>
@@ -57,7 +57,7 @@
         </div>
         
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
             <select type="text" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" placeholder="Masukkan Nip">
               <option value="" hidden selected>Pilih Tempat Lahir</option>
@@ -75,7 +75,7 @@
         </div>
         
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Email:</label>
             <input type="email" class="p-2 border-2 border-gray-700 rounded-sm" placeholder="Masukkan Email">
           </div>
@@ -89,7 +89,7 @@
         <hr class="my-2 text-gray-600 mb-6">
 
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Provinsi:</lab>
             <select type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm">
               <option value="" hidden selected>Pilih Provinsi</option>
@@ -111,7 +111,7 @@
         </div>
         
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Kelurahan:</lab>
             <select type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm">
               <option value="" hidden selected>Pilih Kelurahan</option>
@@ -133,7 +133,7 @@
         </div>
 
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Alamat lengkap:</lab>
             <textarea type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" placeholder="Masukkan Alamat Lengkap"></textarea>
           </div>

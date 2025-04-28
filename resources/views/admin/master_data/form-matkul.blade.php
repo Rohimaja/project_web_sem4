@@ -10,7 +10,7 @@
         <hr class="my-2 text-gray-600 mb-6">
         
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Kode Mata Kuliah:</label>
             <input type="number" min="2000" max="2099" class="p-2 border-2 border-gray-700 rounded-sm" placeholder="Masukkan kode mata kuliah">
           </div>
@@ -21,7 +21,7 @@
         </div>
         
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">SKS:</label>
             <input type="number" min="2000" max="2099" class="p-2 border-2 border-gray-700 rounded-sm" placeholder="Masukkan jumlah SKS">
           </div>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
+          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
             <label for="" class="mb-1 font-semibold">Dosen Pengampu:</lab>
             <select type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm">
               <option value="" hidden selected>Pilih Semester</option>

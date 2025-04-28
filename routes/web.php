@@ -35,8 +35,12 @@ Route::get('/admin/jadwal', function () {
     return view('admin.jadwal', ['title' => 'Jadwal', 'rute' => 'admin -> jadwal']);
 });
 
-Route::get('/admin/laporan', function () {
-    return view('admin.laporan', ['title' => 'Laporan', 'rute' => 'admin -> jadwal']);
+Route::get('/admin/laporan-dosen', function () {
+    return view('admin.laporan_absensi/lap_dosen', ['title' => 'Laporan Dosen', 'rute' => 'admin -> jadwal']);
+});
+
+Route::get('/admin/laporan-mahasiswa', function () {
+    return view('admin.laporan_absensi/lap_mahasiswa', ['title' => 'Laporan Mahasiswa', 'rute' => 'admin -> jadwal']);
 });
 
 Route::get('/admin/presensi', function () {

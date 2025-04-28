@@ -71,13 +71,25 @@
           </a>
         </li>
         <hr class="my-2 text-gray-600">
-        <li>
-          <a href="/admin/laporan">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
-              <i class="bi bi-file-earmark-text-fill"></i>
-              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Laporan</span>
+        <li x-data="{open: false}">
+          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <i class="bi bi-calendar-event-fill"></i>
+            <div class="flex justify-between w-full items-center font-semibold">
+              <span class="text-[15px] ml-4 text-gray-200">Laporan</span>
+              <span x-bind:class="open ? 'rotate-180' : 'rotate-0'" class="text-sm">
+                <i class="bi bi-chevron-down font-semibold"></i>
+              </span>
             </div>
-          </a>
+          </div>
+
+          <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
+            <a href="/admin/laporan-dosen" class="mt-2 w-4/5">
+              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Dosen</h1>
+            </a>
+            <a href="/admin/laporan-mahasiswa" class="mt-2 w-4/5">
+              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mahasiswa</h1>
+            </a>
+          </div>
         </li>
       </ul>
     </div>    
@@ -168,12 +180,36 @@ class="fixed z-50 border-r-1 border-gray-900 w-64 bg-gray-900 h-full overflow-y-
         </li>
         <hr class="my-2 text-gray-600">
         <li>
-          <a href="/admin/laporan">
+          <a href="/admin/jadwal">
             <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
-              <i class="bi bi-file-earmark-text-fill"></i>
-              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Laporan</span>
+              <i class="bi bi-calendar-event-fill"></i>
+              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
             </div>
           </a>
+        </li>
+        <hr class="my-2 text-gray-600">
+        <li x-data="{open: false}">
+          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <i class="bi bi-calendar-event-fill"></i>
+            <div class="flex justify-between w-full items-center font-semibold">
+              <span class="text-[15px] ml-4 text-gray-200">Laporan</span>
+              <span x-bind:class="open ? 'rotate-180' : 'rotate-0'" class="text-sm">
+                <i class="bi bi-chevron-down font-semibold"></i>
+              </span>
+            </div>
+          </div>
+
+          <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
+            <a href="/admin/laporan-dosen" class="mt-2 w-4/5">
+              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Dosen</h1>
+            </a>
+            <a href="/admin/laporan-mahasiswa" class="mt-2 w-4/5">
+              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mahasiswa</h1>
+            </a>
+          </div>
+        </li>
+        <li>
+          <div class="w-full h-50"></div>
         </li>
       </ul>
     </div>    
