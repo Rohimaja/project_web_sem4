@@ -96,7 +96,7 @@ Route::get('/admin/masterdata/form-matkul', function () {
 });
 
 Route::get('/admin/profil', function () {
-    return view('admin.profil', ['title' => 'Master Data Profil', 'rute' => 'admin -> jadwal']);
+    return view('admin.profil', ['title' => 'Profil Admin', 'rute' => 'admin -> jadwal']);
 });
 
 Route::get('/dosen', function () {

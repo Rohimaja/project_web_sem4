@@ -9,7 +9,7 @@
         <h1 class="font-bold text-gray-800 text-2xl mb-2 text-center xl:text-left">Informasi Umum</h1>
         <hr class="my-2 text-gray-600 mb-6">
 
-        <div class="flex flex-col items-center mb-6 gap-4 md:flex-row">
+        {{-- <div class="flex flex-col items-center mb-6 gap-4 md:flex-row">
           <div  class="w-25 h-25 bg-red-200 rounded-full overflow-hidden cursor-pointer">
             <img src="/images/profil.jpg" class="w-full h-full object-cover" alt="">
           </div>
@@ -21,7 +21,7 @@
               <button class="px-3 py-1.5 bg-red-100 hover:bg-red-200 active:bg-red-300 text-red-400  rounded-md cursor-pointer">Hapus Foto</button>
             </div>
           </div>
-        </div>
+        </div> --}}
         
         <div class="flex flex-col md:flex-row">
           <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">

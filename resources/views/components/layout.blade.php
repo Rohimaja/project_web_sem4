@@ -16,13 +16,14 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+  
   <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" />
   <!-- JS (jQuery + DataTables) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+
 
 </head>
 <body class="bg-gray-100">
@@ -45,4 +46,5 @@
     </div>
   </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </html>

@@ -1,8 +1,13 @@
-<aside class="fixed border-r-1 border-gray-900 w-64 bg-gray-900 h-screen overflow-y-auto top-0 left-0 p-4 ease-in-out duration-150 -translate-x-full xl:translate-x-0">
+<aside class="fixed border-r-1 border-gray-300 w-64 bg-blue-900 h-screen overflow-y-auto top-0 left-0 p-4 ease-in-out duration-150 -translate-x-full xl:translate-x-0">
   <div class="text-gray-600">
     <div class="mb-2">
-      <img class="mb-4" src="{{ asset('images/stikes.png') }}" alt="">
-      <hr class="my-2 text-gray-600">
+      <div class="flex items-center justify-center">
+        {{-- <img class="mb-4" src="{{ asset('images/stikes.png') }}" alt=""> --}}
+        <img class="mb-4 w-[35px] mr-2" src="{{ asset('images/stikes(1).png') }}" alt="">
+        {{-- <img class="mb-4 w-[180px]" src="{{ asset('images/stikes_black_text(1).png') }}" alt=""> --}}
+        <img class="mb-4 w-[180px]" src="{{ asset('images/stikes(2).png') }}" alt="">
+      </div>
+      <hr class="my-2 text-gray-300">
     </div>
 
     {{-- <div class="p-2.5 mt-3 flex items-center rounded-md px-4 bg-gray-700 cursor-pointer duration-300 text-white">
@@ -14,7 +19,7 @@
       <ul class="space-y-2">
         <li>
           <a href="/admin/dashboard">
-            <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-700 active:bg-blue-800 cursor-pointer duration-300 text-white">
               <i class="bi bi-house-door-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Dashboard</span>
             </div>
@@ -28,7 +33,7 @@
             </div>
           </a>
         </li>
-        <hr class="my-2 text-gray-600">
+        <hr class="my-2 text-gray-300">
         <li x-data="{open: false}">
           <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
             <i class="bi bi-archive-fill"></i>
@@ -70,7 +75,7 @@
             </div>
           </a>
         </li>
-        <hr class="my-2 text-gray-600">
+        <hr class="my-2 text-gray-300">
         <li x-data="{open: false}">
           <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
             <i class="bi bi-calendar-event-fill"></i>
@@ -107,16 +112,16 @@ x-transition:enter-end="translate-x-0"
 x-transition:leave="transition transform duration-300"
 x-transition:leave-start="translate-x-0"
 x-transition:leave-end="-translate-x-full" 
-class="fixed z-50 border-r-1 border-gray-900 w-64 bg-gray-900 h-full overflow-y-auto top-18 left-0 p-4 ease-in-out duration-150 block xl:hidden">
+class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-auto top-18 left-0 p-4 ease-in-out duration-150 block xl:hidden">
   <div class="text-gray-600">
     <div class="mb-2">
-      <img class="mb-4" src="{{ asset('images/stikes.png') }}" alt="">
+      <div class="mb-3 flex items-center justify-center">
+        {{-- <img class="mb-4" src="{{ asset('images/stikes.png') }}" alt=""> --}}
+        <img class=" w-[35px] mr-1" src="{{ asset('images/stikes(1).png') }}" alt="">
+        {{-- <img class=" w-[180px]" src="{{ asset('images/stikes_black_text(1).png') }}" alt=""> --}}
+        <img class=" w-[180px]" src="{{ asset('images/stikes(2).png') }}" alt="">
+      </div>
       <hr class="my-2 text-gray-600">
-    </div>
-
-    <div class="p-2.5 mt-3 flex items-center rounded-md px-4 bg-gray-700 cursor-pointer duration-300 text-white">
-      <i class="bi bi-search text-sm"></i>
-      <input type="text" placeholder="Search" class="text-[15px] ml-4 w-full bg-transparent focus:outline-none">
     </div>
 
     <div class="font-[sans-serif]">
