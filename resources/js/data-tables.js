@@ -15,3 +15,10 @@ $(document).ready(function () {
         dom: "tp",
     });
 });
+
+// info pres
+$(document).ready(function () {
+    $("#tbl_pres").DataTable({
+        dom: "t",
+    });
+});

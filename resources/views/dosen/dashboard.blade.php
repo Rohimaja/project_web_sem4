@@ -79,75 +79,7 @@
             {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
           </span>
         </div>
-        <div class="overflow-auto h-[350px] px-4 pb-4 mt-5">
-          <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
-            <table id="tbl-pres" class="text-sm text-left w-full pt-2">
-              <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
-                <tr>
-                  <th class="border border-gray-300 px-4 py-2">No</th>
-                  <th class="border border-gray-300 px-4 py-2">Dosen</th>
-                  <th class="border border-gray-300 px-4 py-2">Program Studi</th>
-                  <th class="border border-gray-300 px-4 py-2">Semester</th>
-                  <th class="border border-gray-300 px-4 py-2">Mata Kuliah</th>
-                  <th class="border border-gray-300 px-4 py-2">Ruangan</th>
-                  <th class="border border-gray-300 px-4 py-2">Jam Mulai</th>
-                  <th class="border border-gray-300 px-4 py-2">Jam Akhir</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <tr class="hover:bg-gray-50">
-                  <td class="border border-gray-300 px-4 py-2">1</td>
-                  <td class="border border-gray-300 px-4 py-2">P budiyanto</td>
-                  <td class="border border-gray-300 px-4 py-2">MIK</td>
-                  <td class="border border-gray-300 px-4 py-2">2</td>
-                  <td class="border border-gray-300 px-4 py-2">English</td>
-                  <td class="border border-gray-300 px-4 py-2">3.2</td>
-                  <td class="border border-gray-300 px-4 py-2">08.00</td>
-                  <td class="border border-gray-300 px-4 py-2">10.00</td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="border border-gray-300 px-4 py-2">1</td>
-                  <td class="border border-gray-300 px-4 py-2">P budiyanto</td>
-                  <td class="border border-gray-300 px-4 py-2">MIK</td>
-                  <td class="border border-gray-300 px-4 py-2">2</td>
-                  <td class="border border-gray-300 px-4 py-2">English</td>
-                  <td class="border border-gray-300 px-4 py-2">3.2</td>
-                  <td class="border border-gray-300 px-4 py-2">08.00</td>
-                  <td class="border border-gray-300 px-4 py-2">10.00</td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="border border-gray-300 px-4 py-2">1</td>
-                  <td class="border border-gray-300 px-4 py-2">P budiyanto</td>
-                  <td class="border border-gray-300 px-4 py-2">MIK</td>
-                  <td class="border border-gray-300 px-4 py-2">2</td>
-                  <td class="border border-gray-300 px-4 py-2">English</td>
-                  <td class="border border-gray-300 px-4 py-2">3.2</td>
-                  <td class="border border-gray-300 px-4 py-2">08.00</td>
-                  <td class="border border-gray-300 px-4 py-2">10.00</td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="border border-gray-300 px-4 py-2">1</td>
-                  <td class="border border-gray-300 px-4 py-2">P budiyanto</td>
-                  <td class="border border-gray-300 px-4 py-2">MIK</td>
-                  <td class="border border-gray-300 px-4 py-2">2</td>
-                  <td class="border border-gray-300 px-4 py-2">English</td>
-                  <td class="border border-gray-300 px-4 py-2">3.2</td>
-                  <td class="border border-gray-300 px-4 py-2">08.00</td>
-                  <td class="border border-gray-300 px-4 py-2">10.00</td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="border border-gray-300 px-4 py-2">1</td>
-                  <td class="border border-gray-300 px-4 py-2">P budiyanto</td>
-                  <td class="border border-gray-300 px-4 py-2">MIK</td>
-                  <td class="border border-gray-300 px-4 py-2">2</td>
-                  <td class="border border-gray-300 px-4 py-2">English</td>
-                  <td class="border border-gray-300 px-4 py-2">3.2</td>
-                  <td class="border border-gray-300 px-4 py-2">08.00</td>
-                  <td class="border border-gray-300 px-4 py-2">10.00</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="overflow-x-auto px-4 pb-4 mt-5">
         </div>
       </div>
 

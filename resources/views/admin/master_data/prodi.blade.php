@@ -24,7 +24,7 @@
         </button>        
 
         {{-- tampilan import file --}}
-        <div x-show="openImport" x-transition class="fixed inset-0 z-50 flex justify-center items-center">
+        <div x-show="openImport" x-cloak x-transition class="fixed inset-0 z-50 flex justify-center items-center">
           
           <div class="absolute inset-0 bg-black opacity-50"></div>
           
@@ -71,7 +71,7 @@
                     <button @click="openView = !openView" class="cursor-pointer px-2 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md">
                       <i class="bi bi-eye text-lg"></i>
                     </button>
-                    <div x-show="openView" x-transition class="fixed inset-0 z-50 flex justify-center items-center">
+                    <div x-show="openView" x-cloak x-transition class="fixed inset-0 z-50 flex justify-center items-center">
                       <div class="absolute inset-0 bg-black opacity-50"></div>
                       <div @click.outside="openView = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[305px] h-[600px] max-w-full p-6 overflow-y-scroll">
                         <div class="flex justify-between items-center mb-4">
@@ -103,7 +103,7 @@
                       <i class="bi bi-trash text-lg"></i>
                     </button>
                   
-                    <div x-show="confirmDel" x-transition class="fixed inset-0 z-50 flex justify-center items-center">
+                    <div x-show="confirmDel" x-cloak x-transition class="fixed inset-0 z-50 flex justify-center items-center">
                       <div class="absolute inset-0 bg-black opacity-50"></div>
                       <div @click.outside="confirmDel = false" class="relative z-10 bg-white rounded-lg shadow-2xl w-[90%] max-w-md p-6 flex flex-col items-center">
                         <div class="bg-red-100 rounded-full p-4 mb-4">

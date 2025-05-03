@@ -19,7 +19,7 @@ Route::post('/login', function (Request $request) {
     if ($username === 'admin' && $password === 'admin') {
         return redirect('/admin/dashboard');
     } elseif ($username === 'dosen' && $password === 'dosen') {
-        return redirect('/dosen');
+        return redirect('/dosen/dashboard');
     } elseif ($username === 'mahasiswa' && $password === 'mahasiswa') {
         return redirect('/mahasiswa');
     }
@@ -27,6 +27,15 @@ Route::post('/login', function (Request $request) {
     return back()->with('error', 'Username atau password salah!');
 });
 
+// Dosen
+
+Route::get('/dosen/dashboard', function () {
+    return view('dosen.dashboard', ['title' => 'Dahboard Dosen', 'rute' => 'admin -> dashboard']);
+});
+
+
+
+// Admin
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard', ['title' => 'Dahboard Admin', 'rute' => 'admin -> dashboard']);
 });
@@ -46,6 +55,15 @@ Route::get('/admin/laporan-mahasiswa', function () {
 Route::get('/admin/presensi', function () {
     return view('admin.presensi', ['title' => 'Presensi', 'rute' => 'admin -> jadwal']);
 });
+
+Route::get('/admin/form-presensi', function () {
+    return view('admin.form-presensi', ['title' => 'Form Presensi', 'rute' => 'admin -> jadwal']);
+});
+
+Route::get('/admin/info-presensi', function () {
+    return view('admin.info-presensi', ['title' => 'Informasi Presensi', 'rute' => 'admin -> jadwal']);
+});
+
 
 Route::get('/admin/masterdata/admin', function () {
     return view('admin.master_data/admin', ['title' => 'Master Data Admin', 'import' => 'Import Data Admin']);
@@ -97,10 +115,6 @@ Route::get('/admin/masterdata/form-matkul', function () {
 
 Route::get('/admin/profil', function () {
     return view('admin.profil', ['title' => 'Profil Admin', 'rute' => 'admin -> jadwal']);
-});
-
-Route::get('/dosen', function () {
-    return 'Halo Dosen';
 });
 
 Route::get('/mahasiswa', function () {

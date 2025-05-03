@@ -19,7 +19,7 @@
       <ul class="space-y-2">
         <li>
           <a href="/admin/dashboard">
-            <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-700 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-house-door-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Dashboard</span>
             </div>
@@ -27,7 +27,7 @@
         </li>
         <li>
           <a href="/admin/presensi">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-check-square-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Presensi</span>
             </div>
@@ -35,7 +35,7 @@
         </li>
         <hr class="my-2 text-gray-300">
         <li x-data="{open: false}">
-          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
             <i class="bi bi-archive-fill"></i>
             <div class="flex justify-between w-full items-center font-semibold">
               <span class="text-[15px] ml-4 text-gray-200">Master Data</span>
@@ -47,29 +47,29 @@
 
           <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
             <a href="/admin/masterdata/admin" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Admin</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Admin</h1>
             </a>
             <a href="/admin/masterdata/dosen" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Dosen</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Dosen</h1>
             </a>
             <a href="/admin/masterdata/mahasiswa" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mahasiswa</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Mahasiswa</h1>
             </a>
             <a href="/admin/masterdata/tahunAjaran" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Tahun Ajaran</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Tahun Ajaran</h1>
             </a>
             <a href="/admin/masterdata/prodi" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Program Studi</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Program Studi</h1>
             </a>
             <a href="/admin/masterdata/matkul" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mata Kuliah</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Mata Kuliah</h1>
             </a>
           </div>
         </li>
         
         <li>
           <a href="/admin/jadwal">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-calendar-event-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
             </div>
@@ -77,7 +77,7 @@
         </li>
         <hr class="my-2 text-gray-300">
         <li x-data="{open: false}">
-          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
             <i class="bi bi-calendar-event-fill"></i>
             <div class="flex justify-between w-full items-center font-semibold">
               <span class="text-[15px] ml-4 text-gray-200">Laporan</span>
@@ -89,10 +89,10 @@
 
           <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
             <a href="/admin/laporan-dosen" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Dosen</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Dosen</h1>
             </a>
             <a href="/admin/laporan-mahasiswa" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mahasiswa</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Mahasiswa</h1>
             </a>
           </div>
         </li>
@@ -112,7 +112,7 @@ x-transition:enter-end="translate-x-0"
 x-transition:leave="transition transform duration-300"
 x-transition:leave-start="translate-x-0"
 x-transition:leave-end="-translate-x-full" 
-class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-auto top-18 left-0 p-4 ease-in-out duration-150 block xl:hidden">
+class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-900 h-full overflow-y-auto top-16 left-0 p-4 ease-in-out duration-150 block xl:hidden">
   <div class="text-gray-600">
     <div class="mb-2">
       <div class="mb-3 flex items-center justify-center">
@@ -128,7 +128,7 @@ class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-
       <ul class="space-y-2">
         <li>
           <a href="/admin/dashboard">
-            <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-house-door-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Dashboard</span>
             </div>
@@ -136,7 +136,7 @@ class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-
         </li>
         <li>
           <a href="/admin/presensi">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-check-square-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Presensi</span>
             </div>
@@ -144,7 +144,7 @@ class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-
         </li>
         <hr class="my-2 text-gray-600">
         <li x-data="{open: false}">
-          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
             <i class="bi bi-archive-fill"></i>
             <div class="flex justify-between w-full items-center font-semibold">
               <span class="text-[15px] ml-4 text-gray-200">Master Data</span>
@@ -156,28 +156,28 @@ class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-
 
           <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
             <a href="/admin/masterdata/admin" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Admin</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Admin</h1>
             </a>
             <a href="/admin/masterdata/dosen" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Dosen</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Dosen</h1>
             </a>
             <a href="/admin/masterdata/mahasiswa" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mahasiswa</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Mahasiswa</h1>
             </a>
             <a href="/admin/masterdata/tahunAjaran" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Tahun Ajaran</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Tahun Ajaran</h1>
             </a>
             <a href="/admin/masterdata/prodi" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Program Studi</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Program Studi</h1>
             </a>
             <a href="/admin/masterdata/matkul" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mata Kuliah</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Mata Kuliah</h1>
             </a>
           </div>
         </li>
         <li>
           <a href="/admin/jadwal">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-calendar-event-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
             </div>
@@ -186,7 +186,7 @@ class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-
         <hr class="my-2 text-gray-600">
         <li>
           <a href="/admin/jadwal">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-calendar-event-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
             </div>
@@ -194,7 +194,7 @@ class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-
         </li>
         <hr class="my-2 text-gray-600">
         <li x-data="{open: false}">
-          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
+          <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
             <i class="bi bi-calendar-event-fill"></i>
             <div class="flex justify-between w-full items-center font-semibold">
               <span class="text-[15px] ml-4 text-gray-200">Laporan</span>
@@ -206,10 +206,10 @@ class="fixed z-50 border-r-1 border-gray-300 w-64 bg-blue-600 h-full overflow-y-
 
           <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
             <a href="/admin/laporan-dosen" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Dosen</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Dosen</h1>
             </a>
             <a href="/admin/laporan-mahasiswa" class="mt-2 w-4/5">
-              <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Mahasiswa</h1>
+              <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Mahasiswa</h1>
             </a>
           </div>
         </li>

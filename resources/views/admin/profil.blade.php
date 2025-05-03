@@ -60,11 +60,6 @@
             </div>
           </div>
         </div>
-        <div class="p-4 border-b-2 border-gray-200">
-          <button class="flex items-center px-5 py-2.5 text-white bg-green-500 hover:bg-green-600 active:bg-green-700 rounded-sm font-semibold cursor-pointer">
-            Submit
-          </button>
-        </div>
       </div>
     </div>
 
