@@ -1,4 +1,4 @@
-<x-layout>
+<x-layoutDosen>
   <div class="">
     <h1 class="font-bold text-gray-800 text-xl sm:text-2xl">{{ $title }}</h1>
     <p class="mt-1">Selamat Datang, <b>Syalia Ayu!!!</b></p>
@@ -94,4 +94,4 @@
       </div>
     </div>
   </div>
-</x-layout>
+</x-layoutDosen>

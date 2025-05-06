@@ -21,7 +21,7 @@
             <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/admin/profil"><i class="bi bi-person-circle mr-3"></i>Profile</a>
           </li>
           <li>
-            <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/admin/ubahPassword"><i class="bi bi-gear-fill mr-3"></i>Ubah Password</a>
+            <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/admin/ubahPw"><i class="bi bi-gear-fill mr-3"></i>Ubah Password</a>
           </li>
           <li>
             <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/login"><i class="bi bi-box-arrow-left mr-3"></i>Log Out</a>

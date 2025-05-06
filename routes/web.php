@@ -117,6 +117,10 @@ Route::get('/admin/profil', function () {
     return view('admin.profil', ['title' => 'Profil Admin', 'rute' => 'admin -> jadwal']);
 });
 
+Route::get('/admin/ubahPw', function () {
+    return view('admin.ubahPw', ['title' => 'Pengaturan Admin', 'rute' => 'admin -> jadwal']);
+});
+
 Route::get('/mahasiswa', function () {
     return 'Halo Mahasiswa';
 });
