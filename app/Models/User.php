@@ -6,11 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-<<<<<<< HEAD
-=======
 use App\Notifications\CustomVerifyEmail;
 use App\Notifications\CustomResetPassword;
->>>>>>> c0e2562 (first commit)
 
 class User extends Authenticatable
 {
@@ -26,10 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-<<<<<<< HEAD
-=======
         'role',
->>>>>>> c0e2562 (first commit)
     ];
 
     /**
@@ -54,8 +48,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-<<<<<<< HEAD
-=======
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
 
     public function dosen()
     {
@@ -76,5 +73,4 @@ class User extends Authenticatable
     {
         $this->notify(new CustomResetPassword($token));
     }
->>>>>>> c0e2562 (first commit)
 }

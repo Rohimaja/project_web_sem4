@@ -94,11 +94,7 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
-<<<<<<< HEAD
-            'expire' => 60,
-=======
             'expire' => 2,
->>>>>>> c0e2562 (first commit)
             'throttle' => 60,
         ],
     ],

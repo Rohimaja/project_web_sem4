@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\Admin\StoreMasterTahun;
+use Illuminate\Support\Facades\Validator;
+
 
 class TahunAjaranController extends Controller
 {
@@ -31,7 +34,7 @@ class TahunAjaranController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMasterTahun $request)
     {
         $request->validate([
             'tahun_awal' => 'required|max:4|regex:/^[0-9]+$/',
@@ -39,9 +42,15 @@ class TahunAjaranController extends Controller
             'keterangan' => 'required',
             // 'status' => 'required|max:40|unique:prodis,nama_prodi',
         ], [
-            'tahun_awal.required' => 'Tahun Awal tidak boleh kosong',
-            'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong',
-            'keterangan.required' => 'Wajib diisi',
+            'tahun_awal.required' => 'Tahun Awal tidak boleh kosong.',
+            'tahun_awal.max' => 'Tahun Awal maksimal 4 angka.',
+            'tahun_awal.regex' => 'Tahun Awal hanya boleh berupa angka.',
+
+            'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong.',
+            'tahun_akhir.max' => 'Tahun Akhir maksimal 4 angka.',
+            'tahun_akhir.regex' => 'Tahun Akhir hanya boleh berupa angka.',
+
+            'keterangan.required' => 'Pilih Keterangan terlebih dahulu',
         ]);
 
         if ($request->tahun_awal >= $request->tahun_akhir) {
@@ -69,12 +78,6 @@ class TahunAjaranController extends Controller
                 'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
             ]);
         }
-        // TahunAjaran::create($request->only(['tahun_awal', 'tahun_akhir', 'keterangan']));
-
-        // return redirect()->route('admin.master-tahun.index')->with([
-        //     'status' => 'success',
-        //     'message' => 'Data Berhasil Di Tambahkan'
-        // ]);
     }
 
     /**
@@ -98,22 +101,28 @@ class TahunAjaranController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreMasterTahun $request, $id)
     {
         $request->merge([
             'tahun_awal' => trim($request->tahun_awal),
             'tahun_akhir' => trim($request->tahun_akhir),
         ]);
 
-        $request->validate([
-            'tahun_awal' => 'required|max:4|regex:/^[0-9]+$/',
-            'tahun_akhir' => 'required|max:4|regex:/^[0-9]+$/',
-            'keterangan' => 'required',
-        ], [
-            'tahun_awal.required' => 'Tahun Awal tidak boleh kosong',
-            'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong',
-            'keterangan.required' => 'Wajib diisi',
-        ]);
+        // $request->validate([
+        //     'tahun_awal' => 'required|max:4|regex:/^[0-9]+$/',
+        //     'tahun_akhir' => 'required|max:4|regex:/^[0-9]+$/',
+        //     'keterangan' => 'required',
+        // ], [
+        //     'tahun_awal.required' => 'Tahun Awal tidak boleh kosong.',
+        //     'tahun_awal.max' => 'Tahun Awal maksimal 4 angka.',
+        //     'tahun_awal.regex' => 'Tahun Awal hanya boleh berupa angka.',
+
+        //     'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong.',
+        //     'tahun_akhir.max' => 'Tahun Akhir maksimal 4 angka.',
+        //     'tahun_akhir.regex' => 'Tahun Akhir hanya boleh berupa angka.',
+
+        //     'keterangan.required' => 'Pilih Keterangan terlebih dahulu',
+        // ]);
 
         if ($request->tahun_awal >= $request->tahun_akhir) {
             return redirect()->back()->withInput()->withErrors([
@@ -132,18 +141,18 @@ class TahunAjaranController extends Controller
 
             return redirect()->route('admin.master-tahun.index')->with([
                 'status' => 'success',
-                'message' => 'Data Berhasil Di Di Ubah'
+                'message' => 'Data Berhasil Di Perbarui'
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal Ubah Tahun Ajaran', [
+            Log::error('Gagal Perbarui Tahun Ajaran', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
 
             return redirect()->back()->withInput()->with([
                 'status' => 'error',
-                'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
             ]);
         }
     }
@@ -160,5 +169,23 @@ class TahunAjaranController extends Controller
             'status' => 'success',
             'message' => 'Data Berhasil Dihapus'
         ]);
+    }
+
+    public function validateField(Request $request)
+    {
+        $rules = (new StoreMasterTahun())->rules();
+        $messages = (new StoreMasterTahun())->messages();
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        $validator = Validator::make([$field => $value], [
+            $field => $rules[$field] ?? '',
+        ],$messages);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first($field)], 422);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

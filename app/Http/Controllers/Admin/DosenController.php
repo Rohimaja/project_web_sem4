@@ -9,6 +9,9 @@ use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Admin\StoreMasterDosen;
 
 
 class DosenController extends Controller
@@ -20,7 +23,8 @@ class DosenController extends Controller
     {
         $title = 'Data Dosen';
         $dosen = Dosen::all();
-        return view('admin.master_data.dosen',compact('title','dosen'));
+        $prodi = Dosen::with(relations: ['prodi'])->get();
+        return view('admin.master_data.dosen',compact('title','dosen','prodi'));
 
     }
 
@@ -48,24 +52,62 @@ class DosenController extends Controller
             'alamat' => trim($request->alamat),
         ]);
 
-        $request->validate([
-            'nip' => 'required|max:20|unique:dosens,nip',
-            'nama' => 'required|max:100',
-            'tempat_lahir' => 'required|max:100',
-            'email' => 'required|max:100',
-            'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-            'alamat' => 'required|max:100',
-            'provinsi_id' => 'required|integer',
-            'kota_id' => 'required|integer',
-            'kecamatan_id' => 'required|integer',
-            'kelurahan_id' => 'required|integer',
-        ], [
-            'nama.required' => 'Nama tidak boleh kosong',
-            'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-            'email.required' => 'Email Tidak boleh kosong',
-            'no_telp.required' => 'No Telpon Tidak boleh kosong',
-            'alamat.required' => 'Alamat Tidak boleh kosong',
-        ]);
+        // $request->validate([
+        //     'nip' => 'required|max:20|unique:dosens,nip',
+        //     'nama' => 'required|max:100',
+        //     'jenis_kelamin' => 'required',
+        //     'agama' => 'required',
+        //     'tempat_lahir' => 'required|max:100',
+        //     'tgl_lahir' => 'required|before:today',
+        //     'email' => 'required|email|max:100|unique:dosens,email',
+        //     'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
+        //     'alamat' => 'required|max:200',
+        //     'prodi_id' => 'required',
+        //     'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
+        //     'provinsi_id' => 'required',
+        //     'kota_id' => 'required',
+        //     'kecamatan_id' => 'required',
+        //     'kelurahan_id' => 'required',
+        // ], [
+        //     'nip.required' => 'Nama tidak boleh kosong',
+        //     'nip.max' => 'Nip Maksimal 18 Karakter',
+        //     'nip.unique' => 'Nip sudah terdaftar',
+
+        //     'nama.required' => 'Nama tidak boleh kosong',
+        //     'nama.max' => 'Nama maksimal 100 karakter',
+
+        //     'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
+        //     'agama.required' => 'Agama harus dipilih',
+
+        //     'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
+        //     'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
+
+        //     'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
+        //     'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
+
+        //     'email.required' => 'Email tidak boleh kosong',
+        //     'email.email' => 'Format email tidak valid',
+        //     'email.max' => 'Email maksimal 100 karakter',
+        //     'email.unique' => 'Email sudah digunakan',
+
+        //     'no_telp.required' => 'Nomor Telepon wajib diisi',
+        //     'no_telp.max' => 'Nomor Telepon maksimal 20 karakter',
+        //     'no_telp.regex' => 'Nomor Telepon hanya boleh berisi angka',
+
+        //     'alamat.required' => 'Alamat tidak boleh kosong',
+        //     'alamat.max' => 'Alamat maksimal 200 karakter',
+
+        //     'prodi_id.required' => 'Program Studi wajib dipilih',
+
+        //     'foto.image' => 'File harus berupa gambar',
+        //     'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg',
+        //     'foto.max' => 'Ukuran gambar maksimal 2MB',
+
+        //     'provinsi_id.required' => 'Provinsi wajib dipilih',
+        //     'kota_id.required' => 'Kota wajib dipilih',
+        //     'kecamatan_id.required' => 'Kecamatan wajib dipilih',
+        //     'kelurahan_id.required' => 'Kelurahan wajib dipilih',
+        // ]);
 
         try {
 
@@ -96,10 +138,10 @@ class DosenController extends Controller
                 'alamat' => $request->alamat,
                 'prodi_id' => $request->prodi_id,
                 'foto' => $fotoPath,
-                'provinsi_id' => $request->provinsi_id,
-                'kota_id' => $request->kota_id,
-                'kecamatan_id' => $request->kecamatan_id,
-                'kelurahan_id' => $request->kelurahan_id,
+                'province_id' => $request->province_id,
+                'regency_id' => $request->regency_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
             ]);
 
             return redirect()->route('admin.master-dosen.index')->with([
@@ -108,14 +150,14 @@ class DosenController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Log::error('Gagal menambahkan Admin', [
+            Log::error('Gagal Menambahkan Dosen', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
 
             return redirect()->back()->withInput()->with([
                 'status' => 'error',
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
             ]);
         }
     }
@@ -125,7 +167,22 @@ class DosenController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            // Cari data mahasiswa berdasarkan ID
+            $dosen = Dosen::with('prodi')->findOrFail($id);
+
+            // Kirimkan data mahasiswa sebagai response JSON
+            return response()->json([
+                'status' => 'success',
+                'data' => $dosen
+            ]);
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan pesan error
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
     }
 
     /**
@@ -142,7 +199,7 @@ class DosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreMasterDosen $request, $id)
     {
         $request->merge([
             'nip' => trim($request->nip),
@@ -153,24 +210,62 @@ class DosenController extends Controller
             'alamat' => trim($request->alamat),
         ]);
 
-        $request->validate([
-            'nama' => 'required|max:100',
-            'tempat_lahir' => 'required|max:100',
-            'email' => 'required|email|max:100',
-            'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-            'alamat' => 'required|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-            'provinsi_id' => 'required|integer',
-            'kota_id' => 'required|integer',
-            'kecamatan_id' => 'required|integer',
-            'kelurahan_id' => 'required|integer',
-        ], [
-            'nama.required' => 'Nama tidak boleh kosong',
-            'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-            'email.required' => 'Email Tidak boleh kosong',
-            'no_telp.required' => 'No Telpon Tidak boleh kosong',
-            'alamat.required' => 'Alamat Tidak boleh kosong',
-        ]);
+        // $request->validate([
+        //     'nip' => 'required|max:20|unique:dosens,nip,'.$id,
+        //     'nama' => 'required|max:100',
+        //     'jenis_kelamin' => 'required',
+        //     'agama' => 'required',
+        //     'tempat_lahir' => 'required|max:100',
+        //     'tgl_lahir' => 'required|before:today',
+        //     'email' => 'required|email|max:100|unique:dosens,email,'.$id,
+        //     'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
+        //     'alamat' => 'required|max:200',
+        //     'prodi_id' => 'required',
+        //     'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
+        //     'provinsi_id' => 'required',
+        //     'kota_id' => 'required',
+        //     'kecamatan_id' => 'required',
+        //     'kelurahan_id' => 'required',
+        // ], [
+        //     'nip.required' => 'Nip tidak boleh kosong',
+        //     'nip.max' => 'Nip Maksimal 18 Karakter',
+        //     'nip.unique' => 'Nip sudah terdaftar',
+
+        //     'nama.required' => 'Nama tidak boleh kosong',
+        //     'nama.max' => 'Nama maksimal 100 karakter',
+
+        //     'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
+        //     'agama.required' => 'Agama harus dipilih',
+
+        //     'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
+        //     'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
+
+        //     'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
+        //     'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
+
+        //     'email.required' => 'Email tidak boleh kosong',
+        //     'email.email' => 'Format email tidak valid',
+        //     'email.max' => 'Email maksimal 100 karakter',
+        //     'email.unique' => 'Email sudah digunakan',
+
+        //     'no_telp.required' => 'Nomor Telepon wajib diisi',
+        //     'no_telp.max' => 'Nomor Telepon maksimal 20 karakter',
+        //     'no_telp.regex' => 'Nomor Telepon hanya boleh berisi angka',
+
+        //     'alamat.required' => 'Alamat tidak boleh kosong',
+        //     'alamat.max' => 'Alamat maksimal 200 karakter',
+
+        //     'prodi_id.required' => 'Program Studi wajib dipilih',
+
+        //     'foto.image' => 'File harus berupa gambar',
+        //     'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg',
+        //     'foto.max' => 'Ukuran gambar maksimal 2MB',
+
+        //     'provinsi_id.required' => 'Provinsi wajib dipilih',
+        //     'kota_id.required' => 'Kota wajib dipilih',
+        //     'kecamatan_id.required' => 'Kecamatan wajib dipilih',
+        //     'kelurahan_id.required' => 'Kelurahan wajib dipilih',
+        // ]);
 
         try {
             $dosen = Dosen::findOrFail($id);
@@ -201,10 +296,10 @@ class DosenController extends Controller
                 'alamat' => $request->alamat,
                 'foto' => $dosen->foto, // foto baru atau tetap lama
                 'prodi_id' => $request->prodi_id, // foto baru atau tetap lama
-                'provinsi_id' => $request->provinsi_id,
-                'kota_id' => $request->kota_id,
-                'kecamatan_id' => $request->kecamatan_id,
-                'kelurahan_id' => $request->kelurahan_id,
+                'province_id' => $request->province_id,
+                'regency_id' => $request->regency_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
             ]);
 
             // Update juga data user terkait
@@ -224,14 +319,14 @@ class DosenController extends Controller
                 'message' => 'Data Berhasil Diperbarui'
             ]);
         } catch (\Exception $e) {
-            \Log::error('Gagal mengupdate Admin', [
+            Log::error('Gagal Memperbarui Dosen', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
 
             return redirect()->back()->withInput()->with([
                 'status' => 'error',
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
             ]);
         }
     }
@@ -248,5 +343,41 @@ class DosenController extends Controller
             'status' => 'success',
             'message' => 'Data Berhasil Dihapus'
         ]);
+    }
+
+    public function validateField(Request $request)
+    {
+        $id = $request->input('id'); // ambil id dari form (edit mode)
+        $rules = (new StoreMasterDosen())->rules($id);
+        $messages = (new StoreMasterDosen())->messages();
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        // $rules = [
+        //     'nama' => 'required|max:100',
+        //     'email' => 'required|email|max:100|unique:admins,email',
+        //     // tambahkan field lain sesuai kebutuhan
+        // ];
+
+        $validator = Validator::make([$field => $value], [
+            $field => $rules[$field] ?? '',
+        ],$messages);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first($field)], 422);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function filter(Request $request)
+    {
+        $query = Dosen::query();
+
+        if ($request->prodi_id) {
+            $query->where('prodi_id', $request->prodi_id);
+        }
+
+        return response()->json($query->get(['foto','nip','nama', 'email']));
     }
 }

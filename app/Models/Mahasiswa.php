@@ -29,10 +29,10 @@ class Mahasiswa extends Model
         'tahun_ajaran_id',
         'semester',
         'foto',
-        'provinsi_id',
-        'kota_id',
-        'kecamatan_id',
-        'kelurahan_id',
+        'province_id',
+        'regency_id',
+        'district_id',
+        'village_id',
     ];
 
     public function user()
@@ -40,17 +40,45 @@ class Mahasiswa extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
+    }
+
+    public function tahun()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id', 'id');
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'id');
+    }
+    public function regency()
+    {
+        return $this->belongsTo(Regency::class, 'regency_id', 'id');
+    }
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id');
+    }
+
+    public function village()
+    {
+        return $this->belongsTo(Village::class, 'village_id', 'id');
+    }
+
     protected static function booted()
     {
-        static::deleting(function ($admin) {
+        static::deleting(function ($mahasiswa) {
             // Hapus foto jika ada
-            if ($admin->foto && Storage::disk('public')->exists($admin->foto)) {
-                Storage::disk('public')->delete($admin->foto);
+            if ($mahasiswa->foto && Storage::disk('public')->exists($mahasiswa->foto)) {
+                Storage::disk('public')->delete($mahasiswa->foto);
             }
 
             // Jika kamu mau sekalian hapus user terkait:
-            if ($admin->user) {
-                $admin->user->delete();
+            if ($mahasiswa->user) {
+                $mahasiswa->user->delete();
             }
         });
     }

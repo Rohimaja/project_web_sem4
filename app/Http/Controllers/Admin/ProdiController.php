@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreMasterProdi;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Models\Prodi;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
 
 class ProdiController extends Controller
 {
@@ -32,29 +37,50 @@ class ProdiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMasterProdi $request)
     {
         $request->merge([
             'kode_prodi' => trim($request->kode_prodi),
             'nama_prodi' => trim($request->nama_prodi),
         ]);
 
-        $request->validate([
-            'kode_prodi' => 'required|max:5|regex:/^[A-Z0-9]+$/|unique:prodis,kode_prodi',
-            'jenjang' => 'required',
-            'nama_prodi' => 'required|max:40|unique:prodis,nama_prodi',
-        ], [
-            'kode_prodi.required' => 'Kode Prodi tidak boleh kosong',
-            'kode_prodi.unique' => 'Kode Prodi sudah terdaftar',
-            'nama_prodi.unique' => 'Nama Program Studi sudah ada',
-        ]);
+        // $request->validate([
+        //     'kode_prodi' => 'required|max:8|regex:/^[A-Z0-9]+$/|unique:prodis,kode_prodi',
+        //     'jenjang' => 'required',
+        //     'nama_prodi' => 'required|max:40|unique:prodis,nama_prodi',
+        // ], [
+        //     'kode_prodi.required' => 'Kode Prodi tidak boleh kosong',
+        //     'kode_prodi.max' => 'Kode Prodi hanya maksimal 8 karakter',
+        //     'kode_prodi.unique' => 'Kode Prodi sudah terdaftar',
 
-        Prodi::create($request->only(['kode_prodi', 'jenjang', 'nama_prodi']));
+        //     'jenjang.required' => 'Silahkan pilih jenjang pendidikan',
 
-        return redirect()->route('admin.master-prodi.index')->with([
-            'status' => 'success',
-            'message' => 'Data Berhasil Di Tambahkan'
-        ]);
+        //     'nama_prodi.required' => 'Nama Program Studi tidak boleh kosong.',
+        //     'nama_prodi.max' => 'Nama Program Studi maksimal 40 karakter.',
+        //     'nama_prodi.unique' => 'Nama Program Studi sudah terdaftar.',
+        // ]);
+
+
+
+        try {
+            Prodi::create($request->only(['kode_prodi', 'jenjang', 'nama_prodi']));
+
+            return redirect()->route('admin.master-prodi.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Di Tambahkan'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal tambah Program Studi', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -78,31 +104,50 @@ class ProdiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreMasterProdi $request, $id)
     {
         $request->merge([
             'kode_prodi' => trim($request->kode_prodi),
             'nama_prodi' => trim($request->nama_prodi),
         ]);
 
-        $request->validate([
-            'kode_prodi' => 'required|max:5|regex:/^[A-Z0-9]+$/|unique:prodis,kode_prodi,'.$id,
-            'jenjang' => 'required',
-            'nama_prodi' => 'required|max:40|unique:prodis,nama_prodi,'.$id,
-        ], [
-            'kode_prodi.required' => 'Kode Prodi tidak boleh kosong',
-            'kode_prodi.unique' => 'Kode Prodi sudah terdaftar',
-            'nama_prodi.unique' => 'Nama Program Studi sudah ada',
-        ]);
+        // $request->validate([
+        //     'kode_prodi' => 'required|max:8|regex:/^[A-Z0-9]+$/|unique:prodis,kode_prodi,'.$id,
+        //     'jenjang' => 'required',
+        //     'nama_prodi' => 'required|max:40|unique:prodis,nama_prodi,'.$id,
+        // ], [
+        //     'kode_prodi.required' => 'Kode Prodi tidak boleh kosong',
+        //     'kode_prodi.max' => 'Kode Prodi hanya maksimal 8 karakter',
+        //     'kode_prodi.unique' => 'Kode Prodi sudah terdaftar',
 
-        $prodi = Prodi::findOrFail($id);
+        //     'jenjang.required' => 'Silahkan pilih jenjang pendidikan',
 
-        $prodi->update($request->only(['kode_prodi', 'jenjang', 'nama_prodi']));
+        //     'nama_prodi.required' => 'Nama Program Studi tidak boleh kosong.',
+        //     'nama_prodi.max' => 'Nama Program Studi maksimal 40 karakter.',
+        //     'nama_prodi.unique' => 'Nama Program Studi sudah terdaftar.',
+        // ]);
 
-        return redirect()->route('admin.master-prodi.index')->with([
-            'status' => 'success',
-            'message' => 'Data Berhasil Di Perbarui'
-        ]);
+        try {
+            $prodi = Prodi::findOrFail($id);
+
+            $prodi->update($request->only(['kode_prodi', 'jenjang', 'nama_prodi']));
+
+            return redirect()->route('admin.master-prodi.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Di Perbarui'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Perbarui Program Studi', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -118,4 +163,31 @@ class ProdiController extends Controller
             'message' => 'Data Berhasil Dihapus'
         ]);
     }
+
+    public function validateField(Request $request)
+    {
+        $id = $request->input('id'); // ambil id dari form (edit mode)
+        $rules = (new StoreMasterProdi())->rules($id);
+        $messages = (new StoreMasterProdi())->messages();
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        $validator = Validator::make([$field => $value], [
+            $field => $rules[$field] ?? '',
+        ],$messages);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first($field)], 422);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    // ProdiController.php
+    public function getList()
+    {
+        $data = Prodi::orderBy('nama')->pluck('nama');
+        return response()->json($data);
+    }
+
 }

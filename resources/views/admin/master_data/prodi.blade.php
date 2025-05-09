@@ -1,10 +1,6 @@
 <x-layout>
-<<<<<<< HEAD
-  <div class="h-[1000px]">
-    <x-slot:title>{{ $title }}</x-slot:title>
-  </div>
-</x-layout>
-=======
+    @vite(['resources/js/pages/admin/data-prodi.js'])
+
     <div class="relative">
     <x-slot:title>{{ $title }}</x-slot:title>
     <p>Lihat Data Program Studi</p>
@@ -24,10 +20,10 @@
                     </button>
                 </a>
 
-            <button @click="openImport = !openImport" class="flex items-center px-4 py-2.5 text-white bg-green-600 hover:bg-green-700 active:bg-green-800 rounded-sm font-semibold cursor-pointer">
-                <i class="bi bi-plus-square-fill mr-2"></i>
-                <span>Import</span>
-            </button>
+                <button @click="openImport = !openImport" class="flex items-center px-4 py-2.5 text-white bg-green-600 hover:bg-green-700 active:bg-green-800 rounded-sm font-semibold cursor-pointer">
+                    <i class="bi bi-plus-square-fill mr-2"></i>
+                    <span>Import</span>
+                </button>
 
                 {{-- tampilan import file --}}
                 <div x-show="openImport" x-cloak class="fixed inset-0 z-50 flex justify-center items-center">
@@ -55,7 +51,7 @@
             </div>
 
             <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
-                <table id="myTable" class="text-sm text-left w-full pt-2">
+                <table id="data-prodi" class="text-sm text-left w-full pt-2">
                     <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                         <tr>
                             <th class="border border-gray-300 px-4 py-2">No</th>
@@ -65,7 +61,7 @@
                             <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
+                    <tbody class="">
                         @foreach ($prodi as $p )
                             <tr class="hover:bg-gray-50">
                                 <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
@@ -75,7 +71,7 @@
                                 <td class="border border-gray-300 px-4 py-2 text-center">
                                     <div class="flex justify-center gap-2">
                                         <a href="{{route('admin.master-prodi.edit', $p->id)}}">
-                                            <button class="px-2 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md">
+                                            <button class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">
                                                 <i class="bi bi-pencil-square text-lg"></i>
                                             </button>
                                         </a>
@@ -122,4 +118,3 @@
         </div>
     </div>
 </x-layout>
->>>>>>> c0e2562 (first commit)

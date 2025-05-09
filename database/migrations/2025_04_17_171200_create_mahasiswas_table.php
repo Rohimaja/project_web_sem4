@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nim','15')->unique();
-            $table->string('rfid','30')->unique();
+            $table->string('rfid','30')->unique()->nullable();
             $table->string('nama','100');
             $table->string('jenis_kelamin','10');
             $table->string('agama','20');

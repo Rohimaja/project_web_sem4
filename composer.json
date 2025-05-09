@@ -10,19 +10,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-<<<<<<< HEAD
-=======
         "guzzlehttp/guzzle": "^7.9",
->>>>>>> c0e2562 (first commit)
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
-<<<<<<< HEAD
-=======
         "laravel/breeze": "^2.3",
->>>>>>> c0e2562 (first commit)
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
@@ -79,8 +73,4 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c0e2562 (first commit)

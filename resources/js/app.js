@@ -1,13 +1,12 @@
-<<<<<<< HEAD
-import './bootstrap';
-=======
 import "./bootstrap";
 import "./chart";
-import "./pages/master-admin";
+import "./components/data-wilayah";
+import "./components/image-preview";
+import "./components/form-validasi";
+// import "./pages/data-tables";
 
-import Alpine from "alpinejs";
+// import Alpine from "alpinejs";
 
-window.Alpine = Alpine;
+// window.Alpine = Alpine;
 
-Alpine.start();
->>>>>>> c0e2562 (first commit)
+// Alpine.start();

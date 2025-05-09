@@ -11,13 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-<<<<<<< HEAD
-        //
-=======
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
->>>>>>> c0e2562 (first commit)
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

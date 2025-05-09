@@ -8,18 +8,12 @@
           <div class="text-center">
             <h1 class="text-2xl font-bold text-gray-800">Lupa Password</h1>
             <p class="text-sm text-gray-500 mt-1">Silahkan masukkan alamat email anda</p>
-<<<<<<< HEAD
-          </div>  
-
-          <form method="POST" class="space-y-5">
-=======
           </div>
 
           <x-auth-session-status class="mb-4" :status="session('status')" />
 
 
           <form method="POST" action="{{route('password.email')}}" class="space-y-5">
->>>>>>> c0e2562 (first commit)
               @csrf
 
               <div>
@@ -34,8 +28,6 @@
               </button>
           </form>
 
-<<<<<<< HEAD
-=======
           {{-- <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
             @csrf
 
@@ -54,7 +46,6 @@
         </form> --}}
 
 
->>>>>>> c0e2562 (first commit)
           <div class="text-center text-sm text-gray-500">
               Sudah memiliki akun?
               <a href="/login" class="text-blue-600 hover:underline">Login</a>

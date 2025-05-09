@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Admin\StoreMasterAdmin;
+// use Illuminate\Validation\ValidationException;
+
 
 
 class AdminController extends Controller
@@ -17,7 +23,8 @@ class AdminController extends Controller
     public function index()
     {
         $title = 'Data Admin';
-        $admin = Admin::all();
+        // $admin = Admin::all();
+        $admin = Admin::with(relations: ['province','regency','district','village'])->get();
         return view('admin.master_data.admin',compact('title','admin'));
     }
 
@@ -33,7 +40,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMasterAdmin $request)
     {
         $request->merge([
             'nama' => trim($request->nama),
@@ -41,24 +48,6 @@ class AdminController extends Controller
             'email' => trim($request->email),
             'no_telp' => trim($request->no_telp),
             'alamat' => trim($request->alamat),
-        ]);
-
-        $request->validate([
-            'nama' => 'required|max:100',
-            'tempat_lahir' => 'required|max:100',
-            'email' => 'required|max:100',
-            'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-            'alamat' => 'required|max:100',
-            'provinsi_id' => 'required|integer',
-            'kota_id' => 'required|integer',
-            'kecamatan_id' => 'required|integer',
-            'kelurahan_id' => 'required|integer',
-        ], [
-            'nama.required' => 'Nama tidak boleh kosong',
-            'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-            'email.required' => 'Email Tidak boleh kosong',
-            'no_telp.required' => 'No Telpon Tidak boleh kosong',
-            'alamat.required' => 'Alamat Tidak boleh kosong',
         ]);
 
         try {
@@ -88,10 +77,10 @@ class AdminController extends Controller
                 'no_telp' => $request->no_telp,
                 'alamat' => $request->alamat,
                 'foto' => $fotoPath,
-                'provinsi_id' => $request->provinsi_id,
-                'kota_id' => $request->kota_id,
-                'kecamatan_id' => $request->kecamatan_id,
-                'kelurahan_id' => $request->kelurahan_id,
+                'province_id' => $request->province_id,
+                'regency_id' => $request->regency_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
             ]);
 
             return redirect()->route('admin.master-admin.index')->with([
@@ -100,14 +89,14 @@ class AdminController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Log::error('Gagal menambahkan Admin', [
+            Log::error('Gagal menambahkan Admin', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
 
             return redirect()->back()->withInput()->with([
                 'status' => 'error',
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
             ]);
         }
     }
@@ -117,7 +106,22 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            // Cari data mahasiswa berdasarkan ID
+            $admin = Admin::findOrFail($id);
+
+            // Kirimkan data mahasiswa sebagai response JSON
+            return response()->json([
+                'status' => 'success',
+                'data' => $admin
+            ]);
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan pesan error
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
     }
 
     /**
@@ -133,7 +137,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreMasterAdmin $request, $id)
     {
         $request->merge([
             'nama' => trim($request->nama),
@@ -143,20 +147,54 @@ class AdminController extends Controller
             'alamat' => trim($request->alamat),
         ]);
 
-        $request->validate([
-            'nama' => 'required|max:100',
-            'tempat_lahir' => 'required|max:100',
-            'email' => 'required|email|max:100',
-            'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-            'alamat' => 'required|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-        ], [
-            'nama.required' => 'Nama tidak boleh kosong',
-            'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-            'email.required' => 'Email Tidak boleh kosong',
-            'no_telp.required' => 'No Telpon Tidak boleh kosong',
-            'alamat.required' => 'Alamat Tidak boleh kosong',
-        ]);
+        // $request->validate([
+        //     'nama' => 'required|max:100',
+        //     'jenis_kelamin' => 'required',
+        //     'agama' => 'required',
+        //     'tempat_lahir' => 'required|max:100',
+        //     'tgl_lahir' => 'required|before:today',
+        //     'email' => 'required|email|max:100|unique:admins,email,'.$id,
+        //     'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
+        //     'alamat' => 'required|max:200',
+        //     'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
+        //     'provinsi_id' => 'required',
+        //     'kota_id' => 'required',
+        //     'kecamatan_id' => 'required',
+        //     'kelurahan_id' => 'required',
+        // ], [
+        //     'nama.required' => 'Nama tidak boleh kosong',
+        //     'nama.max' => 'Nama maksimal 100 karakter',
+
+        //     'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
+        //     'agama.required' => 'Agama harus dipilih',
+
+        //     'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
+        //     'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
+
+        //     'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
+        //     'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
+
+        //     'email.required' => 'Email tidak boleh kosong',
+        //     'email.email' => 'Format email tidak valid',
+        //     'email.max' => 'Email maksimal 100 karakter',
+        //     'email.unique' => 'Email sudah digunakan',
+
+        //     'no_telp.required' => 'Nomor Telepon wajib diisi',
+        //     'no_telp.max' => 'Nomor Telepon maksimal 20 karakter',
+        //     'no_telp.regex' => 'Nomor Telepon hanya boleh berisi angka',
+
+        //     'alamat.required' => 'Alamat tidak boleh kosong',
+        //     'alamat.max' => 'Alamat maksimal 200 karakter',
+
+        //     'foto.image' => 'File harus berupa gambar',
+        //     'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg',
+        //     'foto.max' => 'Ukuran gambar maksimal 2MB',
+
+        //     'provinsi_id.required' => 'Provinsi wajib dipilih',
+        //     'kota_id.required' => 'Kota wajib dipilih',
+        //     'kecamatan_id.required' => 'Kecamatan wajib dipilih',
+        //     'kelurahan_id.required' => 'Kelurahan wajib dipilih',
+        // ]);
 
         try {
             $admin = Admin::findOrFail($id);
@@ -185,6 +223,10 @@ class AdminController extends Controller
                 'no_telp' => $request->no_telp,
                 'alamat' => $request->alamat,
                 'foto' => $admin->foto, // foto baru atau tetap lama
+                'province_id' => $request->province_id,
+                'regency_id' => $request->regency_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
             ]);
 
             // Update juga data user terkait
@@ -204,14 +246,14 @@ class AdminController extends Controller
                 'message' => 'Data Berhasil Diperbarui'
             ]);
         } catch (\Exception $e) {
-            \Log::error('Gagal mengupdate Admin', [
+            Log::error('Gagal Perbarui Admin', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
 
             return redirect()->back()->withInput()->with([
                 'status' => 'error',
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
             ]);
         }
     }
@@ -223,10 +265,62 @@ class AdminController extends Controller
     {
         $admin = Admin::findOrFail($id);
         $admin->delete();
-        // return redirect()->route('admin.master-prodi.index')->with('success', 'Prodi berhasil dihapus.');
         return redirect()->route('admin.master-admin.index')->with([
             'status' => 'success',
             'message' => 'Data Berhasil Dihapus'
         ]);
     }
+
+    public function validateField(Request $request)
+    {
+        $id = $request->input('id'); // ambil id dari form (edit mode)
+        $rules = (new StoreMasterAdmin())->rules($id);
+        $messages = (new StoreMasterAdmin())->messages();
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        // $rules = [
+        //     'nama' => 'required|max:100',
+        //     'email' => 'required|email|max:100|unique:admins,email',
+        //     // tambahkan field lain sesuai kebutuhan
+        // ];
+
+        $validator = Validator::make([$field => $value], [
+            $field => $rules[$field] ?? '',
+        ],$messages);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first($field)], 422);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+// public function validateField(Request $request)
+// {
+//     // Ambil rules dan messages dari FormRequest
+//     $rules = (new StoreMasterRequest())->rules();
+//     $messages = (new StoreMasterRequest())->messages();
+
+//     // Validasi hanya field yang dikirim
+//     $inputKey = array_keys($request->all())[0];
+
+//     $validator = Validator::make($request->only($inputKey), [
+//         $inputKey => $rules[$inputKey] ?? '',
+//     ], $messages);
+
+//     // if ($validator->fails()) {
+//     //     return response()->json([
+//     //         'success' => false,
+//     //         'message' => $validator->errors()->first($inputKey),
+//     //     ]);
+//     // }
+
+//     if ($validator->fails()) {
+//         throw new ValidationException($validator);
+//     }
+
+//     return response()->json(['success' => true]);
+// }
+
 }

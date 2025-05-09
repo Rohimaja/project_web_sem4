@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('dosens', function (Blueprint $table) {
-            $table->unsignedBigInteger('provinsi_id')->nullable();
-            $table->unsignedBigInteger('kota_id')->nullable();
-            $table->unsignedBigInteger('kecamatan_id')->nullable();
-            $table->unsignedBigInteger('kelurahan_id')->nullable();
+            $table->foreignId('province_id')->constrained('provinces');
+            $table->foreignId('regency_id')->constrained('regencies');
+            $table->foreignId('district_id')->constrained('districts');
+            $table->foreignId('village_id')->constrained('villages');
         });
     }
 

@@ -8,27 +8,28 @@
             @csrf
             @if (isset($prodi))
                 @method('PUT')
+                <input type="hidden" id="edit_id" value="{{ $prodi->id }}">
             @endif
 
-                <h1 class="font-bold text-gray-800 text-2xl mb-2 text-center xl:text-left">Informasi Umum</h1>
-                <hr class="my-2 text-gray-600 mb-6">
+            <h1 class="font-bold text-gray-800 text-2xl mb-2 text-center xl:text-left">Informasi Umum</h1>
+            <hr class="my-2 text-gray-600 mb-6">
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Kode Program Studi:</label>
-                        <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" placeholder="Masukkan nama lengkap" name="kode_prodi" id="kode_prodi" value="{{old('kode_prodi', $prodi->kode_prodi ?? '')}}">
-                        @error('kode_prodi')
-                            <span class="text-red-600 text-sm">{{ $message }}</span>
-                        @enderror
+                        <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" placeholder="Masukkan nama lengkap" name="kode_prodi" id="kode_prodi" value="{{old('kode_prodi', $prodi->kode_prodi ?? '')}}" required data-validate="prodi" >
+                        <span class="text-red-600 text-sm" id="kode_prodi_error">
+                            @error('kode_prodi'){{ $message }}@enderror
+                        </span>
                     </div>
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Jenjang:</lab>
-                        <select type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-700 rounded-sm" name="jenjang" id="jenjang">
-                        <option value="" hidden selected>Pilih Jenjang</option>
-                        <option value="S1" {{ old('jenjang', $prodi->jenjang ?? '') == 'S1' ? 'selected' : '' }}>S1</option>
-                        <option value="S2" {{ old('jenjang', $prodi->jenjang ?? '') == 'S2' ? 'selected' : '' }}>S2</option>
-                        <option value="D3" {{ old('jenjang', $prodi->jenjang ?? '') == 'D3' ? 'selected' : '' }}>D3</option>
-                        <option value="D4" {{ old('jenjang', $prodi->jenjang ?? '') == 'D4' ? 'selected' : '' }}>D4</option>
+                        <select type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-700 rounded-sm" name="jenjang" id="jenjang" required>
+                            <option value="" hidden selected>Pilih Jenjang</option>
+                            <option value="S1" {{ old('jenjang', $prodi->jenjang ?? '') == 'S1' ? 'selected' : '' }}>S1</option>
+                            <option value="S2" {{ old('jenjang', $prodi->jenjang ?? '') == 'S2' ? 'selected' : '' }}>S2</option>
+                            <option value="D3" {{ old('jenjang', $prodi->jenjang ?? '') == 'D3' ? 'selected' : '' }}>D3</option>
+                            <option value="D4" {{ old('jenjang', $prodi->jenjang ?? '') == 'D4' ? 'selected' : '' }}>D4</option>
                         </select>
                     </div>
                 </div>
@@ -36,10 +37,10 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Nama Program Studi:</lab>
-                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-700 rounded-sm" name="nama_prodi" id="nama_prodi" value="{{old('nama_prodi', $prodi->nama_prodi ?? '')}}" placeholder="Masukkan Alamat Lengkap">
-                        @error('nama_prodi')
-                                <span class="text-red-600 text-sm">{{ $message }}</span>
-                        @enderror
+                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-700 rounded-sm" name="nama_prodi" id="nama_prodi" value="{{old('nama_prodi', $prodi->nama_prodi ?? '')}}" required data-validate="prodi" >
+                        <span class="text-red-600 text-sm" id="nama_prodi_error">
+                            @error('nama_prodi'){{ $message }}@enderror
+                        </span>
                     </div>
                     <div class="flex flex-col w-full mb-4 md:w-1/2"></div>
                 </div>
