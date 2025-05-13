@@ -18,10 +18,10 @@
       <div x-show="open" x-cloak x-transition.top.duration.300ms class="absolute top-16 right-15 p-2 rounded-md bg-white shadow-xl text-gray-800 font-semibold">
         <ul class="">
           <li>
-            <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/admin/profil"><i class="bi bi-person-circle mr-3"></i>Profile</a>
+            <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/dosen/profil"><i class="bi bi-person-circle mr-3"></i>Profile</a>
           </li>
           <li>
-            <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/admin/ubahPw"><i class="bi bi-gear-fill mr-3"></i>Ubah Password</a>
+            <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/dosen/ubahPw"><i class="bi bi-gear-fill mr-3"></i>Ubah Password</a>
           </li>
           <li>
             <a class="p-3 hover:bg-gray-200 active:bg-gray-300 rounded-sm w-full block" href="/login"><i class="bi bi-box-arrow-left mr-3"></i>Log Out</a>

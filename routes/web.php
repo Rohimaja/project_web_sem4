@@ -30,18 +30,58 @@ Route::post('/login', function (Request $request) {
 // Dosen
 
 Route::get('/dosen/dashboard', function () {
-    return view('dosen.dashboard', ['title' => 'Dahboard Dosen', 'rute' => 'admin -> dashboard']);
+    return view('dosen.dashboard', ['title' => 'Dashboard Dosen']);
 });
+
+Route::get('/dosen/presensi', function () {
+    return view('dosen.presensi', ['title' => 'Presensi Dosen']);
+});
+
+Route::get('/dosen/form-presensi', function () {
+    return view('dosen.form-presensi', ['title' => 'Form Presensi']);
+});
+
+Route::get('/dosen/info-presensi', function () {
+    return view('dosen.info-presensi', ['title' => 'Informasi Presensi']);
+});
+
+Route::get('/dosen/jadwal', function () {
+    return view('dosen.jadwal', ['title' => 'Dahboard Dosen']);
+});
+
+Route::get('/dosen/laporan-dosen', function () {
+    return view('dosen.laporan_absensi/lap_dosen', ['title' => 'Laporan Dosen']);
+});
+
+Route::get('/dosen/laporan-mahasiswa', function () {
+    return view('dosen.laporan_absensi/lap_mahasiswa', ['title' => 'Laporan Mahasiswa']);
+});
+
+Route::get('/dosen/profil', function () {
+    return view('dosen.profil', ['title' => 'Profil Admin']);
+});
+
+Route::get('/dosen/ubahPw', function () {
+    return view('dosen.ubahPw', ['title' => 'Pengaturan Admin']);
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 // Admin
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard', ['title' => 'Dahboard Admin', 'rute' => 'admin -> dashboard']);
-});
-
-Route::get('/admin/jadwal', function () {
-    return view('admin.jadwal', ['title' => 'Jadwal', 'rute' => 'admin -> jadwal']);
 });
 
 Route::get('/admin/laporan-dosen', function () {
@@ -93,6 +133,7 @@ Route::get('/admin/masterdata/prodi', function () {
     return view('admin.master_data/prodi', ['title' => 'Master Data Program Studi', ]);
 });
 
+
 Route::get('/admin/masterdata/form-prodi', function () {
     return view('admin.master_data/form-prodi', ['title' => 'Tambah Data Prodi',]);
 });
@@ -111,6 +152,14 @@ Route::get('/admin/masterdata/matkul', function () {
 
 Route::get('/admin/masterdata/form-matkul', function () {
     return view('admin.master_data/form-matkul', ['title' => 'Tambah Mata Kuliah',]);
+});
+
+Route::get('/admin/masterdata/jadwal', function () {
+    return view('admin.master_data/jadwal', ['title' => 'Jadwal', 'rute' => 'admin -> jadwal']);
+});
+
+Route::get('/admin/masterdata/form-jadwal', function () {
+    return view('admin.master_data/form-jadwal', ['title' => 'Tambah Jadwal',]);
 });
 
 Route::get('/admin/profil', function () {

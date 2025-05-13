@@ -31,7 +31,7 @@
     <x-sidebarDosen></x-sidebarDosen>
 
     <div class="xl:ml-64 ease-in-out duration-200 flex flex-col flex-1">
-        <x-navbar></x-navbar>
+        <x-navbarDosen></x-navbarDosen>
         <div
           x-bind:class="isSideMenuOpen ? 'opacity-70 pointer-events-auto' : 'opacity-0 pointer-events-none'"
           class="fixed inset-0 z-20 bg-gray-600 transition-opacity duration-300"

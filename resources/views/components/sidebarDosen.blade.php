@@ -18,16 +18,15 @@
     <div class="font-[sans-serif]">
       <ul class="space-y-2">
         <li>
-          <a href="/admin/dashboard">
+          <a href="/dosen/dashboard">
             <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-house-door-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Dashboard</span>
             </div>
           </a>
         </li>
-        <hr class="my-2 text-gray-300">
         <li>
-          <a href="/admin/presensi">
+          <a href="/dosen/presensi">
             <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-check-square-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Presensi</span>
@@ -35,7 +34,8 @@
           </a>
         </li>
         <li>
-          <a href="/admin/jadwal">
+        <hr class="my-2 text-gray-300">
+          <a href="/dosen/jadwal">
             <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
               <i class="bi bi-calendar-event-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
@@ -55,10 +55,10 @@
           </div>
 
           <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
-            <a href="/admin/laporan-dosen" class="mt-2 w-4/5">
+            <a href="/dosen/laporan-dosen" class="mt-2 w-4/5">
               <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Dosen</h1>
             </a>
-            <a href="/admin/laporan-mahasiswa" class="mt-2 w-4/5">
+            <a href="/dosen/laporan-mahasiswa" class="mt-2 w-4/5">
               <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Mahasiswa</h1>
             </a>
           </div>

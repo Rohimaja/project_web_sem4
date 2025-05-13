@@ -1,95 +1,116 @@
 <x-layoutDosen>
   <div class="">
     <h1 class="font-bold text-gray-800 text-xl sm:text-2xl">{{ $title }}</h1>
-    <p class="mt-1">Selamat Datang, <b>Syalia Ayu!!!</b></p>
-    
-    <!-- Card Statistik -->
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mb-5">
-      <!-- Total Mahasiswa -->
-      <div class="w-[310px] md:w-full group bg-gradient-to-br from-cyan-100 to-cyan-300 rounded-xl shadow-md p-4 border-b-4 border-blue-800 
-                  transition-all duration-300 ease-in-out hover:scale-95 hover:border-b-0 cursor-pointer">
-        <h2 class="text-base font-semibold text-gray-700">Total Mahasiswa</h2>
-        <div class="mt-3 flex items-center justify-between">
-          <i class="bi bi-person-circle text-4xl text-blue-800"></i>
-          <h1 class="text-2xl sm:text-3xl font-bold text-blue-800">2201</h1>
-        </div>
-      </div>
+    <p class="mb-4">Hari ini: <span class="text-md text-gray-800">
+      {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
+    </span>
+    </p>
 
-      <!-- Total Dosen -->
-      <div class="w-[310px] md:w-full group bg-gradient-to-br from-purple-100 to-purple-300 rounded-xl shadow-md p-4 border-b-4 border-purple-800 
-                  transition-all duration-300 ease-in-out hover:scale-95 hover:border-b-0 cursor-pointer">
-        <h2 class="text-base font-semibold text-gray-700">Total Dosen</h2>
-        <div class="mt-3 flex items-center justify-between">
-          <i class="bi bi-person-workspace text-4xl text-purple-800"></i>
-          <h1 class="text-2xl sm:text-3xl font-bold text-purple-800">112</h1>
-        </div>
-      </div>
-
-      <!-- Total Mata Kuliah -->
-      <div class="w-[310px] md:w-full group bg-gradient-to-br from-green-100 to-green-300 rounded-xl shadow-md p-4 border-b-4 border-green-800 
-                  transition-all duration-300 ease-in-out hover:scale-95 hover:border-b-0 cursor-pointer">
-        <h2 class="text-base font-semibold text-gray-700">Total Mata Kuliah</h2>
-        <div class="mt-3 flex items-center justify-between">
-          <i class="bi bi-journal-bookmark-fill text-4xl text-green-800"></i>
-          <h1 class="text-2xl sm:text-3xl font-bold text-green-800">170</h1>
-        </div>
-      </div>
-
-      <!-- Total Prodi -->
-      <div class="w-[310px] md:w-full group bg-gradient-to-br from-red-100 to-red-300 rounded-xl shadow-md p-4 border-b-4 border-red-800 
-                  transition-all duration-300 ease-in-out hover:scale-95 hover:border-b-0 cursor-pointer">
-        <h2 class="text-base font-semibold text-gray-700">Total Program Studi</h2>
-        <div class="mt-3 flex items-center justify-between">
-          <i class="bi bi-book-half text-4xl text-red-800"></i>
-          <h1 class="text-2xl sm:text-3xl font-bold text-red-800">2201</h1>
-        </div>
-      </div>
-    </div>
-
-    <!-- Grafik Absensi -->
     <div class="flex flex-col md:flex-row gap-5 mb-5">
-      <!-- Grafik Bulanan -->
-      <div class="w-[310px] md:w-3/4 bg-white rounded-sm shadow-xl">
-        <div class="p-4 rounded-t-xl border-b-2 border-gray-500 flex justify-between items-center">
-          <h1 class="text-gray-500 text-lg font-semibold">Absensi Mahasiswa Perbulan</h1>
-        </div>
-        <div class="p-6 overflow-x-auto">
-          <div id="chart" class="w-full h-64 min-w-[300px]"></div>
+      <!-- Greeting -->
+      <div class="p-6 bg-gradient-to-r from-sky-600 to-cyan-300 text-white w-full md:w-1/2 rounded-xl shadow-lg flex items-center gap-4">
+        <!-- Gambar -->
+        <img src="/images/img-halo.jpg" alt="Halo" class="w-20 h-20 rounded-full object-cover shadow-md">
+      
+        <!-- Teks Sapaan -->
+        <div>
+          <h2 class="text-xl md:text-2xl font-semibold leading-relaxed">
+            Selamat datang, Bapak/Ibu <span class="font-bold">Syalia Ayu Ambarwita</span> 👋
+          </h2>
+          <p class="mt-2">Semoga harimu menyenangkan dan produktif!</p>
         </div>
       </div>
-
-      <!-- Grafik Tahunan -->
-      <div class="w-[310px] md:w-1/4 bg-white rounded-sm shadow-xl">
-        <div class="p-4 rounded-t-xl border-b-2 border-gray-500 flex justify-between items-center">
-          <h1 class="text-gray-500 text-lg font-semibold">Absensi Mahasiswa Pertahun</h1>
-        </div>
-        <div class="p-6 overflow-x-auto">
-          <div id="chart-doghout" class="w-full h-64 min-w-[300px]"></div>
+      
+    
+      <!-- Info box -->
+      <div class="p-6 bg-white w-full md:w-1/2 rounded-xl shadow-lg border border-gray-200">
+        <h2 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Informasi Hari Ini
+        </h2>
+    
+        <div class="text-sm text-gray-700 space-y-3">
+          <p>📅 <span class="font-medium">Tanggal:</span>
+            <span class="text-gray-900">
+              {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
+            </span>
+          </p>
+          <p>🕘 <span class="font-medium">Jadwal Mengajar Hari Ini:</span> 2 kelas</p>
+          <p>✅ <span class="font-medium">Presensi:</span> 1 dari 2 kelas sudah dipresensi</p>
+          <p>📢 <span class="font-medium">Pengumuman:</span> Sistem presensi ditutup pukul 23:59 WIB.</p>
         </div>
       </div>
     </div>
-
-    <!-- Tabel & Grafik Absensi Dosen -->
+    
+    
     <div class="flex flex-col md:flex-row gap-5">
       <!-- Tabel Dosen -->
-      <div class="w-[310px] md:w-1/2 bg-white rounded-sm shadow-xl">
-        <div class="p-4 rounded-t-xl border-b-2 border-gray-500 flex justify-between items-center">
-          <h1 class="text-gray-500 text-lg font-semibold">Daftar Dosen Mengajar</h1>
+      <div class="w-[310px] md:w-3/4 bg-white rounded-sm shadow-xl">
+        <div class="p-4 rounded-t-xl border-b-2 border-gray-300 flex justify-between items-center">
+          <h1 class="text-gray-500 text-lg font-semibold">Jadwal Mengajar Hari Ini</h1>
           <span class="text-sm text-gray-400">
             {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
           </span>
         </div>
-        <div class="overflow-x-auto px-4 pb-4 mt-5">
-        </div>
+        <div class="overflow-auto h-[300px] px-4 pb-4 mt-5">
+          <div class="overflow-x-auto min-w-[600px] w-full">
+            <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
+              <thead class="bg-gray-300 text-gray-800 sticky top-0 z-10">
+                <tr>
+                  <th class="px-4 py-3 border-b text-center border-gray-300 rounded-tl-lg">Jam</th>
+                  <th class="px-4 py-3 border-b text-center border-gray-300">Mata Kuliah</th>
+                  <th class="px-4 py-3 border-b text-center border-gray-300">Semester</th>
+                  <th class="px-4 py-3 border-b text-center border-gray-300 rounded-tr-lg">Ruangan</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
+                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
+                  <td class="px-4 py-3 border-t border-gray-200">4</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
+                </tr>
+                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
+                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
+                  <td class="px-4 py-3 border-t border-gray-200">4</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
+                </tr>
+                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
+                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
+                  <td class="px-4 py-3 border-t border-gray-200">4</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
+                </tr>
+                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
+                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
+                  <td class="px-4 py-3 border-t border-gray-200">4</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
+                </tr>
+                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
+                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
+                  <td class="px-4 py-3 border-t border-gray-200">4</td>
+                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>        
       </div>
 
-      <!-- Grafik Absensi Dosen -->
       <div class="w-[310px] md:w-1/2 bg-white rounded-sm shadow-xl">
-        <div class="p-4 rounded-t-xl border-b-2 border-gray-500 flex justify-between items-center">
-          <h1 class="text-gray-500 text-lg font-semibold">Absensi Dosen Perbulan</h1>
+        <div class="p-4 rounded-t-xl border-b-2 border-gray-300 flex justify-between items-center">
+          <h1 class="text-gray-500 text-lg font-semibold">Ringkasan Presensi Dosen</h1>
         </div>
-        <div class="p-6 overflow-x-auto">
-          <div id="chart-dosen" class="w-full h-64 min-w-[300px]"></div>
+        <div class="p-4 overflow-x-auto">
+          <p class="text-gray-500 text-sm">Statistik presensi dosen selama 1 semester:</p>
+          <div id="chart-doghout-dosen" class="w-full h-64 min-w-[300px]"></div>
         </div>
       </div>
     </div>
