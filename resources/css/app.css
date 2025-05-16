@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.select2-container .select2-selection--single {
+    @apply border-2 border-gray-700 mt-1 rounded-sm p-2 py-[7px] text-sm font-normal text-gray-800 w-full;
+    height: auto !important;
+}
+
+/* .select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  display: none !important;
+} */
+
+.select2-selection__arrow b {
+    display: none;
+}
+
+.select2-container--default .select2-selection--single::after {
+    content: "▾"; /* atau ganti dengan ↓ */
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: #6b7280; /* gray-500 */
+    pointer-events: none;
+}
+
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
+    color: #1f2937; /* text-gray-800 */
+    line-height: 1.5rem;
+    border: grey;
+}
+
+/* .select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 100%;
+  right: 4rem;
+  top: 50%;
+  transform: translateY(-50%);
+} */

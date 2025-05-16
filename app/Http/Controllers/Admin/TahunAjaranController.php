@@ -1,0 +1,191 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\TahunAjaran;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\Admin\StoreMasterTahun;
+use Illuminate\Support\Facades\Validator;
+
+
+class TahunAjaranController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $title = 'Data Tahun Ajaran';
+        $tahun = TahunAjaran::all();
+        return view('admin.master_data.tahunAjaran',compact('title','tahun'));
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.master_data.form-tahunAjaran',['title' =>'Tambah Data']);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreMasterTahun $request)
+    {
+        $request->validate([
+            'tahun_awal' => 'required|max:4|regex:/^[0-9]+$/',
+            'tahun_akhir' => 'required|max:4|regex:/^[0-9]+$/',
+            'keterangan' => 'required',
+            // 'status' => 'required|max:40|unique:prodis,nama_prodi',
+        ], [
+            'tahun_awal.required' => 'Tahun Awal tidak boleh kosong.',
+            'tahun_awal.max' => 'Tahun Awal maksimal 4 angka.',
+            'tahun_awal.regex' => 'Tahun Awal hanya boleh berupa angka.',
+
+            'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong.',
+            'tahun_akhir.max' => 'Tahun Akhir maksimal 4 angka.',
+            'tahun_akhir.regex' => 'Tahun Akhir hanya boleh berupa angka.',
+
+            'keterangan.required' => 'Pilih Keterangan terlebih dahulu',
+        ]);
+
+        if ($request->tahun_awal >= $request->tahun_akhir) {
+            return redirect()->back()->withInput()->withErrors([
+                'tahun_awal' => 'Tahun Awal harus lebih kecil dari Tahun Akhir.',
+            ]);
+        }
+
+        try {
+            TahunAjaran::create($request->only(['tahun_awal', 'tahun_akhir', 'keterangan']));
+
+            return redirect()->route('admin.master-tahun.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Di Tambahkan'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal tambah Tahun Ajaran', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $title = 'Edit Tahun Ajaran';
+        $tahun = TahunAjaran::findOrFail($id);
+        return view('admin.master_data.form-tahunAjaran', compact('title', 'tahun'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreMasterTahun $request, $id)
+    {
+        $request->merge([
+            'tahun_awal' => trim($request->tahun_awal),
+            'tahun_akhir' => trim($request->tahun_akhir),
+        ]);
+
+        // $request->validate([
+        //     'tahun_awal' => 'required|max:4|regex:/^[0-9]+$/',
+        //     'tahun_akhir' => 'required|max:4|regex:/^[0-9]+$/',
+        //     'keterangan' => 'required',
+        // ], [
+        //     'tahun_awal.required' => 'Tahun Awal tidak boleh kosong.',
+        //     'tahun_awal.max' => 'Tahun Awal maksimal 4 angka.',
+        //     'tahun_awal.regex' => 'Tahun Awal hanya boleh berupa angka.',
+
+        //     'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong.',
+        //     'tahun_akhir.max' => 'Tahun Akhir maksimal 4 angka.',
+        //     'tahun_akhir.regex' => 'Tahun Akhir hanya boleh berupa angka.',
+
+        //     'keterangan.required' => 'Pilih Keterangan terlebih dahulu',
+        // ]);
+
+        if ($request->tahun_awal >= $request->tahun_akhir) {
+            return redirect()->back()->withInput()->withErrors([
+                'tahun_awal' => 'Tahun Awal harus lebih kecil dari Tahun Akhir.',
+            ]);
+        }
+
+        try {
+            if ($request->status == 1) {
+                TahunAjaran::where('status', 1)->update(['status' => 0]);
+            }
+
+            // Update atau create data tahun ajaran
+            $tahun = TahunAjaran::findOrFail($id);
+            $tahun->update($request->only(['tahun_awal', 'tahun_akhir', 'keterangan', 'status']));
+
+            return redirect()->route('admin.master-tahun.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Di Perbarui'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Perbarui Tahun Ajaran', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $tahun = TahunAjaran::findOrFail($id);
+        $tahun->delete();
+        // return redirect()->route('admin.master-prodi.index')->with('success', 'Prodi berhasil dihapus.');
+        return redirect()->route('admin.master-tahun.index')->with([
+            'status' => 'success',
+            'message' => 'Data Berhasil Dihapus'
+        ]);
+    }
+
+    public function validateField(Request $request)
+    {
+        $rules = (new StoreMasterTahun())->rules();
+        $messages = (new StoreMasterTahun())->messages();
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        $validator = Validator::make([$field => $value], [
+            $field => $rules[$field] ?? '',
+        ],$messages);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first($field)], 422);
+        }
+
+        return response()->json(['success' => true]);
+    }
+}

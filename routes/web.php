@@ -1,0 +1,60 @@
+<?php
+
+use App\Http\Controllers\Admin\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route::get('/dashboard', function () {
+//     return view('admin.dashboard',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']);
+// })->middleware(['auth', 'role:admin'])->name('admin.dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', fn () => redirect()->route('admin.dashboard'));
+
+
+Route::get('/dosen/dashboard', function () {
+    return view('dosen.dashboard',['title'=> 'Dashboard', 'rute'=> 'dosen -> Dashboard']);
+})->middleware(['auth', 'role:dosen'])->name('dosen.dashboard');
+
+Route::get('/mahasiswa/dashboard', function () {
+    return view('mahasiswa.dashboard', ['title'=>'Dashboard', 'rute' =>'mahasiswa -> Dashboard']);
+})->middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.dashboard');
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+// routes/web.php
+// Route::get('/api-wilayah/{jenis}/{id?}', function ($jenis, $id = null) {
+//     // $base = 'https://wilayah.id/api/';
+//     $base = 'https://emsifa.github.io/api-wilayah-indonesia/api/';
+//     $url = match ($jenis) {
+//         'provinces' => $base . 'provinces.json',
+//         'regencies' => $base . "regencies/{$id}.json",
+//         'districts' => $base . "districts/{$id}.json",
+//         'villages' => $base . "villages/{$id}.json",
+//         default => abort(404),
+//     };
+
+//     $response = Http::get($url);
+
+//     return response()->json($response->json());
+// });
+
+
+Route::get('/wilayah/{type}/{id?}', function ($type, $id = null) {
+    return match ($type) {
+        'provinces' => \App\Models\Province::select('id', 'name')->get(),
+        'regencies' => \App\Models\Regency::where('province_id', $id)->select('id', 'name')->get(),
+        'districts' => \App\Models\District::where('regency_id', $id)->select('id', 'name')->get(),
+        'villages' => \App\Models\Village::where('district_id', $id)->select('id', 'name')->get(),
+        default => abort(404),
+    };
+});
+
+require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';
