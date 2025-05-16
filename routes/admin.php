@@ -1,24 +1,48 @@
 <?php
 
+<<<<<<< HEAD
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DosenController;
+=======
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DosenController;
+use App\Http\Controllers\Admin\KalenderAkademikController;
+use App\Http\Controllers\Admin\MahasiswaController;
+use App\Http\Controllers\Admin\MatkulController;
+>>>>>>> 8934609 (fixed responsive & view  admin)
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProdiController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\Admin\TahunAjaranController;
+<<<<<<< HEAD
 use App\Http\Controllers\Admin\MatkulController;
 use App\Http\Controllers\Auth\PasswordController;
 
+=======
+use App\Http\Controllers\Auth\PasswordController;
+
+
+
+>>>>>>> 8934609 (fixed responsive & view  admin)
 // Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 //     Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
 //     Route::resource('mahasiswa', MahasiswaController::class);
 // });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+<<<<<<< HEAD
+=======
+    Route::resource('kalender-akademik', KalenderAkademikController::class)
+    ->except(['show']);
+    Route::get('kalender-akademik/view', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
+    Route::post('/validate-field/kalender-akademik', [KalenderAkademikController::class, 'validateField'])->name('admin.validate.field.kalender');
+
+>>>>>>> 8934609 (fixed responsive & view  admin)
     // Route::get('/dashboard', fn () => view('admin.dashboard',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']))->name('dashboard');
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::resource('master-admin', AdminController::class);
@@ -30,7 +54,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('master-mahasiswa', MahasiswaController::class);
     Route::post('/validate-field/mahasiswa', [MahasiswaController::class, 'validateField'])->name('admin.validate.field.mahasiswa');
+<<<<<<< HEAD
     Route::get('/getFilterMahasiswa', [MahasiswaController::class, 'getFilterMahasiswa']);
+=======
+>>>>>>> 8934609 (fixed responsive & view  admin)
 
     Route::resource('master-tahun', TahunAjaranController::class);
     Route::post('/validate-field/tahun', [TahunAjaranController::class, 'validateField'])->name('admin.validate.field.tahun');
@@ -45,6 +72,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('master-ruangan', RuanganController::class);
     Route::post('/validate-field/ruangan', [RuanganController::class, 'validateField'])->name('admin.validate.field.ruangan');
 
+<<<<<<< HEAD
     Route::resource('master-jadwal', JadwalController::class);
 
     Route::resource('presensi', PresensiController::class);
@@ -57,6 +85,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/validate-field/presensi', [PresensiController::class, 'validateField'])->name('admin.validate.field.presensi');
 
     // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');
+=======
+
+    Route::resource('presensi', PresensiController::class);
+    Route::get('/presensi/info-presensi',function(){
+        return view('admin.info-presensi',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']);
+    })->name('info-presensi');
+>>>>>>> 8934609 (fixed responsive & view  admin)
 
     Route::get('/laporan-mahasiswa', function () {
         return view('admin.laporan_absensi.lap_mahasiswa', ['title' => 'Laporan Mahasiswa']);

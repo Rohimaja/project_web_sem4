@@ -43,8 +43,13 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
                 <table id="data-tahun" class="text-sm text-left w-full pt-2">
+=======
+            <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
+                <table id="myTable" class="text-sm text-left w-full pt-2">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                     <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                         <tr>
                             <th class="border border-gray-300 px-4 py-2">No</th>

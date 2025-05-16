@@ -170,7 +170,11 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <div class="mt-4 flex gap-4">
+=======
+      <div class="my-4 flex gap-4">
+>>>>>>> 8934609 (fixed responsive & view  admin)
         <a href="">
           <button class="flex items-center px-4 py-2.5 text-white bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-sm font-semibold cursor-pointer">
             <i class="bi bi-file-earmark-excel mr-2"></i>
@@ -185,7 +189,11 @@
       </div>
 
       <div x-data="{ hovering: false }" class="overflow-x-auto w-60 sm:w-150 md:w-240 xl:min-w-full pb-3">
+<<<<<<< HEAD
         <table id="tbl_lap" class="text-sm text-left w-full pt-4">
+=======
+        <table id="myTable" class="text-sm text-left w-full pt-4">
+>>>>>>> 8934609 (fixed responsive & view  admin)
             <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                 <tr>
                     <th @mouseenter="hovering = true" @mouseleave="hovering = false"

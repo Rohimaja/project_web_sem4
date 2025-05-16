@@ -18,8 +18,18 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
+<<<<<<< HEAD
         "bootstrap-icons": "^1.11.3",
         "jquery": "^3.7.1",
         "jquery-validation": "^1.21.0"
+=======
+        "@fullcalendar/core": "^6.1.17",
+        "@fullcalendar/daygrid": "^6.1.17",
+        "@fullcalendar/interaction": "^6.1.17",
+        "bootstrap-icons": "^1.11.3",
+        "jquery": "^3.7.1",
+        "jquery-validation": "^1.21.0",
+        "tom-select": "^2.4.3"
+>>>>>>> 8934609 (fixed responsive & view  admin)
     }
 }

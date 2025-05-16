@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // // alamat.js
 // document.addEventListener("DOMContentLoaded", function () {
 //     const provinsiSelect = document.getElementById("provinsi");
@@ -389,6 +390,8 @@
 //     });
 // });
 
+=======
+>>>>>>> 8934609 (fixed responsive & view  admin)
 document.addEventListener("DOMContentLoaded", async function () {
     const provinsi = document.getElementById("provinsi");
     const kota = document.getElementById("kota");
@@ -477,6 +480,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 // $("#provinsi").select2({
+<<<<<<< HEAD
 //     // placeholder: "Cari Program Studi",
 //     width: "100%", // agar lebar mengikuti class seperti w-full
 //     // allowClear: true,
@@ -498,4 +502,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 //     // placeholder: "Cari Program Studi",
 //     width: "100%", // agar lebar mengikuti class seperti w-full
 //     // allowClear: true,
+=======
+//     placeholder: "Cari Provinsi",
+//     width: "100%", // agar lebar mengikuti class seperti w-full
+//     allowClear: true,
+// });
+
+// $("#kota").select2({
+//     placeholder: "Cari Kota",
+//     width: "100%", // agar lebar mengikuti class seperti w-full
+//     allowClear: true,
+>>>>>>> 8934609 (fixed responsive & view  admin)
 // });

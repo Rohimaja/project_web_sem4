@@ -15,6 +15,7 @@
                 <h1 class="font-bold text-gray-800 text-2xl mb-2 text-center xl:text-left">Informasi Umum</h1>
                 <hr class="my-2 text-gray-600 mb-6">
 
+<<<<<<< HEAD
                 <div class="flex flex-col items-center mb-6 gap-4 md:flex-row">
                     <div  class="w-25 h-25 bg-red-200 rounded-full overflow-hidden cursor-pointer">
                         <img src="/images/profil-kosong.png" class="w-40 h-40 object-cover" alt="">
@@ -26,14 +27,47 @@
                         <div>
                             <label for="foto" class="px-3 py-2 mr-2 bg-blue-100 hover:bg-blue-200 active:bg-blue-300 text-blue-400 rounded-md cursor-pointer">Unggah Foto</label>
                             <button class="px-3 py-1.5 bg-red-100 hover:bg-red-200 active:bg-red-300 text-red-400  rounded-md cursor-pointer">Hapus Foto</button>
+=======
+                <div class="flex flex-col md:flex-row items-center gap-6 mb-6">
+                    <!-- Preview Foto -->
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gray-300 shadow-sm">
+                        <img 
+                            src="{{ isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : asset('images/profil-kosong.png') }}" 
+                            id="previewImage" 
+                            class="w-full h-full object-cover" 
+                            alt="Preview Foto"
+                        >
+                    </div>
+                
+                    <!-- Info & Tombol -->
+                    <div class="flex flex-col gap-3 text-center md:text-left md:ml-4">
+                        <p class="text-gray-600 text-sm">Format file yang didukung: <span class="font-medium">JPEG, JPG, PNG</span></p>
+                
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                            <input type="file" name="foto" id="foto" accept="image/*" class="hidden">
+                            
+                            <label for="foto" class="px-2 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow cursor-pointer transition">
+                                Unggah Foto
+                            </label>
+                            
+                            <button type="button" id="resetFoto" class="px-2 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md shadow transition">
+                                Hapus Foto
+                            </button>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
                         <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" name="nama" id="nama" value="{{old('nama', $dosen->nama ?? '')}}" required data-validate="dosen" placeholder="Masukkan nama lengkap">
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
+                        <input type="text" class="p-2 border-2 border-gray-400 rounded-sm" name="nama" id="nama" value="{{old('nama', $dosen->nama ?? '')}}" required data-validate="dosen" placeholder="Masukkan nama lengkap">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="nama_error">
                             @error('nama'){{ $message }}@enderror
                         </span>
@@ -41,7 +75,11 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">NIP:</label>
+<<<<<<< HEAD
                         <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" name="nip" id="nip" value="{{old('nip', $dosen->nip ?? '')}}" required data-validate="dosen" placeholder="Masukkan NIP">
+=======
+                        <input type="text" class="p-2 border-2 border-gray-400 rounded-sm" name="nip" id="nip" value="{{old('nip', $dosen->nip ?? '')}}" required data-validate="dosen" placeholder="Masukkan NIP">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="nip_error">
                             @error('nip'){{ $message }}@enderror
                         </span>
@@ -49,9 +87,15 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Jenis Kelamin:</lab>
                         <select class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" name="jenis_kelamin" id="jenis_kelamin" required >
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Jenis Kelamin:</lab>
+                        <select class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 rounded-sm" name="jenis_kelamin" id="jenis_kelamin" required >
+>>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih jenis kelamin</option>
                             <option value="Laki-laki" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                             <option value="Perempuan" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'Perempuan' ? 'selected' : ''}}>Perempuan</option>
@@ -63,7 +107,11 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Agama:</label>
+<<<<<<< HEAD
                         <select class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" name="agama" id="agama" required >
+=======
+                        <select class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 rounded-sm" name="agama" id="agama" required >
+>>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Agama</option>
                             <option value="Islam" {{old('agama', $dosen->agama ?? '') == 'Islam' ? 'selected' : ''}}>Islam</option>
                             <option value="Hindu" {{old('agama', $dosen->agama ?? '') == 'Hindu' ? 'selected' : ''}}>Hindu</option>
@@ -78,9 +126,15 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
                         <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" name="tempat_lahir" id="tempat_lahir" value="{{old('tempat_lahir', $dosen->tempat_lahir ?? '')}}" required data-validate="dosen" placeholder="Masukkan Tempat Lahir">
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
+                        <input type="text" class="p-2 border-2 border-gray-400 rounded-sm" name="tempat_lahir" id="tempat_lahir" value="{{old('tempat_lahir', $dosen->tempat_lahir ?? '')}}" required data-validate="dosen" placeholder="Masukkan Tempat Lahir">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="tempat_lahir_error">
                             @error('tempat_lahir'){{ $message }}@enderror
                         </span>
@@ -88,7 +142,11 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Tanggal Lahir:</label>
+<<<<<<< HEAD
                         <input type="date" class="p-2 border-2 border-gray-700 rounded-sm" name="tgl_lahir" id="tgl_lahir" value="{{old('tgl_lahir', $dosen->tgl_lahir ?? '')}}" required data-validate="dosen" placeholder="Masukkan tanggal lahir">
+=======
+                        <input type="date" class="p-2 border-2 border-gray-400 rounded-sm" name="tgl_lahir" id="tgl_lahir" value="{{old('tgl_lahir', $dosen->tgl_lahir ?? '')}}" required data-validate="dosen" placeholder="Masukkan tanggal lahir">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="tgl_lahir_error">
                             @error('tgl_lahir'){{ $message }}@enderror
                         </span>
@@ -96,9 +154,15 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Email:</label>
                         <input type="email" class="p-2 border-2 border-gray-700 rounded-sm" name="email" id="email" value="{{old('email', $dosen->email ?? '')}}" required data-validate="dosen" placeholder="Masukkan Email">
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Email:</label>
+                        <input type="email" class="p-2 border-2 border-gray-400 rounded-sm" name="email" id="email" value="{{old('email', $dosen->email ?? '')}}" required data-validate="dosen" placeholder="Masukkan Email">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="email_error">
                             @error('email'){{ $message }}@enderror
                         </span>
@@ -106,7 +170,11 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Nomor Telepon:</label>
+<<<<<<< HEAD
                         <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" name="no_telp" id="no_telp" value="{{old('no_telp', $dosen->no_telp ?? '')}}" required data-validate="dosen" placeholder="Masukkan no telp">
+=======
+                        <input type="text" class="p-2 border-2 border-gray-400 rounded-sm" name="no_telp" id="no_telp" value="{{old('no_telp', $dosen->no_telp ?? '')}}" required data-validate="dosen" placeholder="Masukkan no telp">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="no_telp_error">
                             @error('no_telp'){{ $message }}@enderror
                         </span>
@@ -114,9 +182,15 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Pilih Prodi:</label>
                         <select class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" name="prodi_id" id="prodi_id" required>
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Pilih Prodi:</label>
+                        <select class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 rounded-sm" name="prodi_id" id="prodi_id" required>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Prodi</option>
                             @foreach ($prodi as $p)
                                 <option value="{{ $p->id }}" @if (old('prodi_id', $dosen->prodi_id ?? '') == $p->id) selected @endif>
@@ -133,7 +207,11 @@
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Password:</label>
                         <input type="hidden" name="old_password" id="old_password" value="{{$dosen->password ?? ''}}">
+<<<<<<< HEAD
                         <input type="password" class="p-2 border-2 border-gray-700 rounded-sm" name="new_password" id="password" placeholder="Masukkan Password">
+=======
+                        <input type="password" class="p-2 border-2 border-gray-400 rounded-sm" name="new_password" id="password" placeholder="Masukkan Password">
+>>>>>>> 8934609 (fixed responsive & view  admin)
                     </div>
                     @endif
                 </div>
@@ -142,9 +220,15 @@
                 <hr class="my-2 text-gray-600 mb-6">
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Provinsi:</lab>
                         <select id="provinsi" name="province_id" data-selected="{{old('province_id',$dosen->province_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Provinsi:</lab>
+                        <select id="provinsi" name="province_id" data-selected="{{$dosen->province_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 rounded-sm" required>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Provinsi</option>
                         </select>
                         @error('province_id')
@@ -154,7 +238,11 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
+<<<<<<< HEAD
                         <select name="regency_id" id="kota" data-selected="{{old('regency_id',$dosen->regency_id ?? '')}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+=======
+                        <select name="regency_id" id="kota" data-selected="{{$dosen->regency_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 rounded-sm" required>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Kota / Kabupaten</option>
                         </select>
                         @error('regency_id')
@@ -164,9 +252,15 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Kecamatan:</lab>
                         <select id="kecamatan" name="district_id" data-selected="{{old('district_id',$dosen->district_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Kecamatan:</lab>
+                        <select id="kecamatan" name="district_id" data-selected="{{$dosen->district_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 rounded-sm" required>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Kecamatan</option>
                         </select>
                         @error('ditrict_id')
@@ -176,7 +270,11 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Kelurahan:</label>
+<<<<<<< HEAD
                         <select id="kelurahan" name="village_id" data-selected="{{old('village_id',$dosen->village_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+=======
+                        <select id="kelurahan" name="village_id" data-selected="{{$dosen->village_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 rounded-sm" required>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Kode pos</option>
                         </select>
                         @error('village_id')
@@ -186,9 +284,15 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
+<<<<<<< HEAD
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Alamat lengkap:</lab>
                         <textarea type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" name="alamat" id="alamat" placeholder="Masukkan Alamat Lengkap" required data-validate="dosen" >{{old('alamat', $dosen->alamat ?? '')}}</textarea>
+=======
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label for="" class="mb-1 font-semibold">Alamat lengkap:</lab>
+                        <textarea type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 rounded-sm" name="alamat" id="alamat" placeholder="Masukkan Alamat Lengkap" required data-validate="dosen" >{{old('alamat', $dosen->alamat ?? '')}}</textarea>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="alamat_error">
                             @error('alamat'){{ $message }}@enderror
                         </span>
@@ -196,11 +300,19 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2"></div>
                 </div>
+<<<<<<< HEAD
                 <div>
                     <button class="px-5 py-2 mr-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
                     <a href="{{route('admin.master-dosen.index')}}" class="px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
+=======
+                <div class="w-full flex justify-end mt-7">
+                    <a href="{{route('admin.master-dosen.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
+                        Batal
+                    </a>
+                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+>>>>>>> 8934609 (fixed responsive & view  admin)
                 </div>
             </form>
         </div>

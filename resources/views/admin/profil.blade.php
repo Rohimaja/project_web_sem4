@@ -18,14 +18,22 @@
             {{-- <img src="/images/profil.jpg" class="w-40 h-40 mb-4 hover:border-2 border-white border-2 hover:border-gray-300 active:border-gray-400 rounded-full object-cover" id="previewImage" alt="User"> --}}
             <p class="mb-3 text-gray-500">Format tersedia hanya file JPEG, JPG, atau PNG</p>
             <input type="file" name="foto" id="foto" accept="image/*" class="hidden">
+<<<<<<< HEAD
             <label for="foto" class="flex items-center px-5 py-2.5 text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-sm font-semibold cursor-pointer">Upload New Image</label>
+=======
+            <label for="foto" class="flex items-center px-5 py-2 text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-sm font-semibold cursor-pointer">Upload New Image</label>
+>>>>>>> 8934609 (fixed responsive & view  admin)
             {{-- <button class="flex items-center px-5 py-2.5 text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-sm font-semibold cursor-pointer"> --}}
               {{-- Upload New Image --}}
             {{-- </button> --}}
           </div>
           <div class=" px-8 py-4 flex justify-end">
               {{-- <a href="{{route('admin.master-admin.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Batal</a> --}}
+<<<<<<< HEAD
               <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+=======
+              <button type="submit" class="px-5 py-2 bg-green-600 w-full md:w-max hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+>>>>>>> 8934609 (fixed responsive & view  admin)
         </div>
     </form>
         </div>

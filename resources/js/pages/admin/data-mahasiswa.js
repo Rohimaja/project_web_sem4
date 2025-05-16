@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
 
 $(document).ready(function () {
     const table = $("#data-mahasiswa").DataTable({
+=======
+$(document).ready(function () {
+    table = $("#data-mahasiswa").DataTable({
+>>>>>>> 8934609 (fixed responsive & view  admin)
         searching: true, // Aktifkan pencarian
         paging: true, // Aktifkan pagination
         info: true, // Menampilkan informasi tabel
@@ -11,6 +16,7 @@ $(document).ready(function () {
         autoWidth: false, // Hindari ukuran otomatis
     });
     $("div.dt-search").hide();
+<<<<<<< HEAD
     // });
 
     $("#prodi").select2({
@@ -142,4 +148,6 @@ $(document).on("click", ".btn-detail", function () {
             alert("Gagal mengambil data mahasiswa.");
         },
     });
+=======
+>>>>>>> 8934609 (fixed responsive & view  admin)
 });

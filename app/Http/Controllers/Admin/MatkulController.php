@@ -7,7 +7,10 @@ use App\Models\Prodi;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
+=======
+>>>>>>> 8934609 (fixed responsive & view  admin)
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Admin\StoreMasterMatkul;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +27,11 @@ class MatkulController extends Controller
         // $matkul = Matkul::all();
         // $prodi = Matkul::with('prodi')->get();
         // $tahun = Matkul::with('tahunAjaran')->get();
+<<<<<<< HEAD
         $matkul = Matkul::with( ['prodi', 'tahun'])->get();
+=======
+        $matkul = Matkul::with(relations: ['prodi', 'tahun'])->get();
+>>>>>>> 8934609 (fixed responsive & view  admin)
 
 
         return view('admin.master_data.matkul', compact('title', 'matkul'));
@@ -44,13 +51,18 @@ class MatkulController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+<<<<<<< HEAD
     public function store(StoreMasterMatkul $request)
+=======
+    public function store(Request $request)
+>>>>>>> 8934609 (fixed responsive & view  admin)
     {
         $request->merge([
             'nama_matkul' => trim($request->nama_matkul),
             'durasi_matkul' => trim($request->durasi_matkul),
         ]);
 
+<<<<<<< HEAD
         try {
             DB::transaction(function () use ($request) {
                 $kodeMatkul = $this->generateKodeMatkul($request->prodi_id);
@@ -65,6 +77,41 @@ class MatkulController extends Controller
                 ]);
             });
 
+=======
+        // $request->validate([
+        //     'nama_matkul' => 'required|max:100',
+        //     'prodi_id' => 'required',
+        //     'tahun_ajaran_id' => 'required',
+        //     'semester' => 'required|integer|min:1|max:14',
+        //     'durasi_matkul' => 'required|integer|min:1|max:10',
+        // ], [
+        //     'nama_matkul.required' => 'Mata Kuliah tidak boleh kosong.',
+        //     'nama_matkul.max' => 'Nama Mata Kuliah maksimal 100 karakter.',
+
+        //     'prodi_id.required' => 'Program Studi harus dipilih.',
+
+        //     'tahun_ajaran_id.required' => 'Tahun Ajaran harus dipilih.',
+
+        //     'semester.required' => 'Semester harus dipilih.',
+
+        //     'durasi_matkul.required' => 'Jumlah SKS tidak boleh kosong.',
+        //     'durasi_matkul.integer' => 'Jumlah SKS harus berupa angka.',
+        //     'durasi_matkul.min' => 'Minimal 1 SKS.',
+        //     'durasi_matkul.max' => 'Maksimal 10 SKS.',
+        // ]);
+
+        try {
+            $kodeMatkul = $this->generateKodeMatkul($request->prodi_id);
+
+            Matkul::create([
+                'kode_matkul' => $kodeMatkul,
+                'nama_matkul' => $request->nama_matkul,
+                'tahun_ajaran_id' => $request->tahun_ajaran_id,
+                'semester' => $request->semester,
+                'durasi_matkul' => $request->durasi_matkul,
+                'prodi_id' => $request->prodi_id,
+            ]);
+>>>>>>> 8934609 (fixed responsive & view  admin)
 
             return redirect()->route('admin.master-matkul.index')->with([
                 'status' => 'success',
@@ -113,6 +160,7 @@ class MatkulController extends Controller
             'durasi_matkul' => trim($request->durasi_matkul),
         ]);
 
+<<<<<<< HEAD
         try {
 
             DB::transaction(function () use ($request, $id) {
@@ -121,6 +169,35 @@ class MatkulController extends Controller
                 $matkul->update($request->only(['nama_matkul', 'tahun_ajaran_id', 'semester', 'durasi_matkul','prodi_id']));
             });
 
+=======
+        // $request->validate([
+        //     'nama_matkul' => 'required|max:100',
+        //     'prodi_id' => 'required',
+        //     'tahun_ajaran_id' => 'required',
+        //     'semester' => 'required',
+        //     'durasi_matkul' => 'required',
+        // ], [
+        //     'nama_matkul.required' => 'Mata Kuliah tidak boleh kosong.',
+        //     'nama_matkul.max' => 'Nama Mata Kuliah maksimal 100 karakter.',
+
+        //     'prodi_id.required' => 'Program Studi harus dipilih.',
+
+        //     'tahun_ajaran_id.required' => 'Tahun Ajaran harus dipilih.',
+
+        //     'semester.required' => 'Semester harus dipilih.',
+
+        //     'durasi_matkul.required' => 'Jumlah SKS tidak boleh kosong.',
+        //     'durasi_matkul.integer' => 'Jumlah SKS harus berupa angka.',
+        //     'durasi_matkul.min' => 'Minimal 1 SKS.',
+        //     'durasi_matkul.max' => 'Maksimal 10 SKS.',
+        // ]);
+
+        try {
+
+            // Update atau create data tahun ajaran
+            $matkul = Matkul::findOrFail($id);
+            $matkul->update($request->only(['nama_matkul', 'tahun_ajaran_id', 'semester', 'durasi_matkul','prodi_id']));
+>>>>>>> 8934609 (fixed responsive & view  admin)
 
             return redirect()->route('admin.master-matkul.index')->with([
                 'status' => 'success',
