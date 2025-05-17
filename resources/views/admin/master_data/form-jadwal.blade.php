@@ -1,11 +1,11 @@
 <x-layout>
-    @vite(['resources/js/pages/admin/data-presensi.js'])
+    @vite(['resources/js/pages/admin/data-jadwal.js'])
     <div class="h-full">
         <x-slot:title>{{ $title }}</x-slot:title>
         <p>Silahkan tambahkan data Admin</p>
         <div class="w-full h-max max-w-full mt-5 p-8 bg-gray-150 rounded-sm shadow-xl">
 
-            <form action="{{route('admin.presensi.store')}}" method="POST" class="form-presensi">
+            <form action="{{route('admin.master-jadwal.store')}}" method="POST" class="form-presensi">
             @csrf
 
                 <div class="flex flex-col md:flex-row">
@@ -85,34 +85,42 @@
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Pilih Tanggal:</label>
-                        <input type="date" name="tgl_presensi" class="p-2 border-2 mt-1 border-gray-400 rounded-sm" value="{{old('tgl_presensi')}}" placeholder="Masukkan tanggal presensi" required>
+                        <label class="mb-1 font-semibold">Pilih Hari:</label>
+                        <select id="hari" name="hari" class="w-full" required>
+                            <option value="" hidden selected>Pilih Hari</option>
+                            <option value="Senin">Senin</option>
+                            <option value="Selasa">Selasa</option>
+                            <option value="Rabu">Rabu</option>
+                            <option value="Kamis">Kamis</option>
+                            <option value="Jumat">Jumat</option>
+                            <option value="Sabtu">Sabtu</option>
+                        </select>
+                        <span class="text-red-600 text-sm" id="hari_error">
+                            @error('hari'){{ $message }}@enderror
+                        </span>
                     </div>
-                    <span class="text-red-600 text-sm" id="tgl_presensi_error">
-                        @error('tgl_presensi'){{ $message }}@enderror
-                    </span>
                 </div>
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Jam Awal:</label>
-                        <input type="time" name="jam_awal" value="{{old('jam_awal')}}" class="p-2 w-full border-2 border-gray-400 rounded-sm" placeholder="Masukkan Jam Awal" required>
-                        <span class="text-red-600 text-sm" id="jam_awal_error">
-                            @error('jam_awal'){{ $message }}@enderror
+                        <label for="" class="mb-1 font-semibold">Durasi</label>
+                        <input type="number" name="durasi" value="{{old('durasi')}}" class="p-2 w-full border-2 border-gray-400 rounded-sm" placeholder="Masukkan Durasi Perkuliahan" required>
+                        <span class="text-red-600 text-sm" id="durasi_error">
+                            @error('durasi'){{ $message }}@enderror
                         </span>
                     </div>
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Jam Akhir:</label>
-                        <input type="time" name="jam_akhir" value="{{old('jam_akhir')}}" class="p-2 w-full border-2 border-gray-400 rounded-sm" placeholder="Masukkan Jam Akhir" required>
-                        <span class="text-red-600 text-sm" id="jam_akhir_error">
-                            @error('jam_akhir'){{ $message }}@enderror
+                        <label for="" class="mb-1 font-semibold">Jam Jadwal</label>
+                        <input type="time" name="jam" value="{{old('jam')}}" class="p-2 w-full border-2 border-gray-400 rounded-sm" placeholder="Masukkan Jam Awal" required>
+                        <span class="text-red-600 text-sm" id="jam_error">
+                            @error('jam'){{ $message }}@enderror
                         </span>
                     </div>
                 </div>
 
                 <div class="w-full flex justify-end">
                     <button type="submit" class="px-5 py-2 mr-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
-                    <a href="{{route('admin.presensi.index')}}" class="px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
+                    <a href="{{route('admin.master-jadwal.index')}}" class="px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
                 </div>

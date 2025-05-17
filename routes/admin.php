@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DosenController;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('master-mahasiswa', MahasiswaController::class);
     Route::post('/validate-field/mahasiswa', [MahasiswaController::class, 'validateField'])->name('admin.validate.field.mahasiswa');
+    Route::get('/getFilterMahasiswa', [MahasiswaController::class, 'getFilterMahasiswa']);
 
     Route::resource('master-tahun', TahunAjaranController::class);
     Route::post('/validate-field/tahun', [TahunAjaranController::class, 'validateField'])->name('admin.validate.field.tahun');
@@ -43,10 +45,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('master-ruangan', RuanganController::class);
     Route::post('/validate-field/ruangan', [RuanganController::class, 'validateField'])->name('admin.validate.field.ruangan');
 
+    Route::resource('master-jadwal', JadwalController::class);
+
     Route::resource('presensi', PresensiController::class);
+    Route::post('/presensi/info-presensi', [PresensiController::class, 'updateDetailPresensi'])
+    ->name('update-detail-presensi');
     Route::get('/presensi/info-presensi',function(){
         return view('admin.info-presensi',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']);
     })->name('info-presensi');
+    Route::get('/getMatkulByProdi', [PresensiController::class, 'getMatkulByProdi']);
+    Route::post('/validate-field/presensi', [PresensiController::class, 'validateField'])->name('admin.validate.field.presensi');
+
+    // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');
 
     Route::get('/laporan-mahasiswa', function () {
         return view('admin.laporan_absensi.lap_mahasiswa', ['title' => 'Laporan Mahasiswa']);

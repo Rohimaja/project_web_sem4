@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <div class="text-white">
       <button @click="isSideMenuOpen = !isSideMenuOpen" class="cursor-pointer block xl:hidden px-2 py-1 border-2 hover:bg-slate-800 border:bg-slate-400 rounded-sm"><i class="bi bi-list font-bold text-2xl"></i></button>
-      <h1 class="text-lg font-semibold text-white hidden xl:block">{{Auth::user()->role}} -> Dashboard</h1>
+      {{-- <h1 class="text-lg font-semibold text-white hidden xl:block">{{Auth::user()->role}}</h1> --}}
     </div>
 
     @php

@@ -144,7 +144,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Provinsi:</lab>
-                        <select id="provinsi" name="province_id" data-selected="{{$dosen->province_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select id="provinsi" name="province_id" data-selected="{{old('province_id',$dosen->province_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Provinsi</option>
                         </select>
                         @error('province_id')
@@ -154,7 +154,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
-                        <select name="regency_id" id="kota" data-selected="{{$dosen->regency_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select name="regency_id" id="kota" data-selected="{{old('regency_id',$dosen->regency_id ?? '')}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Kota / Kabupaten</option>
                         </select>
                         @error('regency_id')
@@ -166,7 +166,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Kecamatan:</lab>
-                        <select id="kecamatan" name="district_id" data-selected="{{$dosen->district_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select id="kecamatan" name="district_id" data-selected="{{old('district_id',$dosen->district_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Kecamatan</option>
                         </select>
                         @error('ditrict_id')
@@ -176,7 +176,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Kelurahan:</label>
-                        <select id="kelurahan" name="village_id" data-selected="{{$dosen->village_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select id="kelurahan" name="village_id" data-selected="{{old('village_id',$dosen->village_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Kode pos</option>
                         </select>
                         @error('village_id')

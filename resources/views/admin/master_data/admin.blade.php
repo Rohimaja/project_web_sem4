@@ -61,7 +61,7 @@
                                 <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     <div  class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
-                                        <img src="{{ asset('storage/' . ($a->foto ?? 'image/profil-kosong.png')) }}" alt="Photo">
+                                        <img src="{{ $a->foto ? asset('storage/' . $a->foto) : asset('images/profil-kosong.png') }}" alt="Photo">
                                     </div>
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">{{$a->nama}}</td>
@@ -92,10 +92,6 @@
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                                     <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
                                                     <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->nama}}">
-                                                    </div>
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    <label for="" class="mb-1 font-semibold">NIP:</label>
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->nip}}">
                                                     </div>
                                                 </div>
                                                 <div class="flex flex-col md:flex-row">

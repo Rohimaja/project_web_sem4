@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Document</title>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-      @vite(['resources/css/app.css', 'resources/js/app.js'])
-  @endif
-  <!-- Bootstrap Icons CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" href="{{asset('images/stipress.png')}}">
+    <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 
-  <style>[x-cloak] { display: none !important; }</style>
+    <style>[x-cloak] { display: none !important; }</style>
 
 </head>
 <body>
@@ -58,49 +61,110 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const forms = document.querySelectorAll('.form-hapus');
+    // document.addEventListener('submit', function (e) {
+    //     const forms = document.querySelectorAll('.form-hapus');
+    //     const formsPresensi = document.querySelectorAll('.form-presensi');
 
-        forms.forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault(); // Jangan langsung submit
+    //     forms.forEach(form => {
+    //         form.addEventListener('submit', function (e) {
+    //             e.preventDefault(); // Jangan langsung submit
 
-                Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: "Data yang dihapus tidak bisa dikembalikan!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit(); // Baru submit form kalau user tekan "Ya"
-                    }
-                });
-            });
+    //             Swal.fire({
+    //                 title: 'Apakah Anda yakin?',
+    //                 text: "Data yang dihapus tidak bisa dikembalikan!",
+    //                 icon: 'warning',
+    //                 showCancelButton: true,
+    //                 confirmButtonColor: '#d33',
+    //                 cancelButtonColor: '#3085d6',
+    //                 confirmButtonText: 'Ya, hapus!',
+    //                 cancelButtonText: 'Batal'
+    //             }).then((result) => {
+    //                 if (result.isConfirmed) {
+    //                     form.submit(); // Baru submit form kalau user tekan "Ya"
+    //                 }
+    //             });
+    //         });
+    //     });
+
+    //     formsPresensi.forEach(form => {
+    //         form.addEventListener('submit', function (e) {
+    //             e.preventDefault(); // Jangan langsung submit
+
+    //             Swal.fire({
+    //                 title: 'Apakah Anda yakin?',
+    //                 text: "Pastikan data sudah sesuai!",
+    //                 icon: 'warning',
+    //                 showCancelButton: true,
+    //                 confirmButtonColor: '#3085d6',
+    //                 cancelButtonColor: '#d33',
+    //                 cancelButtonText: 'Batal',
+    //                 confirmButtonText: 'Ya, simpan!',
+    //             }).then((result) => {
+    //                 if (result.isConfirmed) {
+    //                     form.submit(); // Baru submit form kalau user tekan "Ya"
+    //                 }
+    //             });
+    //         });
+    //     });
+
+    // Delegated event handler agar form yang ditambahkan via JS tetap terdeteksi
+document.addEventListener('submit', function (e) {
+    if (e.target.classList.contains('form-hapus')) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                e.target.submit();
+            }
         });
+    }
+
+    if (e.target.classList.contains('form-presensi')) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Pastikan data sudah sesuai!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Ya, simpan!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                e.target.submit();
+            }
+        });
+    }
+});
 
         @if (session('status') && session('message'))
-            Swal.fire({
-                icon: '{{ session('status') }}',
-                title: '{{ ucfirst(session('status')) }}',
-                text: '{{ session('message') }}',
-                timer: 2000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-                // willClose: () => {
-                //     @if (session('redirect'))
-                //         window.location.href = '{{ session('redirect') }}';
-                //     @endif
-                // }
+            window.addEventListener('pageshow', function (event) {
+                if (!event.persisted) {
+                    Swal.fire({
+                        icon: '{{ session('status') }}',
+                        title: '{{ ucfirst(session('status')) }}',
+                        text: '{{ session('message') }}',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    });
+                    if (window.history.replaceState) {
+                        window.history.replaceState(null, null, window.location.href);
+                    }
+                }
             });
         @endif
-    });
-
-
     </script>
-{{-- <script src="{{ asset('js/init-alpine.js') }}"></script> --}}
 </body>
 </html>

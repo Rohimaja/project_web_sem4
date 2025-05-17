@@ -123,7 +123,7 @@
                                 <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     <div  class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
-                                        <img src="{{ asset('storage/' . $d->foto) }}" alt="Photo">
+                                        <img src="{{ $d->foto ? asset('storage/' . $d->foto) : asset('images/profil-kosong.png') }}" alt="Photo">
                                     </div>
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">{{$d->nip}}</td>

@@ -6,27 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Presensi extends Model
+class Jadwal extends Model
 {
     use HasFactory, Notifiable;
 
-        protected $fillable = [
-        'presensi_id',
-        'tgl_presensi',
-        'jam_awal',
-        'jam_akhir',
+    protected $fillable = [
+        'jam',
+        'durasi',
+        'hari',
         'dosen_id',
         'prodi_id',
-        'semester',
         'matkul_id',
         'ruangan_id',
         'tahun_ajaran_id',
-        'link_zoom'
+        'semester'
     ];
 
-    public function detailpresensi()
+        public function detailjadwal()
     {
-        return $this->hasMany(DetailPresensi::class, 'presensi_id', 'id');
+        return $this->hasMany(DetailJadwal::class, 'jadwal_id', 'id');
     }
 
     public function prodi()

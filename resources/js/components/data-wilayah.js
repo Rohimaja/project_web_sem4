@@ -475,3 +475,27 @@ document.addEventListener("DOMContentLoaded", async function () {
         );
     });
 });
+
+// $("#provinsi").select2({
+//     // placeholder: "Cari Program Studi",
+//     width: "100%", // agar lebar mengikuti class seperti w-full
+//     // allowClear: true,
+// });
+
+// $("#kota").select2({
+//     // placeholder: "Cari Program Studi",
+//     width: "100%", // agar lebar mengikuti class seperti w-full
+//     // allowClear: true,
+// });
+
+// $("#kecamatan").select2({
+//     // placeholder: "Cari Program Studi",
+//     width: "100%", // agar lebar mengikuti class seperti w-full
+//     // allowClear: true,
+// });
+
+// $("#kelurahan").select2({
+//     // placeholder: "Cari Program Studi",
+//     width: "100%", // agar lebar mengikuti class seperti w-full
+//     // allowClear: true,
+// });

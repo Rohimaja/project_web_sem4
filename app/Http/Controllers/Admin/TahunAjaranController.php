@@ -36,22 +36,6 @@ class TahunAjaranController extends Controller
      */
     public function store(StoreMasterTahun $request)
     {
-        $request->validate([
-            'tahun_awal' => 'required|max:4|regex:/^[0-9]+$/',
-            'tahun_akhir' => 'required|max:4|regex:/^[0-9]+$/',
-            'keterangan' => 'required',
-            // 'status' => 'required|max:40|unique:prodis,nama_prodi',
-        ], [
-            'tahun_awal.required' => 'Tahun Awal tidak boleh kosong.',
-            'tahun_awal.max' => 'Tahun Awal maksimal 4 angka.',
-            'tahun_awal.regex' => 'Tahun Awal hanya boleh berupa angka.',
-
-            'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong.',
-            'tahun_akhir.max' => 'Tahun Akhir maksimal 4 angka.',
-            'tahun_akhir.regex' => 'Tahun Akhir hanya boleh berupa angka.',
-
-            'keterangan.required' => 'Pilih Keterangan terlebih dahulu',
-        ]);
 
         if ($request->tahun_awal >= $request->tahun_akhir) {
             return redirect()->back()->withInput()->withErrors([
@@ -107,22 +91,6 @@ class TahunAjaranController extends Controller
             'tahun_awal' => trim($request->tahun_awal),
             'tahun_akhir' => trim($request->tahun_akhir),
         ]);
-
-        // $request->validate([
-        //     'tahun_awal' => 'required|max:4|regex:/^[0-9]+$/',
-        //     'tahun_akhir' => 'required|max:4|regex:/^[0-9]+$/',
-        //     'keterangan' => 'required',
-        // ], [
-        //     'tahun_awal.required' => 'Tahun Awal tidak boleh kosong.',
-        //     'tahun_awal.max' => 'Tahun Awal maksimal 4 angka.',
-        //     'tahun_awal.regex' => 'Tahun Awal hanya boleh berupa angka.',
-
-        //     'tahun_akhir.required' => 'Tahun Akhir tidak boleh kosong.',
-        //     'tahun_akhir.max' => 'Tahun Akhir maksimal 4 angka.',
-        //     'tahun_akhir.regex' => 'Tahun Akhir hanya boleh berupa angka.',
-
-        //     'keterangan.required' => 'Pilih Keterangan terlebih dahulu',
-        // ]);
 
         if ($request->tahun_awal >= $request->tahun_akhir) {
             return redirect()->back()->withInput()->withErrors([

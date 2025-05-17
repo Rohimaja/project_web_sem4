@@ -1,117 +1,41 @@
 <x-layout>
     @vite(['resources/js/pages/admin/data-mahasiswa.js'])
 
-    <div class="relative">
+    {{-- <div class="relative"> --}}
     <x-slot:title>{{ $title }}</x-slot:title>
     <p>Lihat data Mahasiswa hari ini</p>
     <div x-data="{openImport: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white rounded-sm shadow-xl">
         <div class="flex flex-col md:flex-row">
-          <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8"
-               x-data="{
-                  open: false,
-                  search: '',
-                  selected: '',
-                  loading: false,
-                  options: ['Teknik Informatika', 'Sistem Informasi', 'Teknik Elektro', 'Manajemen', 'Akuntansi'],
-                  get filtered() {
-                    return this.options.filter(o => o.toLowerCase().includes(this.search.toLowerCase()));
-                  }
-               }">
-            <label class="mb-1 font-semibold">Filter Program Studi:</label>
-
-            <div class="relative">
-              <input
-                type="text"
-                x-model="search"
-                @click="open = true"
-                @input="loading = true; setTimeout(() => loading = false, 300)"
-                placeholder="Pilih Program Studi"
-                class="p-2 py-[8px] w-full border-2 border-gray-700 rounded-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-400 pr-10"
-              />
-
-              <div class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-
-              <div
-                x-show="open"
-                x-cloak
-                @click.outside="open = false"
-                class="absolute mt-1 w-full bg-white border border-gray-300 rounded shadow-lg z-50 max-h-60 overflow-auto"
-              >
-                <template x-if="loading">
-                  <div class="p-2 text-gray-500 text-sm text-center">Loading...</div>
-                </template>
-
-                <template x-if="!loading && filtered.length === 0">
-                  <div class="p-2 text-gray-500 text-sm text-center">Tidak ditemukan</div>
-                </template>
-
-                <template x-for="option in filtered" :key="option">
-                  <div
-                    @click="search = option; selected = option; open = false"
-                    class="cursor-pointer p-2 hover:bg-blue-100"
-                    x-text="option"
-                  ></div>
-                </template>
-              </div>
+            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                <label class="mb-1 font-semibold">Pilih Program Studi:</label>
+                <select id="prodi" name="prodi_id">
+                    <option value="" hidden selected>Pilih Program Studi</option>
+                    @foreach ($prodi as $p)
+                        <option value="{{ $p->id }}" {{ old('prodi_id') == $p->id ? 'selected' : '' }}>
+                            {{ $p->jenjang .' '.$p->nama_prodi}}
+                        </option>
+                    @endforeach
+                </select>
+                @error('prodi_id')
+                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                @enderror
             </div>
-          </div>
-          <div class="flex flex-col w-full mb-4 md:w-1/2 "
-               x-data="{
-                  open: false,
-                  search: '',
-                  selected: '',
-                  loading: false,
-                  options: ['Teknik Informatika', 'Sistem Informasi', 'Teknik Elektro', 'Manajemen', 'Akuntansi'],
-                  get filtered() {
-                    return this.options.filter(o => o.toLowerCase().includes(this.search.toLowerCase()));
-                  }
-               }">
-            <label class="mb-1 font-semibold">Filter Semester:</label>
 
-            <div class="relative">
-              <input
-                type="text"
-                x-model="search"
-                @click="open = true"
-                @input="loading = true; setTimeout(() => loading = false, 300)"
-                placeholder="Pilih Semester"
-                class="p-2 py-[8px] w-full border-2 border-gray-700 rounded-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-400 pr-10"
-              />
-
-              <div class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-
-              <div
-                x-show="open"
-                x-cloak
-                @click.outside="open = false"
-                class="absolute mt-1 w-full bg-white border border-gray-300 rounded shadow-lg z-50 max-h-60 overflow-auto"
-              >
-                <template x-if="loading">
-                  <div class="p-2 text-gray-500 text-sm text-center">Loading...</div>
-                </template>
-
-                <template x-if="!loading && filtered.length === 0">
-                  <div class="p-2 text-gray-500 text-sm text-center">Tidak ditemukan</div>
-                </template>
-
-                <template x-for="option in filtered" :key="option">
-                  <div
-                    @click="search = option; selected = option; open = false"
-                    class="cursor-pointer p-2 hover:bg-blue-100"
-                    x-text="option"
-                  ></div>
-                </template>
-              </div>
+            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0">
+                <label class="mb-1 font-semibold">Pilih Semester:</label>
+                <select id="semester" name="semester" class="w-full" >
+                    <option value="" hidden selected>Pilih Senester</option>
+                        @for($i = 1; $i <= 14; $i++)
+                            {{-- <option value="{{ $i }}"> --}}
+                            <option value="{{ $i }}" {{ old('semester') == $i ? 'selected' : '' }}>
+                                Semester {{$i}}
+                            </option>
+                        @endfor
+                </select>
+                <span class="text-red-600 text-sm" id="semester_error">
+                    @error('semester'){{ $message }}@enderror
+                </span>
             </div>
-          </div>
         </div>
 
 
@@ -164,6 +88,7 @@
                             <th class="border border-gray-300 px-4 py-2">Nama</th>
                             <th class="border border-gray-300 px-4 py-2">Jenis Kelamin</th>
                             <th class="border border-gray-300 px-4 py-2">Email</th>
+                            <th class="border border-gray-300 px-4 py-2">Program Studi</th>
                             <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -173,17 +98,25 @@
                                 <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     <div  class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
-                                        <img src="{{ asset('storage/' . $m->foto) }}" alt="Photo">
+                                        <img src="{{ $m->foto ? asset('storage/' . $m->foto) : asset('images/profil-kosong.png') }}" alt="Photo">
                                     </div>
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">{{$m->nim}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$m->nama}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$m->jenis_kelamin}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$m->email}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$m->prodi->jenjang .' '. $m->prodi->nama_prodi}}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-center">
                                     <div class="flex justify-center gap-2">
 
-                                    <div x-data="{openView: false}">
+                                        <button
+                                            class="btn-detail px-2 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded-md"
+                                            data-id="{{ $m->id }}">
+                                            <i class="bi bi-eye text-lg"></i>
+                                        </button>
+
+
+                                    {{-- <div x-data="{openView: false}">
                                         <button @click="openView = !openView" class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">
                                             <i class="bi bi-eye text-lg"></i>
                                         </button>
@@ -275,7 +208,7 @@
                                             </div>
                                             </div>
                                         </div>
-                                        </div>
+                                        </div> --}}
 
                                         <a href="{{route('admin.master-mahasiswa.edit', $m->id)}}" class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">
                                             <i class="bi bi-pencil-square text-lg"></i>
@@ -291,6 +224,16 @@
                                 </td>
                             </tr>
                         @endforeach
+                            <div id="modal-detail" x-data="{ open: false }" x-show="open" x-cloak class="fixed inset-0 z-50 flex justify-center items-center">
+                                <div class="absolute inset-0 bg-black opacity-50" @click="open = false"></div>
+                                <div class="relative bg-white rounded-lg shadow-lg w-[500px] max-w-full p-6 max-h-[90vh] overflow-y-auto z-10">
+                                    <div class="flex justify-between mb-4">
+                                        <h2 class="text-xl font-bold">Detail Mahasiswa</h2>
+                                        <button @click="open = false"><i class="bi bi-eye text-lg"></i></button>
+                                    </div>
+                                    <div id="modal-body"></div>
+                                </div>
+                            </div>
                     </tbody>
                 </table>
             </div>

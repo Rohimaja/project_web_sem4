@@ -12,16 +12,6 @@
                     <input type="hidden" id="edit_id" value="{{ $admin->id }}">
                 @endif
 
-                @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
         {{-- @php
             $defaultFoto = asset('images/profil-kosong.png');
             $previewFoto = isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : $defaultFoto;
@@ -122,13 +112,13 @@
                         </span>
                     </div>
 
-                    @if (isset($admin))
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
+                    @if (isset($admin))
                         <label for="" class="mb-1 font-semibold">Password Baru:</label>
                         <input type="hidden" class="p-2 border-2 border-gray-700 rounded-sm" name="old_password" id="old_password" value="{{($admin->password ?? '')}}">
                         <input type="password" class="p-2 border-2 border-gray-700 rounded-sm" name="new_password" id="new_password" placeholder="Masukkan Password Baru">
+                        @endif
                     </div>
-                    @endif
                 </div>
 
                 <h1 class="font-bold text-gray-800 text-2xl my-2 text-center xl:text-left">Alamat</h1>
@@ -137,7 +127,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Provinsi:</lab>
-                        <select id="provinsi" name="province_id" data-selected="{{$admin->province_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select id="provinsi" name="province_id" data-selected="{{ old('province_id', $admin->province_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Provinsi</option>
                         </select>
                         @error('province_id')
@@ -147,7 +137,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
-                        <select name="regency_id" id="kota" data-selected="{{$admin->regency_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select name="regency_id" id="kota" data-selected="{{old('regency_id',$admin->regency_id ?? '')}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Kota / Kabupaten</option>
                         </select>
                         @error('regency_id')
@@ -159,7 +149,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
                         <label for="" class="mb-1 font-semibold">Kelurahan:</lab>
-                        <select id="kecamatan" name="district_id" data-selected="{{$admin->district_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select id="kecamatan" name="district_id" data-selected="{{old('district_id',$admin->district_id ?? '')}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Kelurahan</option>
                         </select>
                         @error('district_id')
@@ -169,7 +159,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Kelurahan:</label>
-                        <select id="kelurahan" name="village_id" data-selected="{{$admin->village_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
+                        <select id="kelurahan" name="village_id" data-selected="{{old('village_id',$admin->village_id ?? '')}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-700 rounded-sm" required>
                             <option value="" hidden selected>Pilih Kode pos</option>
                         </select>
                         @error('village_id')

@@ -1,12 +1,12 @@
 <x-layout>
-    @vite(['resources/js/pages/admin/data-presensi.js'])
+    @vite(['resources/js/pages/admin/data-jadwal.js'])
     <div class="h-full">
     <x-slot:title>{{ $title }}</x-slot:title>
-    <p>Data Presensi Hari ini</p>
+    <p>Data Jadwal</p>
 
         <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white rounded-sm shadow-xl">
             <div class="mb-10 flex">
-                <a href="{{route('admin.presensi.create')}}">
+                <a href="{{route('admin.master-jadwal.create')}}">
                     <button class="flex items-center px-4 py-2.5 text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold cursor-pointer">
                             <i class="bi bi-plus-square-fill mr-2"></i>
                         <span>Tambah</span>
@@ -19,9 +19,10 @@
                     <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                         <tr>
                             <th class="border border-gray-300 px-4 py-2">No</th>
-                            <th class="border border-gray-300 px-4 py-2">Tanggal</th>
-                            <th class="border border-gray-300 px-4 py-2">Dosen</th>
+                            <th class="border border-gray-300 px-4 py-2">Hari</th>
                             <th class="border border-gray-300 px-4 py-2">Jam Perkuliahan</th>
+                            <th class="border border-gray-300 px-4 py-2">Durasi</th>
+                            <th class="border border-gray-300 px-4 py-2">Dosen</th>
                             <th class="border border-gray-300 px-4 py-2">Program Studi</th>
                             <th class="border border-gray-300 px-4 py-2">Semester</th>
                             <th class="border border-gray-300 px-4 py-2">Mata Kuliah</th>
@@ -30,25 +31,26 @@
                         </tr>
                     </thead>
                     <tbody class="">
-                        @foreach ($presensi as $p)
+                        @foreach ($jadwal as $j)
                             <tr class="hover:bg-gray-50">
                                 <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{$p->tgl_presensi}}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{$p->dosen->nama}}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{$p->jam_awal .' - '.$p->jam_akhir}}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{$p->prodi->jenjang .' '.$p->prodi->nama_prodi}}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{$p->semester}}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{$p->matkul->nama_matkul}}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{$p->ruangan->nama_ruangan}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->hari}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->jam}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->durasi .' SKS'}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->dosen->nama}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->prodi->jenjang .' '.$j->prodi->nama_prodi}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->semester}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->matkul->nama_matkul}}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{$j->ruangan->nama_ruangan}}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-center">
                                     <div class="flex justify-center gap-2">
-                                        <a href="{{route('admin.presensi.show', $p->id)}}">
+                                        <a href="{{route('admin.master-jadwal.show', $j->id)}}">
                                             <button class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">
                                                 <i class="bi bi-card-text text-lg"></i>
                                             </button>
                                         </a>
 
-                                        <form action="{{ route('admin.presensi.destroy', $p->id) }}" method="POST" class="form-hapus inline-block">
+                                        <form action="{{ route('admin.master-jadwal.destroy', $j->id) }}" method="POST" class="form-hapus inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="px-2 py-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-md">
