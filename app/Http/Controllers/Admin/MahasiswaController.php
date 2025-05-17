@@ -8,10 +8,7 @@ use App\Models\Prodi;
 use App\Models\User;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
-=======
->>>>>>> 8934609 (fixed responsive & view  admin)
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -26,17 +23,10 @@ class MahasiswaController extends Controller
     public function index()
     {
         $title = 'Data Mahasiswa';
-<<<<<<< HEAD
         $prodi = Prodi::all();
         $mahasiswa = Mahasiswa::with(relations: ['prodi', 'tahun','province','regency','district','village'])->get();
 
         return view('admin.master_data.mahasiswa',compact('title','prodi','mahasiswa'));
-=======
-        // $mahasiswa = Mahasiswa::all();
-        $mahasiswa = Mahasiswa::with(relations: ['prodi', 'tahun','province','regency','district','village'])->get();
-
-        return view('admin.master_data.mahasiswa',compact('title','mahasiswa'));
->>>>>>> 8934609 (fixed responsive & view  admin)
 
     }
 
@@ -66,7 +56,6 @@ class MahasiswaController extends Controller
             'tahun_masuk' => trim($request->tahun_masuk),
         ]);
 
-<<<<<<< HEAD
         try {
 
             DB::transaction(function () use ($request) {
@@ -115,116 +104,6 @@ class MahasiswaController extends Controller
                     'message' => 'Data Berhasil Ditambahkan'
                 ]);
             });
-=======
-        // $request->validate([
-        //     'nim' => 'required|max:10|unique:mahasiswas,nim',
-        //     'nama' => 'required|max:100',
-        //     'jenis_kelamin' => 'required',
-        //     'agama' => 'required',
-        //     'tempat_lahir' => 'required|max:100',
-        //     'tgl_lahir' => 'required|before:today',
-        //     'email' => 'required|email|max:100|unique:mahasiswas,email',
-        //     'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-        //     'alamat' => 'required|max:200',
-        //     'prodi_id' => 'required',
-        //     'tahun_masuk' => 'required|max:4|regex:/^[0-9]+$/',
-        //     'semester' => 'required',
-        //     'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-        //     'provinsi_id' => 'required',
-        //     'kota_id' => 'required',
-        //     'kecamatan_id' => 'required',
-        //     'kelurahan_id' => 'required',
-        // ], [
-        //     'nim.required' => 'Nim tidak boleh kosong',
-        //     'nim.max' => 'Nim Maksimal 10 Karakter',
-        //     'nim.unique' => 'Nim sudah terdaftar',
-
-        //     'nama.required' => 'Nama tidak boleh kosong',
-        //     'nama.max' => 'Nama maksimal 100 karakter',
-
-        //     'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
-        //     'agama.required' => 'Agama harus dipilih',
-
-        //     'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-        //     'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
-
-        //     'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
-        //     'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
-
-        //     'email.required' => 'Email tidak boleh kosong',
-        //     'email.email' => 'Format email tidak valid',
-        //     'email.max' => 'Email maksimal 100 karakter',
-        //     'email.unique' => 'Email sudah digunakan',
-
-        //     'no_telp.required' => 'Nomor Telepon wajib diisi',
-        //     'no_telp.max' => 'Nomor Telepon maksimal 20 karakter',
-        //     'no_telp.regex' => 'Nomor Telepon hanya boleh berisi angka',
-
-        //     'alamat.required' => 'Alamat tidak boleh kosong',
-        //     'alamat.max' => 'Alamat maksimal 200 karakter',
-
-        //     'prodi_id.required' => 'Program Studi wajib dipilih',
-        //     'semester.required' => 'Semester wajib dipilih',
-
-        //     'tahun_masuk.required' => 'Tahun Akhir tidak boleh kosong.',
-        //     'tahun_masuk.max' => 'Tahun Akhir maksimal 4 angka.',
-        //     'tahun_masuk.regex' => 'Tahun Akhir hanya boleh berupa angka.',
-
-        //     'foto.image' => 'File harus berupa gambar',
-        //     'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg',
-        //     'foto.max' => 'Ukuran gambar maksimal 2MB',
-
-        //     'provinsi_id.required' => 'Provinsi wajib dipilih',
-        //     'kota_id.required' => 'Kota wajib dipilih',
-        //     'kecamatan_id.required' => 'Kecamatan wajib dipilih',
-        //     'kelurahan_id.required' => 'Kelurahan wajib dipilih',
-        // ]);
-
-        try {
-
-            $fotoPath = null;
-            if ($request->hasFile('foto')) {
-                $fotoPath = $request->file('foto')->store( 'foto_mahasiswa', 'public'); // folder: storage/app/public/foto_admin
-            }
-
-            $tahunAjaranAktif = TahunAjaran::where('status', true)->first();
-
-            // Insert ke tabel users dulu
-            $user = User::create([
-                'name' => $request->nama,
-                'nim' => $request->nim,
-                'role' => 'mahasiswa', // default role admin
-                'password' => Hash::make('password123'), // default password sementara
-            ]);
-
-            // Insert ke tabel admins
-            Mahasiswa::create([
-                'user_id' => $user->id, // hubungkan ke user yang baru dibuat
-                'nim' => $request->nim,
-                'nama' => $request->nama,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-                'tempat_lahir' => $request->tempat_lahir,
-                'tgl_lahir' => $request->tgl_lahir,
-                'email' => $request->email,
-                'no_telp' => $request->no_telp,
-                'alamat' => $request->alamat,
-                'prodi_id' => $request->prodi_id,
-                'tahun_masuk' => $request->tahun_masuk,
-                'tahun_ajaran_id' => $tahunAjaranAktif->id,
-                'semester' => $request->semester,
-                'foto' => $fotoPath,
-                'province_id' => $request->province_id,
-                'regency_id' => $request->regency_id,
-                'district_id' => $request->district_id,
-                'village_id' => $request->village_id,
-            ]);
-
-            return redirect()->route('admin.master-mahasiswa.index')->with([
-                'status' => 'success',
-                'message' => 'Data Berhasil Ditambahkan'
-            ]);
->>>>>>> 8934609 (fixed responsive & view  admin)
 
         } catch (\Exception $e) {
             Log::error('Gagal menambahkan Mahasiswa', [
@@ -244,13 +123,9 @@ class MahasiswaController extends Controller
      */
     public function show(string $id)
     {
-<<<<<<< HEAD
         $mahasiswa = Mahasiswa::with(relations: ['prodi', 'tahun','province','regency','district','village'])->findOrFail($id);
         return response()->json($mahasiswa);
 
-=======
-        //
->>>>>>> 8934609 (fixed responsive & view  admin)
     }
 
     /**
@@ -280,76 +155,8 @@ class MahasiswaController extends Controller
             'tahun_masuk' => trim($request->tahun_masuk),
         ]);
 
-<<<<<<< HEAD
         try {
             DB::transaction(function () use ($request, $id) {
-=======
-        // $request->validate([
-        //     'nim' => 'required|max:10|unique:mahasiswas,nim,'.$id,
-        //     'nama' => 'required|max:100',
-        //     'jenis_kelamin' => 'required',
-        //     'agama' => 'required',
-        //     'tempat_lahir' => 'required|max:100',
-        //     'tgl_lahir' => 'required|before:today',
-        //     'email' => 'required|email|max:100|unique:mahasiswas,email,'.$id,
-        //     'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-        //     'alamat' => 'required|max:200',
-        //     'prodi_id' => 'required',
-        //     'tahun_masuk' => 'required|max:4|regex:/^[0-9]+$/',
-        //     'semester' => 'required',
-        //     'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-        //     'provinsi_id' => 'required',
-        //     'kota_id' => 'required',
-        //     'kecamatan_id' => 'required',
-        //     'kelurahan_id' => 'required',
-        // ], [
-        //     'nim.required' => 'Nim tidak boleh kosong',
-        //     'nim.max' => 'Nim Maksimal 10 Karakter',
-        //     'nim.unique' => 'Nim sudah terdaftar',
-
-        //     'nama.required' => 'Nama tidak boleh kosong',
-        //     'nama.max' => 'Nama maksimal 100 karakter',
-
-        //     'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
-        //     'agama.required' => 'Agama harus dipilih',
-
-        //     'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-        //     'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
-
-        //     'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
-        //     'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
-
-        //     'email.required' => 'Email tidak boleh kosong',
-        //     'email.email' => 'Format email tidak valid',
-        //     'email.max' => 'Email maksimal 100 karakter',
-        //     'email.unique' => 'Email sudah digunakan',
-
-        //     'no_telp.required' => 'Nomor Telepon wajib diisi',
-        //     'no_telp.max' => 'Nomor Telepon maksimal 20 karakter',
-        //     'no_telp.regex' => 'Nomor Telepon hanya boleh berisi angka',
-
-        //     'alamat.required' => 'Alamat tidak boleh kosong',
-        //     'alamat.max' => 'Alamat maksimal 200 karakter',
-
-        //     'prodi_id.required' => 'Program Studi wajib dipilih',
-        //     'semester.required' => 'Semester wajib dipilih',
-
-        //     'tahun_masuk.required' => 'Tahun Akhir tidak boleh kosong.',
-        //     'tahun_masuk.max' => 'Tahun Akhir maksimal 4 angka.',
-        //     'tahun_masuk.regex' => 'Tahun Akhir hanya boleh berupa angka.',
-
-        //     'foto.image' => 'File harus berupa gambar',
-        //     'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg',
-        //     'foto.max' => 'Ukuran gambar maksimal 2MB',
-
-        //     'provinsi_id.required' => 'Provinsi wajib dipilih',
-        //     'kota_id.required' => 'Kota wajib dipilih',
-        //     'kecamatan_id.required' => 'Kecamatan wajib dipilih',
-        //     'kelurahan_id.required' => 'Kelurahan wajib dipilih',
-        // ]);
-
-        try {
->>>>>>> 8934609 (fixed responsive & view  admin)
             $mahasiswa = Mahasiswa::findOrFail($id);
             $user = $mahasiswa->user;
 
@@ -361,12 +168,8 @@ class MahasiswaController extends Controller
                 }
 
                 // Simpan foto baru
-<<<<<<< HEAD
                 $filename = 'profile/student/profile_' . $request->nim . '.' . $request->file('foto')->extension();
                 $fotoPath = $request->file('foto')->storeAs('foto_mahasiswa',$filename, 'public');
-=======
-                $fotoPath = $request->file('foto')->store('foto_mahasiswa', 'public');
->>>>>>> 8934609 (fixed responsive & view  admin)
                 $mahasiswa->foto = $fotoPath;
             }
 
@@ -375,10 +178,6 @@ class MahasiswaController extends Controller
 
             // Update data admin
             $mahasiswa->update([
-<<<<<<< HEAD
-=======
-                'user_id' => $user->id, // hubungkan ke user yang baru dibuat
->>>>>>> 8934609 (fixed responsive & view  admin)
                 'nim' => $request->nim,
                 'rfid' => $request->rfid,
                 'nama' => $request->nama,
@@ -411,10 +210,7 @@ class MahasiswaController extends Controller
             }
 
             $user->update($userData);
-<<<<<<< HEAD
             });
-=======
->>>>>>> 8934609 (fixed responsive & view  admin)
 
             return redirect()->route('admin.master-mahasiswa.index')->with([
                 'status' => 'success',
@@ -447,7 +243,6 @@ class MahasiswaController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
     public function getFilterMahasiswa(Request $request){
         $prodi = $request->query('prodi');
         $semester = $request->query('semester');
@@ -467,8 +262,6 @@ class MahasiswaController extends Controller
         return response()->json($mahasiswa);
     }
 
-=======
->>>>>>> 8934609 (fixed responsive & view  admin)
     public function validateField(Request $request)
     {
         $id = $request->input('id'); // ambil id dari form (edit mode)

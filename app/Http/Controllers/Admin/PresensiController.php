@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-<<<<<<< HEAD
 use App\Http\Requests\Admin\StorePresensi;
 use App\Models\DetailPresensi;
 use App\Models\Dosen;
@@ -16,16 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Presensi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Validator;
-=======
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Presensi;
-use App\Models\Dosen;
-use App\Models\Prodi;
-use App\Models\Matkul;
-use App\Models\Ruangan;
->>>>>>> 8934609 (fixed responsive & view  admin)
+use Illuminate\Support\Facades\Validator;
 
 
 class PresensiController extends Controller
@@ -36,11 +26,7 @@ class PresensiController extends Controller
     public function index()
     {
         $title = 'Data Presensi';
-<<<<<<< HEAD
         $presensi = Presensi::with('dosen','prodi','ruangan','matkul')->get();
-=======
-        $presensi = Presensi::all();
->>>>>>> 8934609 (fixed responsive & view  admin)
         return view('admin.presensi', compact('presensi','title'));
     }
 
@@ -49,12 +35,7 @@ class PresensiController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
         $title = 'Data Presensi';
-=======
-        $title = 'Tambah Data Presensi';
-        // $prodi = Prodi::all();
->>>>>>> 8934609 (fixed responsive & view  admin)
         $prodi = Prodi::all(); // Ambil semua data prodi
         $ruangan = Ruangan::all(); // Ambil semua data prodi
         $matkul = Matkul::all(); // Ambil semua data prodi
@@ -66,7 +47,6 @@ class PresensiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-<<<<<<< HEAD
     public function store(StorePresensi $request)
     {
             // $request = $request->validated(); // Ambil data yang sudah divalidasi
@@ -181,11 +161,6 @@ class PresensiController extends Controller
                 'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
             ]);
         }
-=======
-    public function store(Request $request)
-    {
-        //
->>>>>>> 8934609 (fixed responsive & view  admin)
     }
 
     /**
@@ -199,17 +174,11 @@ class PresensiController extends Controller
     // }
     public function show(string $id)
     {
-<<<<<<< HEAD
         $title = 'Data Presensi';
         // $presensi = Presensi::findOrFail($id);
         $presensi = Presensi::with('dosen','prodi','ruangan','matkul','tahun')->findOrFail($id);
         $detail = DetailPresensi::with('mahasiswa')->where('presensi_id', $id)->get();
         return view('admin.info-presensi', compact('title','presensi','detail'));
-=======
-        $title = 'Detail Data Presensi';
-        // $prodi = Prodi::all();
-        return view('admin.info-presensi', compact('title'));
->>>>>>> 8934609 (fixed responsive & view  admin)
     }
 
     /**
@@ -223,7 +192,6 @@ class PresensiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-<<<<<<< HEAD
     public function updateDetailPresensi(Request $request)
     {
         try {
@@ -260,11 +228,6 @@ class PresensiController extends Controller
                 'message' => 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage()
             ]);
         }
-=======
-    public function update(Request $request, string $id)
-    {
-        //
->>>>>>> 8934609 (fixed responsive & view  admin)
     }
 
     /**
@@ -272,7 +235,6 @@ class PresensiController extends Controller
      */
     public function destroy(string $id)
     {
-<<<<<<< HEAD
         try {
 
             // Update atau create data tahun ajaran
@@ -356,8 +318,4 @@ class PresensiController extends Controller
         return response()->json(['success' => true]);
     }
 
-=======
-        //
-    }
->>>>>>> 8934609 (fixed responsive & view  admin)
 }

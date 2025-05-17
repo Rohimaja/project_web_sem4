@@ -44,27 +44,6 @@ class ProdiController extends Controller
             'nama_prodi' => trim($request->nama_prodi),
         ]);
 
-<<<<<<< HEAD
-=======
-        // $request->validate([
-        //     'kode_prodi' => 'required|max:8|regex:/^[A-Z0-9]+$/|unique:prodis,kode_prodi',
-        //     'jenjang' => 'required',
-        //     'nama_prodi' => 'required|max:40|unique:prodis,nama_prodi',
-        // ], [
-        //     'kode_prodi.required' => 'Kode Prodi tidak boleh kosong',
-        //     'kode_prodi.max' => 'Kode Prodi hanya maksimal 8 karakter',
-        //     'kode_prodi.unique' => 'Kode Prodi sudah terdaftar',
-
-        //     'jenjang.required' => 'Silahkan pilih jenjang pendidikan',
-
-        //     'nama_prodi.required' => 'Nama Program Studi tidak boleh kosong.',
-        //     'nama_prodi.max' => 'Nama Program Studi maksimal 40 karakter.',
-        //     'nama_prodi.unique' => 'Nama Program Studi sudah terdaftar.',
-        // ]);
-
-
-
->>>>>>> 8934609 (fixed responsive & view  admin)
         try {
             Prodi::create($request->only(['kode_prodi', 'jenjang', 'nama_prodi']));
 
@@ -114,25 +93,6 @@ class ProdiController extends Controller
             'nama_prodi' => trim($request->nama_prodi),
         ]);
 
-<<<<<<< HEAD
-=======
-        // $request->validate([
-        //     'kode_prodi' => 'required|max:8|regex:/^[A-Z0-9]+$/|unique:prodis,kode_prodi,'.$id,
-        //     'jenjang' => 'required',
-        //     'nama_prodi' => 'required|max:40|unique:prodis,nama_prodi,'.$id,
-        // ], [
-        //     'kode_prodi.required' => 'Kode Prodi tidak boleh kosong',
-        //     'kode_prodi.max' => 'Kode Prodi hanya maksimal 8 karakter',
-        //     'kode_prodi.unique' => 'Kode Prodi sudah terdaftar',
-
-        //     'jenjang.required' => 'Silahkan pilih jenjang pendidikan',
-
-        //     'nama_prodi.required' => 'Nama Program Studi tidak boleh kosong.',
-        //     'nama_prodi.max' => 'Nama Program Studi maksimal 40 karakter.',
-        //     'nama_prodi.unique' => 'Nama Program Studi sudah terdaftar.',
-        // ]);
-
->>>>>>> 8934609 (fixed responsive & view  admin)
         try {
             $prodi = Prodi::findOrFail($id);
 

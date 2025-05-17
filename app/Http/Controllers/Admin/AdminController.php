@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
 use App\Models\Admin;
 use App\Models\Mahasiswa;
 use App\Models\User;
@@ -14,19 +13,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Admin\StoreMasterAdmin;
-=======
-use App\Http\Requests\Admin\StoreMasterAdmin;
-use App\Models\Admin;
-use App\Models\Mahasiswa;
-use App\Models\Province;
-use App\Models\Regency;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-
->>>>>>> 8934609 (fixed responsive & view  admin)
 // use Illuminate\Validation\ValidationException;
 
 
@@ -49,19 +35,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
         return view('admin.master_data.form-admin',['title' =>'Tambah Data']);
 
-=======
-        $province = Province::all();
-        $regencie = Regency::all();
-
-        return view('admin.master_data.form-admin', [
-            'title' => 'Tambah Data',
-            // 'province' => $province,
-            // 'regencie' => $regencie,
-        ]);
->>>>>>> 8934609 (fixed responsive & view  admin)
     }
 
     /**
@@ -79,7 +54,6 @@ class AdminController extends Controller
 
         try {
 
-<<<<<<< HEAD
             DB::transaction(function () use ($request) {
                 $user = User::create([
                     'name' => $request->nama,
@@ -112,38 +86,6 @@ class AdminController extends Controller
                 ]);
             });
 
-=======
-            $fotoPath = null;
-            if ($request->hasFile('foto')) {
-                $fotoPath = $request->file('foto')->store( 'foto_admin'); // folder: storage/app/public/foto_admin
-            }
-
-            // Insert ke tabel users dulu
-            $user = \App\Models\User::create([
-                'name' => $request->nama,
-                'email' => $request->email,
-                'role' => 'admin', // default role admin
-                'password' => Hash::make('password123'), // default password sementara
-            ]);
-
-            // Insert ke tabel admins
-            Admin::create([
-                'user_id' => $user->id, // hubungkan ke user yang baru dibuat
-                'nama' => $request->nama,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-                'tempat_lahir' => $request->tempat_lahir,
-                'tgl_lahir' => $request->tgl_lahir,
-                'email' => $request->email,
-                'no_telp' => $request->no_telp,
-                'alamat' => $request->alamat,
-                'foto' => $fotoPath,
-                'province_id' => $request->province_id,
-                'regency_id' => $request->regency_id,
-                'district_id' => $request->district_id,
-                'village_id' => $request->village_id,
-            ]);
->>>>>>> 8934609 (fixed responsive & view  admin)
 
             return redirect()->route('admin.master-admin.index')->with([
                 'status' => 'success',
@@ -209,61 +151,8 @@ class AdminController extends Controller
             'alamat' => trim($request->alamat),
         ]);
 
-<<<<<<< HEAD
         try {
             DB::transaction(function () use ($request, $id) {
-=======
-        // $request->validate([
-        //     'nama' => 'required|max:100',
-        //     'jenis_kelamin' => 'required',
-        //     'agama' => 'required',
-        //     'tempat_lahir' => 'required|max:100',
-        //     'tgl_lahir' => 'required|before:today',
-        //     'email' => 'required|email|max:100|unique:admins,email,'.$id,
-        //     'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-        //     'alamat' => 'required|max:200',
-        //     'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-        //     'provinsi_id' => 'required',
-        //     'kota_id' => 'required',
-        //     'kecamatan_id' => 'required',
-        //     'kelurahan_id' => 'required',
-        // ], [
-        //     'nama.required' => 'Nama tidak boleh kosong',
-        //     'nama.max' => 'Nama maksimal 100 karakter',
-
-        //     'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
-        //     'agama.required' => 'Agama harus dipilih',
-
-        //     'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-        //     'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
-
-        //     'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
-        //     'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
-
-        //     'email.required' => 'Email tidak boleh kosong',
-        //     'email.email' => 'Format email tidak valid',
-        //     'email.max' => 'Email maksimal 100 karakter',
-        //     'email.unique' => 'Email sudah digunakan',
-
-        //     'no_telp.required' => 'Nomor Telepon wajib diisi',
-        //     'no_telp.max' => 'Nomor Telepon maksimal 20 karakter',
-        //     'no_telp.regex' => 'Nomor Telepon hanya boleh berisi angka',
-
-        //     'alamat.required' => 'Alamat tidak boleh kosong',
-        //     'alamat.max' => 'Alamat maksimal 200 karakter',
-
-        //     'foto.image' => 'File harus berupa gambar',
-        //     'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg',
-        //     'foto.max' => 'Ukuran gambar maksimal 2MB',
-
-        //     'provinsi_id.required' => 'Provinsi wajib dipilih',
-        //     'kota_id.required' => 'Kota wajib dipilih',
-        //     'kecamatan_id.required' => 'Kecamatan wajib dipilih',
-        //     'kelurahan_id.required' => 'Kelurahan wajib dipilih',
-        // ]);
-
-        try {
->>>>>>> 8934609 (fixed responsive & view  admin)
             $admin = Admin::findOrFail($id);
             $user = $admin->user;
 
@@ -275,12 +164,8 @@ class AdminController extends Controller
                 }
 
                 // Simpan foto baru
-<<<<<<< HEAD
                 $filename = 'profile/admin/profile_' . $user->id . '.' . $request->file('foto')->extension();
                 $fotoPath = $request->file('foto')->storeAs('foto_admin',$filename, 'public');
-=======
-                $fotoPath = $request->file('foto')->store('foto_admin', 'public');
->>>>>>> 8934609 (fixed responsive & view  admin)
                 $admin->foto = $fotoPath;
             }
 
@@ -312,11 +197,8 @@ class AdminController extends Controller
             }
 
             $user->update($userData);
-<<<<<<< HEAD
         });
 
-=======
->>>>>>> 8934609 (fixed responsive & view  admin)
 
             return redirect()->route('admin.master-admin.index')->with([
                 'status' => 'success',
@@ -356,15 +238,6 @@ class AdminController extends Controller
         $field = $request->input('field');
         $value = $request->input('value');
 
-<<<<<<< HEAD
-=======
-        // $rules = [
-        //     'nama' => 'required|max:100',
-        //     'email' => 'required|email|max:100|unique:admins,email',
-        //     // tambahkan field lain sesuai kebutuhan
-        // ];
-
->>>>>>> 8934609 (fixed responsive & view  admin)
         $validator = Validator::make([$field => $value], [
             $field => $rules[$field] ?? '',
         ],$messages);
@@ -375,35 +248,4 @@ class AdminController extends Controller
 
         return response()->json(['success' => true]);
     }
-<<<<<<< HEAD
-=======
-
-// public function validateField(Request $request)
-// {
-//     // Ambil rules dan messages dari FormRequest
-//     $rules = (new StoreMasterRequest())->rules();
-//     $messages = (new StoreMasterRequest())->messages();
-
-//     // Validasi hanya field yang dikirim
-//     $inputKey = array_keys($request->all())[0];
-
-//     $validator = Validator::make($request->only($inputKey), [
-//         $inputKey => $rules[$inputKey] ?? '',
-//     ], $messages);
-
-//     // if ($validator->fails()) {
-//     //     return response()->json([
-//     //         'success' => false,
-//     //         'message' => $validator->errors()->first($inputKey),
-//     //     ]);
-//     // }
-
-//     if ($validator->fails()) {
-//         throw new ValidationException($validator);
-//     }
-
-//     return response()->json(['success' => true]);
-// }
-
->>>>>>> 8934609 (fixed responsive & view  admin)
 }

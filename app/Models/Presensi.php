@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -29,13 +28,6 @@ class Presensi extends Model
     {
         return $this->hasMany(DetailPresensi::class, 'presensi_id', 'id');
     }
-=======
-use Illuminate\Database\Eloquent\Model;
-
-class Presensi extends Model
-{
-    //
->>>>>>> 8934609 (fixed responsive & view  admin)
 
     public function prodi()
     {
@@ -46,7 +38,6 @@ class Presensi extends Model
     {
         return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id', 'id');
     }
-<<<<<<< HEAD
 
     public function matkul()
     {
@@ -62,6 +53,4 @@ class Presensi extends Model
     {
         return $this->belongsTo(Ruangan::class, 'ruangan_id', 'id');
     }
-=======
->>>>>>> 8934609 (fixed responsive & view  admin)
 }

@@ -72,12 +72,8 @@ class ProfileController extends Controller
                 }
 
                 // Simpan foto baru
-<<<<<<< HEAD
                 $filename = 'profile/admin/profile_' . $admin->id . '.' . $request->file('foto')->extension();
                 $fotoPath = $request->file('foto')->storeAs('foto_admin', $filename, 'public');
-=======
-                $fotoPath = $request->file('foto')->store('foto_admin', 'public');
->>>>>>> 8934609 (fixed responsive & view  admin)
                 $admin->update(['foto' => $fotoPath]);
             }
 
