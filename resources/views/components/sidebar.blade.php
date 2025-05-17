@@ -67,14 +67,14 @@
             </a>
           </div>
         </li>
-        <li>
+        {{-- <li>
           <a href="{{ route('admin.kalender-akademik.view') }}">
               <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">
                   <i class="bi bi-calendar3"></i>
-                  <span class="text-[15px] ml-4 text-gray-200 font-semibold">Lihat Kalender Akademik</span>
+                  <span class="text-[15px] ml-4 text-gray-200 font-semibold">Kalender Akademik</span>
               </div>
           </a>
-      </li>
+        </li> --}}
         <hr class="my-2 text-gray-600">
         <li x-data="{open: false}">
             <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-800 active:bg-blue-700 cursor-pointer duration-300 text-white">

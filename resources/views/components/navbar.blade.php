@@ -15,11 +15,29 @@
       @if (Auth::user()->role === 'admin')
       <div class="relative flex items-center gap-2" x-data="{ open: false }">
         <div class="relative flex gap-5 items-center mr-2">
-            <a href="{{ route('admin.kalender-akademik.view') }}">
-                <i class="bi bi-calendar-event text-gray-600 text-lg mb-1"></i>
-            </a>
+            <div x-data="{ isDark: false }">
+                <button @click="isDark = !isDark" class="text-gray-600 text-lg hover:text-black">
+                    <template x-if="!isDark">
+                        <i class="bi bi-sun"></i> <!-- Matahari -->
+                    </template>
+                    <template x-if="isDark">
+                        <i class="bi bi-moon"></i> <!-- Bulan -->
+                    </template>
+                </button>
+            </div>
+
+            <a href="{{ route('admin.kalender-akademik.view') }}" class="relative group">
+                <i class="bi bi-calendar3 text-gray-600 text-lg mb-1"></i>
+                <span
+                  class="absolute left-1/2 top-full mt-1 -translate-x-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap"
+                >
+                  Kalender Akademik
+                </span>
+              </a>
+              
+              
     
-            <div class="w-px h-10 bg-gray-600"></div>
+            <div class="w-px h-10 bg-gray-400"></div>
         </div>
     
         <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 focus:outline-none">
