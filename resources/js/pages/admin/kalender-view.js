@@ -1,6 +1,6 @@
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
+import interactionPlugin from "@fullcalendar/interaction"; // Optional
 
 document.addEventListener("DOMContentLoaded", function () {
     const calendarEl = document.getElementById("calendar");
@@ -8,15 +8,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: "dayGridMonth",
-        locale: "id", // opsional
-        events: "/admin/kalender-akademik/events", // ambil data dari backend
-        headerToolbar: {
-            left: "prev,next today",
-            center: "title",
-            right: "",
-        },
+        events: JSON.parse(calendarEl.dataset.events),
         eventClick: function (info) {
-            alert(info.event.title + "\n" + info.event.extendedProps.deskripsi);
+            alert(
+                info.event.title +
+                    "\n" +
+                    (info.event.extendedProps.description ?? "")
+            );
         },
     });
 

@@ -6,6 +6,7 @@ use App\Models\KalenderAkademik;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class KalenderAkademikController extends Controller
 {
@@ -126,10 +127,19 @@ class KalenderAkademikController extends Controller
     {
         $title = 'Lihat Kalender Akademik';
 
-        // Ambil data kalender akademik untuk ditampilkan di kalender (misal: id, judul, tanggal_mulai, tanggal_selesai)
         $kalenders = KalenderAkademik::all();
 
-        return view('admin.view-kalender', compact('kalenders', 'title'));
+        // Prepare data event untuk FullCalendar
+        $events = $kalenders->map(function($item) {
+            return [
+                'title' => $item->judul,
+                'start' => $item->tanggal_mulai,
+                'end' => $item->tanggal_selesai ? Carbon::parse($item->tanggal_selesai)->addDay()->toDateString() : null,
+                'description' => $item->deskripsi,
+            ];
+        })->values();
+
+        return view('admin.view-kalender', compact('title', 'events'));
     }
 
 }
