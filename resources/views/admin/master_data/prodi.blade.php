@@ -50,8 +50,7 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-            <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
+            <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
                 <table id="data-prodi" class="text-sm text-left w-full pt-2">
                     <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                         <tr>
@@ -60,35 +59,16 @@
                             <th class="border border-gray-300 px-4 py-2">Jenjang</th>
                             <th class="border border-gray-300 px-4 py-2">Nama Program Studi</th>
                             <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
-=======
-            <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
-                <table id="myTable" class="text-sm text-left w-full pt-2">
-                    <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
-                        <tr>
-                            <th class="border border-gray-300 px-4">No</th>
-                            <th class="border border-gray-300 px-4">Kode Prodi</th>
-                            <th class="border border-gray-300 px-4">Jenjang</th>
-                            <th class="border border-gray-300 px-4">Nama Program Studi</th>
-                            <th class="border border-gray-300 px-4 text-center">Aksi</th>
->>>>>>> 8934609 (fixed responsive & view  admin)
                         </tr>
                     </thead>
                     <tbody class="">
                         @foreach ($prodi as $p )
                             <tr class="hover:bg-gray-50">
-<<<<<<< HEAD
                                 <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$p->kode_prodi}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$p->jenjang}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$p->nama_prodi}}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-center">
-=======
-                                <td class="border border-gray-300 px-4">{{$loop->iteration}}</td>
-                                <td class="border border-gray-300 px-4">{{$p->kode_prodi}}</td>
-                                <td class="border border-gray-300 px-4">{{$p->jenjang}}</td>
-                                <td class="border border-gray-300 px-4">{{$p->nama_prodi}}</td>
-                                <td class="border border-gray-300 px-4 text-center">
->>>>>>> 8934609 (fixed responsive & view  admin)
                                     <div class="flex justify-center gap-2">
                                         <a href="{{route('admin.master-prodi.edit', $p->id)}}">
                                             <button class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">

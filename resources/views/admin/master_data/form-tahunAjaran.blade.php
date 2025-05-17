@@ -14,15 +14,9 @@
                 <hr class="my-2 text-gray-600 mb-6">
 
                 <div class="flex flex-col md:flex-row">
-<<<<<<< HEAD
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
-                        <label for="" class="mb-1 font-semibold">Tahun Mulai:</label>
-                        <input list="tahun-list" name="tahun_awal" class="p-2 border-2 border-gray-700 rounded-sm" id="tahun_awal" placeholder="Masukkan Tahun Awal" value="{{old('tahun_awal', $tahun->tahun_awal ?? '')}}" required data-validate="tahun">
-=======
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Tahun Mulai:</label>
                         <input list="tahun-list" name="tahun_awal" class="p-2 border-2 border-gray-400 rounded-sm" id="tahun_awal" placeholder="Masukkan Tahun Awal" value="{{old('tahun_awal', $tahun->tahun_awal ?? '')}}" required data-validate="tahun">
->>>>>>> 8934609 (fixed responsive & view  admin)
                         <datalist id="tahun-list">
                             @for($i = date('Y'); $i >= 2000; $i--)
                                 <option value="{{ $i }}">
@@ -35,11 +29,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Tahun Selesai:</label>
-<<<<<<< HEAD
-                        <input list="tahun-list" name="tahun_akhir" class="p-2 border-2 border-gray-700 rounded-sm" id="tahun_akhir" value="{{old('tahun_akhir', $tahun->tahun_akhir ?? '')}}" required data-validate="tahun" placeholder="Masukkan Tahun Akhir">
-=======
                         <input list="tahun-list" name="tahun_akhir" class="p-2 border-2 border-gray-400 rounded-sm" id="tahun_akhir" value="{{old('tahun_akhir', $tahun->tahun_akhir ?? '')}}" required data-validate="tahun" placeholder="Masukkan Tahun Akhir">
->>>>>>> 8934609 (fixed responsive & view  admin)
                         <datalist id="tahun-list">
                             @for($i = date('Y'); $i >= 2000; $i--)
                                 <option value="{{ $i }}">
@@ -52,15 +42,9 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
-<<<<<<< HEAD
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
-                        <label for="" class="mb-1 font-semibold">Keterangan:</lab>
-                        <select type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-700 rounded-sm" name="keterangan" id="keterangan" required>
-=======
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Keterangan:</lab>
                         <select type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 rounded-sm" name="keterangan" id="keterangan" required>
->>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Keterangan</option>
                             <option value="Ganjil" {{ old('keterangan', $tahun->keterangan ?? '') == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
                             <option value="Genap" {{ old('keterangan', $tahun->keterangan ?? '') == 'Genap' ? 'selected' : '' }}>Genap</option>
@@ -70,15 +54,10 @@
                         @enderror
                     </div>
 
-<<<<<<< HEAD
-                    @if (isset($tahun))
-                    <div class="flex flex-col w-full mb-4 md:w-1/2">
-=======
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8"></div>
 
                     @if (isset($tahun))
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
->>>>>>> 8934609 (fixed responsive & view  admin)
                     <label for="" class="mb-1 font-semibold">Tahun Ajaran Aktif:</lab>
                         <div class="flex items-center mt-2">
                             <input id="aktif" name="status" type="radio" class="mr-2 w-5 h-5" value="1" {{ old('status', $tahun->status ?? '') == 1 ? 'checked' : '' }}>
@@ -89,19 +68,11 @@
                     </div>
                     @endif
                 </div>
-<<<<<<< HEAD
-                <div>
-                    <button class="px-5 py-2 mr-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
-                    <a href="{{ route('admin.master-tahun.index') }}" class="inline-block px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
-                        Batal
-                    </a>
-=======
                 <div class="w-full flex justify-end mt-7">
                     <a href="{{ route('admin.master-tahun.index') }}" class="inline-block px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
                     <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
->>>>>>> 8934609 (fixed responsive & view  admin)
                 </div>
             </form>
         </div>

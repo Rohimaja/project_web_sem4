@@ -15,28 +15,16 @@
             <hr class="my-2 text-gray-600 mb-6">
 
                 <div class="flex flex-col md:flex-row">
-<<<<<<< HEAD
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
-                        <label for="" class="mb-1 font-semibold">Kode Program Studi:</label>
-                        <input type="text" class="p-2 border-2 border-gray-700 rounded-sm" placeholder="Masukkan nama lengkap" name="kode_prodi" id="kode_prodi" value="{{old('kode_prodi', $prodi->kode_prodi ?? '')}}" required data-validate="prodi" >
-=======
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Kode Program Studi:</label>
                         <input type="text" class="p-2 border-2 border-gray-400 rounded-sm" placeholder="Masukkan nama lengkap" name="kode_prodi" id="kode_prodi" value="{{old('kode_prodi', $prodi->kode_prodi ?? '')}}" required data-validate="prodi" >
->>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="kode_prodi_error">
                             @error('kode_prodi'){{ $message }}@enderror
                         </span>
                     </div>
-<<<<<<< HEAD
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
-                        <label for="" class="mb-1 font-semibold">Jenjang:</lab>
-                        <select type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-700 rounded-sm" name="jenjang" id="jenjang" required>
-=======
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Jenjang:</lab>
                         <select type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 rounded-sm" name="jenjang" id="jenjang" required>
->>>>>>> 8934609 (fixed responsive & view  admin)
                             <option value="" hidden selected>Pilih Jenjang</option>
                             <option value="S1" {{ old('jenjang', $prodi->jenjang ?? '') == 'S1' ? 'selected' : '' }}>S1</option>
                             <option value="S2" {{ old('jenjang', $prodi->jenjang ?? '') == 'S2' ? 'selected' : '' }}>S2</option>
@@ -47,34 +35,20 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
-<<<<<<< HEAD
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-8">
-                        <label for="" class="mb-1 font-semibold">Nama Program Studi:</lab>
-                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-700 rounded-sm" name="nama_prodi" id="nama_prodi" value="{{old('nama_prodi', $prodi->nama_prodi ?? '')}}" required data-validate="prodi" >
-=======
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Nama Program Studi:</lab>
                         <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 rounded-sm" name="nama_prodi" id="nama_prodi" value="{{old('nama_prodi', $prodi->nama_prodi ?? '')}}" required data-validate="prodi" >
->>>>>>> 8934609 (fixed responsive & view  admin)
                         <span class="text-red-600 text-sm" id="nama_prodi_error">
                             @error('nama_prodi'){{ $message }}@enderror
                         </span>
                     </div>
                     <div class="flex flex-col w-full mb-4 md:w-1/2"></div>
                 </div>
-<<<<<<< HEAD
-                <div>
-                    <button class="px-5 py-2 mr-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
-                    <a href="{{ route('admin.master-prodi.index') }}" class="inline-block px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
-                        Batal
-                    </a>
-=======
                 <div class="w-full flex justify-end mt-7">
                     <a href="{{ route('admin.master-prodi.index') }}" class="inline-block mr-2 px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
                     <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
->>>>>>> 8934609 (fixed responsive & view  admin)
                 </div>
             </form>
         </div>

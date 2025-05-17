@@ -74,11 +74,7 @@
                                 <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     <div  class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
-<<<<<<< HEAD
                                         <img src="{{ $a->foto ? asset('storage/' . $a->foto) : asset('images/profil-kosong.png') }}" alt="Photo">
-=======
-                                        <img src="{{ asset('storage/' . ($a->foto ?? 'image/profil-kosong.png')) }}" alt="Photo">
->>>>>>> 8934609 (fixed responsive & view  admin)
                                     </div>
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">{{$a->nama}}</td>
@@ -94,33 +90,6 @@
                                             <div x-show="openView" x-cloak x-transition class="shadow-xl fixed inset-0 z-50 flex justify-center items-center">
                                                 <div class="absolute inset-0 bg-black opacity-50"></div>
                                                 <div @click.outside="openView = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[305px] h-[600px] max-w-full p-6 overflow-y-scroll">
-<<<<<<< HEAD
-                                                <div class="flex justify-between items-center mb-4">
-                                                    <h1 class="text-gray-600 text-xl font-semibold">View Data Admin</h1>
-                                                    <button @click="openView = false"><i class="bi bi-x-lg text-2xl mb-4 cursor-pointer"></i></button>
-                                                </div>
-
-                                                <div class="flex w-full justify-center items-center">
-                                                    <div  class="w-25 h-25 bg-red-200 rounded-full overflow-hidden cursor-pointer mb-3">
-                                                        <img src="{{asset('storage/'. $a->foto)}}" class="w-full h-full object-cover" alt="Photo">
-                                                    </div>
-                                                </div>
-
-                                                <div class="flex flex-col md:flex-row">
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                                                    <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->nama}}">
-                                                    </div>
-                                                </div>
-                                                <div class="flex flex-col md:flex-row">
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                                                    <label for="" class="mb-1 font-semibold">Jenis Kelamin:</label>
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->jenis_kelamin}}">
-                                                    </div>
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    <label for="" class="mb-1 font-semibold">Agama:</label>
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->agama}}">
-=======
                                                 
                                                 <div class="flex justify-between items-center mb-6 border-b pb-3">
                                                     <h2 class="text-2xl font-semibold text-gray-700">View Data Admin</h2>
@@ -154,93 +123,53 @@
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                                         <label for="" class="mb-1 font-semibold">Agama:</label>
                                                         <input type="text" readonly class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md" value="{{$a->agama}}">
->>>>>>> 8934609 (fixed responsive & view  admin)
                                                     </div>
                                                 </div>
                                                 <div class="flex flex-col md:flex-row">
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                                     <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
-<<<<<<< HEAD
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->tempat_lahir}}">
-                                                    </div>
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    <label for="" class="mb-1 font-semibold">Tanggal Lahir:</label>
-                                                    <input type="date" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->tgl_lahir}}">
-=======
                                                     <input type="text" readonly class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md" value="{{$a->tempat_lahir}}">
                                                     </div>
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                                     <label for="" class="mb-1 font-semibold">Tanggal Lahir:</label>
                                                     <input type="date" readonly class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md" value="{{$a->tgl_lahir}}">
->>>>>>> 8934609 (fixed responsive & view  admin)
                                                     </div>
                                                 </div>
                                                 <div class="flex flex-col md:flex-row">
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                                     <label for="" class="mb-1 font-semibold">Email:</label>
-<<<<<<< HEAD
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->email}}">
-                                                    </div>
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    <label for="" class="mb-1 font-semibold">Nomor Telepon:</label>
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->no_telp}}">
-=======
                                                     <input type="text" readonly class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md" value="{{$a->email}}">
                                                     </div>
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                                     <label for="" class="mb-1 font-semibold">Nomor Telepon:</label>
                                                     <input type="text" readonly class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md" value="{{$a->no_telp}}">
->>>>>>> 8934609 (fixed responsive & view  admin)
                                                     </div>
                                                 </div>
                                                 <div class="flex flex-col md:flex-row">
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                                     <label for="" class="mb-1 font-semibold">Provinsi:</label>
-<<<<<<< HEAD
-                                                    <input type="text" disabled id="provinsi" class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->province->name}}">
-                                                    </div>
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
-                                                    <input type="text" disabled id="kota" class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->regency->name}}">
-=======
                                                     <input type="text" readonly id="provinsi" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm" value="{{$a->province->name}}">
                                                     </div>
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                                     <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
                                                     <input type="text" readonly id="kota" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm" value="{{$a->regency->name}}">
->>>>>>> 8934609 (fixed responsive & view  admin)
                                                     </div>
                                                 </div>
 
                                                 <div class="flex flex-col md:flex-row">
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                                     <label for="" class="mb-1 font-semibold">Kecamatan:</label>
-<<<<<<< HEAD
-                                                    <input type="text" disabled id="kecamatan" class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->district->name}}">
-                                                    </div>
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    <label for="" class="mb-1 font-semibold">Kelurahan:</label>
-                                                    <input type="text" disabled id="kelurahan" class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->village->name}}">
-=======
                                                     <input type="text" readonly id="kecamatan" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm" value="{{$a->district->name}}">
                                                     </div>
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                                     <label for="" class="mb-1 font-semibold">Kelurahan:</label>
                                                     <input type="text" readonly id="kelurahan" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm" value="{{$a->village->name}}">
->>>>>>> 8934609 (fixed responsive & view  admin)
                                                     </div>
                                                 </div>
 
                                                 <div class="flex flex-col md:flex-row">
                                                     {{-- <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                                     <label for="" class="mb-1 font-semibold">Jenjang Studi:</label>
-<<<<<<< HEAD
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->prodi->jenjang.' '.$a->prodi->nama_prodi}}">
-                                                    </div> --}}
-                                                    <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    <label for="" class="mb-1 font-semibold">Alamat:</label>
-                                                    <input type="text" disabled class="bg-gray-100 w-full p-2 border-2 border-gray-700 rounded-sm" value="{{$a->alamat}}">
-=======
                                                     <input type="text" readonly class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md" value="{{$a->prodi->jenjang.' '.$a->prodi->nama_prodi}}">
                                                     </div> --}}
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
@@ -249,7 +178,6 @@
                                                     </div>
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                                     
->>>>>>> 8934609 (fixed responsive & view  admin)
                                                     </div>
                                                 </div>
                                                 </div>

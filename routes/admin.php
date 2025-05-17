@@ -1,19 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminController;
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\JadwalController;
-use App\Http\Controllers\Admin\MahasiswaController;
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DosenController;
+use App\Http\Controllers\Admin\JadwalController;
+use App\Http\Controllers\Admin\KalenderAkademikController;
+use App\Http\Controllers\Admin\MahasiswaController;
+use App\Http\Controllers\Admin\MatkulController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProdiController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\Admin\TahunAjaranController;
-use App\Http\Controllers\Admin\MatkulController;
 use App\Http\Controllers\Auth\PasswordController;
+use Illuminate\Support\Facades\Route;
+
 
 // Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 //     Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
@@ -21,6 +23,12 @@ use App\Http\Controllers\Auth\PasswordController;
 // });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('kalender-akademik', KalenderAkademikController::class)
+    ->except(['show']);
+    Route::get('kalender-akademik/view', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
+    Route::post('/validate-field/kalender-akademik', [KalenderAkademikController::class, 'validateField'])->name('admin.validate.field.kalender');
+
+
     // Route::get('/dashboard', fn () => view('admin.dashboard',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']))->name('dashboard');
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::resource('master-admin', AdminController::class);
