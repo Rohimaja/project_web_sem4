@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +66,11 @@ Route::get('/mahasiswa/dashboard', function () {
 
 //     return response()->json($response->json());
 // });
+
+Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/presensi',[DashboardController::class,'index'])->name('presensi');
+  });
 
 
 Route::get('/wilayah/{type}/{id?}', function ($type, $id = null) {

@@ -6,38 +6,25 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         plotOptions: {
             bar: {
-                columnWidth: "80%", // memperkecil lebar bar
+                columnWidth: "80%",
             },
         },
         series: [
             {
-                name: "Hadir 2025",
-                data: [30, 40, 45, 50, 49, 60, 70, 65, 55, 48, 52, 60],
+                name: "Hadir",
+                data: [25, 30, 28, 32],
             },
             {
-                name: "Izin 2025",
-                data: [15, 20, 18, 22, 25, 20, 18, 20, 23, 15, 17, 19],
+                name: "Izin",
+                data: [5, 4, 6, 3],
             },
             {
-                name: "Alpha 2025",
-                data: [5, 10, 7, 10, 9, 8, 7, 5, 5, 10, 6, 4],
+                name: "Alpha",
+                data: [2, 1, 1, 0],
             },
         ],
         xaxis: {
-            categories: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "Mei",
-                "Jun",
-                "Jul",
-                "Agu",
-                "Sep",
-                "Okt",
-                "Nov",
-                "Des",
-            ],
+            categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
         },
         colors: ["#2563eb", "#f59e0b", "#ef4444"], // Biru, Orange, Merah
     };
