@@ -7,16 +7,37 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth'])->get('/dashboard', function () {
+    $role = auth()->user()->role;
+
+    return match($role) {
+        'admin' => redirect()->route('admin.dashboard'),
+        'dosen' => redirect()->route('dosen.dashboard'),
+        'mahasiswa' => redirect()->route('mahasiswa.dashboard'),
+        default => abort(403),
+    };
+});
+
+// Route::middleware('auth')->get('/dashboard', function () {
+//     if (auth('admin')->check()) return redirect()->route('admin.dashboard');
+//     if (auth('dosen')->check()) return redirect()->route('dosen.dashboard');
+//     if (auth('mahasiswa')->check()) return redirect()->route('mahasiswa.dashboard');
+//     abort(403);
+// });
+// Route::middleware('auth')->group(function () {
+
+
 // Route::get('/dashboard', function () {
 //     return view('admin.dashboard',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']);
 // })->middleware(['auth', 'role:admin'])->name('admin.dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard', fn () => redirect()->route('admin.dashboard'));
+// Route::get('/dashboard', fn () => redirect()->route('admin.dashboard'));
 
+// Route::get('/dashboard', fn () => redirect()->route('dosen.dashboard'));
 
-Route::get('/dosen/dashboard', function () {
-    return view('dosen.dashboard',['title'=> 'Dashboard', 'rute'=> 'dosen -> Dashboard']);
-})->middleware(['auth', 'role:dosen'])->name('dosen.dashboard');
+// Route::get('/dosen/dashboard', function () {
+//     return view('dosen.dashboard',['title'=> 'Dashboard', 'rute'=> 'dosen -> Dashboard']);
+// })->middleware(['auth', 'role:dosen'])->name('dosen.dashboard');
 
 Route::get('/mahasiswa/dashboard', function () {
     return view('mahasiswa.dashboard', ['title'=>'Dashboard', 'rute' =>'mahasiswa -> Dashboard']);
@@ -58,3 +79,4 @@ Route::get('/wilayah/{type}/{id?}', function ($type, $id = null) {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
+require __DIR__.'/dosen.php';

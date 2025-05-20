@@ -24,7 +24,7 @@ class Presensi extends Model
         'link_zoom'
     ];
 
-    public function detailpresensi()
+    public function detailPresensi()
     {
         return $this->hasMany(DetailPresensi::class, 'presensi_id', 'id');
     }
@@ -34,7 +34,7 @@ class Presensi extends Model
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }
 
-    public function tahun()
+    public function tahunAjaran()
     {
         return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id', 'id');
     }

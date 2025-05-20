@@ -5,6 +5,18 @@
     <p>Data Presensi Hari ini</p>
 
         <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white rounded-sm shadow-xl">
+
+        <div class="flex flex-col md:flex-row">
+            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                <label class="mb-1 font-semibold">Filter Presensi:</label>
+                <select id="filter-presensi" name="prodi_id">
+                    <option value="" hidden selected>Pilih Program Studi</option>
+                    <option value="today">Hari ini</option>
+                    <option value="all">Semua Periode</option>
+                </select>
+            </div>
+        </div>
+
             <div class="mb-10 flex">
                 <a href="{{route('admin.presensi.create')}}">
                     <button class="flex items-center px-4 py-2.5 text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold cursor-pointer">

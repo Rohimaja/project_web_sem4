@@ -12,6 +12,11 @@ use Illuminate\Validation\Rules\Password;
 
 class PasswordController extends Controller
 {
+
+    public function changePassword(){
+        $title = "Ganti Password";
+        return view('changePassword', compact('title'));
+    }
     /**
      * Update the user's password.
      */
@@ -27,16 +32,19 @@ class PasswordController extends Controller
                 'password' => Hash::make($request->validated()['password']),
             ]);
 
-            return redirect()->route('admin.change-password')->with([
+            return redirect()->back()->with([
                 'status' => 'success',
-                'message' => 'Data Berhasil Di Perbarui'
+                'message' => 'Password berhasil diperbarui',
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal Perbarui Password', [
+
+            Log::error('Gagal perbarui password', [
+                'user_id' => $request->user()->id,
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
+
 
             return redirect()->back()->withInput()->with([
                 'status' => 'error',

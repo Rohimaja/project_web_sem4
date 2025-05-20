@@ -176,7 +176,7 @@ class PresensiController extends Controller
     {
         $title = 'Data Presensi';
         // $presensi = Presensi::findOrFail($id);
-        $presensi = Presensi::with('dosen','prodi','ruangan','matkul','tahun')->findOrFail($id);
+        $presensi = Presensi::with('dosen','prodi','ruangan','matkul','tahunAjaran')->findOrFail($id);
         $detail = DetailPresensi::with('mahasiswa')->where('presensi_id', $id)->get();
         return view('admin.info-presensi', compact('title','presensi','detail'));
     }

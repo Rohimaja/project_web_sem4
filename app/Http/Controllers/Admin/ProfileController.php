@@ -83,7 +83,7 @@ class ProfileController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal Perbarui Ruangan', [
+            Log::error('Gagal Perbarui Profile', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);

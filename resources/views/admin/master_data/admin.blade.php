@@ -22,22 +22,14 @@
 
                 <div class="absolute inset-0 bg-black opacity-50"></div>
 
-<<<<<<< HEAD
-                    <div @click.outside="openImport = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[380px] max-w-full p-6" >
-=======
                     <div @click.outside="openImport = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[320px] max-w-full p-6" >
->>>>>>> 8934609 (fixed responsive & view  admin)
                         <div class="flex justify-between items-center mb-4">
                             <h1 class="text-gray-600 text-2xl font-semibold">Import Data Admin</h1>
                             <button @click="openImport = false"><i class="bi bi-x-lg text-2xl mb-4 cursor-pointer"></i></button>
                         </div>
                         <div class="flex flex-col items-center justify-center w-full h-50 border-4 border-gray-400 border-dashed mb-4">
                             <i class="bi bi-upload text-gray-600 text-2xl"></i>
-<<<<<<< HEAD
-                            <p class="text-gray-600">Jatuhkan dokumen anda disini atau <a href="" class="text-blue-600">pilih berkas</a></p>
-=======
                             <p class="text-gray-600 text-cnter text-sm md:text-md">Jatuhkan dokumen anda disini atau <a href="" class="text-blue-600">pilih berkas</a></p>
->>>>>>> 8934609 (fixed responsive & view  admin)
                             <p class="text-gray-400">Didukung: VSC, XLS, XML, JSON</p>
                         </div>
                         <div class="mb-4 flex justify-center">
@@ -50,13 +42,8 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-            <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
-                <table id="data-admin" class="text-sm text-left w-full pt-2">
-=======
             <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
-                <table id="myTable" class="text-sm text-left w-full pt-2">
->>>>>>> 8934609 (fixed responsive & view  admin)
+                <table id="data-admin" class="text-sm text-left w-full pt-2">
                     <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                         <tr>
                         <th class="border border-gray-300 px-4 py-2">No</th>
@@ -90,20 +77,20 @@
                                             <div x-show="openView" x-cloak x-transition class="shadow-xl fixed inset-0 z-50 flex justify-center items-center">
                                                 <div class="absolute inset-0 bg-black opacity-50"></div>
                                                 <div @click.outside="openView = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[305px] h-[600px] max-w-full p-6 overflow-y-scroll">
-                                                
+
                                                 <div class="flex justify-between items-center mb-6 border-b pb-3">
                                                     <h2 class="text-2xl font-semibold text-gray-700">View Data Admin</h2>
                                                     <button @click="openView = false" class="text-gray-500 hover:text-gray-900 transition">
                                                         <i class="bi bi-x-lg text-3xl"></i>
                                                     </button>
                                                 </div>
-                                                
-                                                
+
+
 
                                                 <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-indigo-500 shadow-lg mb-6 cursor-pointer">
                                                     <img src="{{asset('storage/'. $a->foto)}}" class="w-full h-full object-cover" alt="Photo">
                                                   </div>
-                                                  
+
 
                                                 <div class="flex flex-col md:flex-row">
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
@@ -177,7 +164,7 @@
                                                     <input type="text" readonly class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md" value="{{$a->alamat}}">
                                                     </div>
                                                     <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                                    
+
                                                     </div>
                                                 </div>
                                                 </div>

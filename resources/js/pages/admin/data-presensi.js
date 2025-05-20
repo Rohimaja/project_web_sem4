@@ -28,6 +28,8 @@ $("#semester").select2({
     allowClear: true,
 });
 
+let table;
+
 $(document).ready(function () {
     table = $("#data-presensi").DataTable({
         searching: true, // Aktifkan pencarian
@@ -35,8 +37,79 @@ $(document).ready(function () {
         info: true, // Menampilkan informasi tabel
         scrollX: true, // Aktifkan scroll horizontal
         autoWidth: false, // Hindari ukuran otomatis
+        // order: [[0, "desc"]], // Urutkan berdasarkan kolom tanggal (index 0), descending
     });
-    $("div.dt-search").hide();
+
+    // Default filter state
+    let defaultFilter = "today";
+    $("#filter-presensi").val(defaultFilter).trigger("change");
+
+    // Validasi Sampai Tanggal Tidak Boleh Kurang dari Dari Tanggal
+    $("#start-date").on("input", function () {
+        let startDate = $(this).val();
+        $("#end-date").attr("min", startDate);
+    });
+
+    $("#end-date").on("input", function () {
+        let startDate = $("#start-date").val();
+        let endDate = $(this).val();
+
+        if (startDate && endDate < startDate) {
+            $(this).val(""); // Reset nilai end-date
+            alert("Sampai Tanggal tidak boleh lebih kecil dari Dari Tanggal.");
+        }
+    });
+
+    // Filter kustom untuk DataTables
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        let filter = $("#filter-presensi").val();
+        let startDate = $("#start-date").val()
+            ? new Date($("#start-date").val())
+            : null;
+        let endDate = $("#end-date").val()
+            ? new Date($("#end-date").val())
+            : null;
+        let date = new Date(data[1]); // Sesuaikan kolom tanggal pada tabel Anda
+
+        // Filter berdasarkan "Hari Ini"
+        if (filter === "today") {
+            let today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (date.toDateString() !== today.toDateString()) {
+                return false;
+            }
+        }
+
+        // Filter berdasarkan range tanggal
+        if (filter === "all") {
+            if (startDate && date < startDate) {
+                return false;
+            }
+            if (endDate && date > endDate) {
+                return false;
+            }
+        }
+
+        return true; // Data lolos filter
+    });
+
+    // Event Listener untuk Dropdown dan Input Tanggal
+    $("#filter-presensi").on("change", function () {
+        let filter = $(this).val();
+
+        if (filter === "today") {
+            $("#filter-date").hide(); // Sembunyikan input tanggal
+        } else if (filter === "all") {
+            $("#filter-date").show(); // Tampilkan input tanggal
+        }
+
+        table.draw(); // Refresh tabel sesuai filter
+    });
+
+    $("#start-date, #end-date").on("input", function () {
+        table.draw(); // Refresh tabel sesuai tanggal yang dipilih
+    });
+    table.draw(); // Refresh tabel sesuai tanggal yang dipilih
 });
 
 $(document).ready(function () {
@@ -83,6 +156,79 @@ $(document).ready(function () {
         loadMatkul(oldProdi, oldSemester, oldMatkul);
     }
 });
+
+// $(document).ready(function () {
+//     // Default filter state
+//     let defaultFilter = "today";
+//     $("#filter-presensi").val(defaultFilter).trigger("change");
+
+//     // Validasi Sampai Tanggal Tidak Boleh Kurang dari Dari Tanggal
+//     $("#start-date").on("input", function () {
+//         let startDate = $(this).val();
+//         $("#end-date").attr("min", startDate);
+//     });
+
+//     $("#end-date").on("input", function () {
+//         let startDate = $("#start-date").val();
+//         let endDate = $(this).val();
+
+//         if (startDate && endDate < startDate) {
+//             $(this).val(""); // Reset nilai end-date
+//             alert("Sampai Tanggal tidak boleh lebih kecil dari Dari Tanggal.");
+//         }
+//     });
+
+//     // Filter kustom untuk DataTables
+//     $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+//         let filter = $("#filter-presensi").val();
+//         let startDate = $("#start-date").val()
+//             ? new Date($("#start-date").val())
+//             : null;
+//         let endDate = $("#end-date").val()
+//             ? new Date($("#end-date").val())
+//             : null;
+//         let date = new Date(data[1]); // Sesuaikan kolom tanggal pada tabel Anda
+
+//         // Filter berdasarkan "Hari Ini"
+//         if (filter === "today") {
+//             let today = new Date();
+//             today.setHours(0, 0, 0, 0);
+//             if (date.toDateString() !== today.toDateString()) {
+//                 return false;
+//             }
+//         }
+
+//         // Filter berdasarkan range tanggal
+//         if (filter === "all") {
+//             if (startDate && date < startDate) {
+//                 return false;
+//             }
+//             if (endDate && date > endDate) {
+//                 return false;
+//             }
+//         }
+
+//         return true; // Data lolos filter
+//     });
+
+//     // Event Listener untuk Dropdown dan Input Tanggal
+//     $("#filter-presensi").on("change", function () {
+//         let filter = $(this).val();
+
+//         if (filter === "today") {
+//             $("#filter-date").hide(); // Sembunyikan input tanggal
+//         } else if (filter === "all") {
+//             $("#filter-date").show(); // Tampilkan input tanggal
+//         }
+
+//         table.draw(); // Refresh tabel sesuai filter
+//     });
+
+//     $("#start-date, #end-date").on("input", function () {
+//         table.draw(); // Refresh tabel sesuai tanggal yang dipilih
+//     });
+//     table.draw(); // Refresh tabel sesuai tanggal yang dipilih
+// });
 
 // $(document).ready(function () {
 //     $("#prodi, #semester").on("change", function () {

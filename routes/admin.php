@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\MatkulController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProdiController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RekapDosenController;
+use App\Http\Controllers\Admin\RekapMahasiswaController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -68,13 +70,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');
 
-    Route::get('/laporan-mahasiswa', function () {
-        return view('admin.laporan_absensi.lap_mahasiswa', ['title' => 'Laporan Mahasiswa']);
-    })->name('laporan.mahasiswa');
+    Route::resource('rekap-dosen', RekapDosenController::class);
+    Route::post('admin/rekap-dosen', [RekapDosenController::class, 'rekapDosen'])->name('rekap-dosen.filter');
 
-    Route::get('/laporan-dosen', function () {
-        return view('admin.laporan_absensi.lap_dosen', ['title' => 'Laporan Dosen']);
-    })->name('laporan.dosen');
+    Route::resource('rekap-mahasiswa', RekapMahasiswaController::class);
+    Route::post('admin/rekap-mahasiswa', [RekapMahasiswaController::class, 'rekapMahasiswa'])->name('rekap-mahasiswa.filter');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
@@ -82,30 +83,4 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/validate-field/change-password', [ProfileController::class, 'validateField'])->name('admin.validate.field.profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-
-    // routes/web.php
-// Route::get('/api-wilayah/{jenis}/{id?}', function ($jenis, $id = null) {
-//     $base = 'https://emsifa.github.io/api-wilayah-indonesia/api/';
-//     $url = match ($jenis) {
-//         'provinces' => $base . 'provinces.json',
-//         'regencies' => $base . "regencies/{$id}.json",
-//         'districts' => $base . "districts/{$id}.json",
-//         'villages' => $base . "villages/{$id}.json",
-//         default => abort(404),
-//     };
-
-//     $response = Http::get($url);
-
-//     return response()->json($response->json());
-// });
-
-    // Route::get('/laporan', function () {
-    //     return view('admin.laporan_absensi.lap_dosen');
-    // })->name('laporan.dosen');
-    // Route::get('/master-admin', [AdminController::class, 'index'])->name('master.index');
-
-    // Route::resource('dosen', DosenController::class);
-    // Route::resource('matkul', MatkulController::class);
 });
