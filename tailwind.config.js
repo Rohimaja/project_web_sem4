@@ -15,6 +15,9 @@ export default {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                customblue: "#1E88E4",
+            },
         },
     },
     darkMode: "class", // Atur dark mode menggunakan kelas 'dark'

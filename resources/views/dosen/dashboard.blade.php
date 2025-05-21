@@ -1,129 +1,136 @@
 <x-layout>
   <div class="">
     <x-slot:title>{{ $title }}</x-slot:title>
-    <h1 class="font-bold text-gray-800 text-xl sm:text-2xl">{{ $title }}</h1>
     <p class="mb-4">Hari ini: <span class="text-md text-gray-800">
       {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
     </span>
     </p>
 
-    <div class="flex flex-col md:flex-row gap-5 mb-5">
-      <!-- Greeting -->
-      <div class="p-6 bg-gradient-to-r from-sky-600 to-cyan-500 text-white w-full flex-col md:flex-row md:w-1/2 rounded-xl shadow-lg flex items-center gap-4">
-        <!-- Gambar -->
-        <img src="/images/img-halo.jpg" alt="Halo" class="w-20 h-20 rounded-full object-cover shadow-md">
-      
-        <!-- Teks Sapaan -->
-        <div>
-          <h2 class="text-xl md:text-2xl font-semibold leading-relaxed">
-            Selamat datang, Bapak/Ibu <span class="font-bold">Syalia Ayu Ambarwita</span> 👋
-          </h2>
-          <p class="mt-2">Semoga harimu menyenangkan dan produktif!</p>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <!-- KIRI -->
+      <div class="flex flex-col justify-between rounded-xl shadow-lg p-6 border border-gray-200 h-full bg-white">
+        
+        <!-- Ucapan Selamat -->
+        <div class="bg-gradient-to-br from-sky-500 via-cyan-500 to-teal-400 text-white rounded-2xl p-6 py-12 mb-6 flex items-center gap-4 shadow-md">
+          <div>
+            <h2 class="text-2xl font-bold">
+              Selamat datang, <br>
+              <span class="font-extrabold">Bapak/Ibu Syalia Ayu Ambarwita</span> 👋
+            </h2>
+            <p class="text-sm mt-1">Semoga harimu menyenangkan dan produktif!</p>
+          </div>
+        </div>
+    
+        <!-- Kotak Info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Box 1 -->
+          <div class="bg-blue-50 rounded-md p-5 border border-blue-200 hover:shadow-lg transition duration-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-medium text-blue-700">Jadwal Hari Ini</h3>
+                <p class="text-4xl font-bold text-blue-600 mt-2">2 Kelas</p>
+              </div>
+              <div class="text-blue-500 text-3xl">
+                <i class="bi bi-calendar-event-fill"></i>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Box 2 -->
+          <div class="bg-green-50 rounded-md p-5 border border-green-200 hover:shadow-lg transition duration-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-medium text-green-700">Sudah Presensi</h3>
+                <p class="text-4xl font-bold text-green-600 mt-2">1 Kelas</p>
+              </div>
+              <div class="text-green-500 text-3xl">
+                <i class="bi bi-check2-circle"></i>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      
     
-      <!-- Info box -->
-      <div class="p-6 bg-white w-full md:w-1/2 rounded-xl shadow-lg border border-gray-200">
-        <h2 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-500" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          Informasi Hari Ini
-        </h2>
-    
-        <div class="text-sm text-gray-700 space-y-3">
-          <p>📅 <span class="font-medium">Tanggal:</span>
-            <span class="text-gray-900">
-              {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
-            </span>
-          </p>
-          <p>🕘 <span class="font-medium">Jadwal Mengajar Hari Ini:</span> 2 kelas</p>
-          <p>✅ <span class="font-medium">Presensi:</span> 1 dari 2 kelas sudah dipresensi</p>
-          <p>📢 <span class="font-medium">Pengumuman:</span> Sistem presensi ditutup pukul 23:59 WIB.</p>
-        </div>
+      <!-- KANAN: Grafik -->
+      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100 h-full flex flex-col">
+        <h2 class="text-xl font-semibold text-gray-400 mb-4">Grafik Kehadiran Bulanan</h2>
+        <div id="grafik-kehadiran" class="w-full h-64 bg-gray-100 rounded-md"></div>
       </div>
     </div>
     
     
     <div class="flex flex-col md:flex-row gap-5">
-      <!-- Tabel Dosen -->
       <div class="w-[310px] md:w-3/4 bg-white rounded-sm shadow-xl">
-        <div class="p-4 rounded-t-xl border-b-2 border-gray-300 flex justify-between items-center">
-          <h1 class="text-gray-500 text-lg font-semibold">Jadwal Mengajar Hari Ini</h1>
-          <span class="text-sm text-gray-400">
-            {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
-          </span>
+        <!-- Header -->
+        <div class="mb-3 p-4 rounded-t-xl border-b-2 border-gray-300 flex justify-between items-center flex-wrap gap-2">
+          <h1 class="text-gray-500 text-lg font-semibold">Daftar Dosen Mengajar Hari Ini</h1>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari..."
+            class="w-full md:w-[200px] text-sm border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
         </div>
-        <div class="overflow-auto h-[300px] px-4 pb-4 mt-5">
-          <div class="overflow-x-auto min-w-[600px] w-full">
-            <table class="w-full text-sm text-left text-gray-700 border border-gray-200">
-              <thead class="bg-gray-300 text-gray-800 sticky top-0 z-10">
-                <tr>
-                  <th class="px-4 py-3 border-b text-center border-gray-300 rounded-tl-lg">Jam</th>
-                  <th class="px-4 py-3 border-b text-center border-gray-300">Mata Kuliah</th>
-                  <th class="px-4 py-3 border-b text-center border-gray-300">Program Studi</th>
-                  <th class="px-4 py-3 border-b text-center border-gray-300">Kelas</th>
-                  <th class="px-4 py-3 border-b text-center border-gray-300">Semester</th>
-                  <th class="px-4 py-3 border-b text-center border-gray-300 rounded-tr-lg">Ruangan</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
-                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Manajemen Kesehatan</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Inter A</td>
-                  <td class="px-4 py-3 border-t border-gray-200">4</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
-                </tr>
-                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
-                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Manajemen Kesehatan</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Inter A</td>
-                  <td class="px-4 py-3 border-t border-gray-200">4</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
-                </tr>
-                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
-                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Manajemen Kesehatan</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Inter A</td>
-                  <td class="px-4 py-3 border-t border-gray-200">4</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
-                </tr>
-                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
-                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Manajemen Kesehatan</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Inter A</td>
-                  <td class="px-4 py-3 border-t border-gray-200">4</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
-                </tr>
-                <tr class="even:bg-gray-50 hover:bg-gray-100 transition duration-150">
-                  <td class="px-4 py-3 border-t border-gray-200">08.00 - 10.00</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Metodologi Ilmu</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Manajemen Kesehatan</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Inter A</td>
-                  <td class="px-4 py-3 border-t border-gray-200">4</td>
-                  <td class="px-4 py-3 border-t border-gray-200">Lt4</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>        
+      
+        <!-- Tabel Scrollable -->
+        <div class="px-3 pb-3 overflow-x-auto max-h-[400px] overflow-y-auto">
+          <table class="min-w-full divide-y divide-gray-200 text-sm" id="dosenTable">
+            <thead class="bg-gray-100 sticky top-0 z-10 text-gray-700">
+              <tr>
+                <th class="px-4 py-2 text-left">No</th>
+                <th class="px-4 py-2 text-left">Program Studi</th>
+                <th class="px-4 py-2 text-left">Semester</th>
+                <th class="px-4 py-2 text-left">Mata Kuliah</th>
+                <th class="px-4 py-2 text-left">Ruangan</th>
+                <th class="px-4 py-2 text-left">Jam Mulai</th>
+                <th class="px-4 py-2 text-left">Jam Akhir</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-gray-700">
+              @foreach (range(1, 5) as $i)
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2">{{ $i }}</td>
+                <td class="px-4 py-2">MIK</td>
+                <td class="px-4 py-2">2</td>
+                <td class="px-4 py-2">English</td>
+                <td class="px-4 py-2">3.2</td>
+                <td class="px-4 py-2">08.00</td>
+                <td class="px-4 py-2">10.00</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div class="w-[310px] md:w-1/2 bg-white rounded-sm shadow-xl">
-        <div class="p-4 rounded-t-xl border-b-2 border-gray-300 flex justify-between items-center">
-          <h1 class="text-gray-500 text-lg font-semibold">Ringkasan Presensi Dosen</h1>
+      <div class="w-[310px] md:w-1/4 bg-white rounded-md shadow-xl">
+        <div class="p-4 border-b-2 border-gray-300 flex justify-between items-center">
+          <h1 class="text-gray-500 text-lg font-semibold tracking-wide">Mahasiswa Tidak Hadir Hari Ini</h1>
         </div>
-        <div class="p-4 overflow-x-auto">
-          <p class="text-gray-500 text-sm">Statistik presensi dosen selama 1 semester:</p>
-          <div id="chart-doghout-dosen" class="w-full h-64 min-w-[300px]"></div>
+        <div class="p-4 space-y-4 text-sm text-gray-700 max-h-[430px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          @foreach (range(1, 10) as $i)
+          <div class="item-mahasiswa flex items-start gap-4 p-3 rounded-md border border-red-200 hover:shadow transition-all">
+            <img src="https://ui-avatars.com/api/?name=P+Budiyanto&background=EF4444&color=fff"
+                 alt="P Budiyanto"
+                 class="w-12 h-12 rounded-full object-cover">
+            
+            <div class="flex-1">
+              <p class="nama font-semibold text-gray-800">P Budiyanto</p>
+              <p class="text-xs text-gray-500 mb-1">MIK - Semester 2 • English</p>
+              
+              <div class="flex flex-wrap gap-2 text-xs text-gray-600 mb-1">
+                <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-md">Ruangan: 3.2</span>
+                <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-md">08.00 - 10.00</span>
+              </div>
+          
+              <!-- Status Alpha -->
+              <span class="inline-block text-xs font-medium text-red-700 bg-red-100 px-2 py-0.5 rounded-md">
+                Alpha
+              </span>
+            </div>
+          </div>
+                   
+          @endforeach
         </div>
       </div>
     </div>

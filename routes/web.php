@@ -25,7 +25,7 @@ Route::middleware(['auth'])->get('/dashboard', function () {
 //     if (auth('mahasiswa')->check()) return redirect()->route('mahasiswa.dashboard');
 //     abort(403);
 // });
-// Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () { 
 
 
 // Route::get('/dashboard', function () {

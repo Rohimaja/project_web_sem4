@@ -25,8 +25,26 @@ document.addEventListener("DOMContentLoaded", function () {
         ],
         xaxis: {
             categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
+            labels: {
+                style: {
+                    colors: "#555",
+                },
+            },
         },
-        colors: ["#2563eb", "#f59e0b", "#ef4444"], // Biru, Orange, Merah
+        yaxis: {
+            labels: {
+                style: {
+                    colors: "#555",
+                },
+            },
+        },
+        dataLabels: {
+            enabled: true,
+            style: {
+                colors: ["#555"],
+            },
+        },
+        colors: ["#2563eb", "#f59e0b", "#ef4444"],
     };
 
     const chartContainer = document.querySelector("#chart");
@@ -37,107 +55,38 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+// DOSEN DOSEN DOSEN
+document.addEventListener("DOMContentLoaded", () => {
     const options = {
         chart: {
-            type: "donut",
-            height: 300,
-            toolbar: { show: false },
-        },
-        series: [70, 20, 10], // Hadir, Izin, Alpha
-        labels: ["Hadir 2025", "Izin 2025", "Alpha 2025"],
-        colors: ["#2563eb", "#f59e0b", "#ef4444"],
-        legend: {
-            position: "bottom",
-        },
-        plotOptions: {
-            pie: {
-                donut: {
-                    size: "60%",
-                    labels: {
-                        show: true,
-                        total: {
-                            show: true,
-                            label: "Total Absensi",
-                            formatter: function (w) {
-                                return (
-                                    w.globals.seriesTotals.reduce(
-                                        (a, b) => a + b,
-                                        0
-                                    ) + "%"
-                                );
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    };
-
-    const chartContainer = document.querySelector("#chart-doghout");
-
-    if (chartContainer) {
-        const chart = new ApexCharts(chartContainer, options);
-        chart.render();
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const options = {
-        chart: {
-            type: "line",
-            height: 300,
+            type: "bar",
+            height: 250,
             toolbar: { show: false },
         },
         series: [
             {
-                name: "Hadir 2025",
-                data: [30, 40, 45, 50, 49, 60, 70, 65, 55, 48, 52, 60],
+                name: "Jumlah Presensi",
+                data: [5, 4, 6, 3], // Minggu 1 - 4
             },
         ],
         xaxis: {
-            categories: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "Mei",
-                "Jun",
-                "Jul",
-                "Agu",
-                "Sep",
-                "Okt",
-                "Nov",
-                "Des",
-            ],
+            categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
         },
-        colors: ["#2563eb"], // Warna biru untuk Hadir
-        stroke: {
-            curve: "smooth", // Garis melengkung
-            width: 3,
-        },
-        markers: {
-            size: 5,
-            colors: ["#2563eb"],
-            strokeWidth: 2,
-            hover: {
-                size: 7,
+        colors: ["#1E88E5"],
+        plotOptions: {
+            bar: {
+                borderRadius: 6,
+                columnWidth: "50%",
             },
         },
         dataLabels: {
-            enabled: false,
-        },
-        yaxis: {
-            title: {
-                text: "Jumlah Kehadiran",
-            },
+            enabled: true,
         },
     };
 
-    const chartContainer = document.querySelector("#chart-dosen");
-
-    if (chartContainer) {
-        const chart = new ApexCharts(chartContainer, options);
-        chart.render();
-    }
+    const chart = new ApexCharts(
+        document.querySelector("#grafik-kehadiran"),
+        options
+    );
+    chart.render();
 });

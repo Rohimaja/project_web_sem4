@@ -1,17 +1,35 @@
 <?php
 
-use App\Http\Controllers\Dosen\DashboardController;
 use App\Http\Controllers\Admin\KalenderAkademikController;
+use App\Http\Controllers\Dosen\RekapDosenController;
+use App\Http\Controllers\Dosen\RekapMahasiswaController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Dosen\DashboardController;
+use App\Http\Controllers\Dosen\JadwalController;
+use App\Http\Controllers\Dosen\PresensiController;
 use App\Http\Controllers\Dosen\ProfileController;
 
+
+
+
+
 Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
+    Route::get('/presensi',[PresensiController::class,'index'])->name('presensi');
+    
     Route::resource('kalender-akademik', KalenderAkademikController::class)
     ->except(['show']);
     Route::get('kalender-akademik/view', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
     Route::post('/validate-field/kalender-akademik', [KalenderAkademikController::class, 'validateField'])->name('admin.validate.field.kalender');
 
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+
+    Route::get('/jadwal',[JadwalController::class,'index'])->name('jadwal');
+
+    
+    Route::resource('rekap-dosen', RekapDosenController::class);
+    Route::resource('rekap-mahasiswa', RekapMahasiswaController::class);
+
+    
 
 
 

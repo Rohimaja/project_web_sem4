@@ -15,11 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         $title = 'Dashboard';
-        $mahasiswa = Mahasiswa::count();
-        $dosen = Dosen::count();
-        $matkul = Matkul::count();
-        $prodi = Prodi::count();
-        return view('dosen.dashboard',compact('title','dosen','mahasiswa','matkul','prodi'));
+        return view('dosen.dashboard',compact('title'));
 
     }
 }
