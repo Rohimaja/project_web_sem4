@@ -112,13 +112,10 @@ class AdminController extends Controller
     {
         try {
             // Cari data mahasiswa berdasarkan ID
-            $admin = Admin::findOrFail($id);
+            $admin = Admin::with('province','regency','district','village')->findOrFail($id);
 
             // Kirimkan data mahasiswa sebagai response JSON
-            return response()->json([
-                'status' => 'success',
-                'data' => $admin
-            ]);
+            return response()->json( $admin);
         } catch (\Exception $e) {
             // Jika ada kesalahan, kembalikan pesan error
             return response()->json([

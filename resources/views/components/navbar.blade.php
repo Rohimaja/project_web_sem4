@@ -130,6 +130,65 @@
     @endif
 
 
+    @if (Auth::user()->role === 'mahasiswa')
+      <div class="relative flex items-center gap-2" x-data="{ open: false }">
+        <div class="relative flex gap-5 items-center mr-2">
+            <div x-data="{ isDark: false }">
+                <button @click="isDark = !isDark" class="text-gray-600 text-lg hover:text-black">
+                    <template x-if="!isDark">
+                        <i class="bi bi-sun"></i> <!-- Matahari -->
+                    </template>
+                    <template x-if="isDark">
+                        <i class="bi bi-moon"></i> <!-- Bulan -->
+                    </template>
+                </button>
+            </div>
+
+            <a href="{{ route('admin.kalender-akademik.view') }}" class="relative group">
+                <i class="bi bi-calendar3 text-gray-600 text-lg mb-1"></i>
+                <span class="absolute left-1/2 top-full mt-1 -translate-x-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                    Kalender Akademik
+                </span>
+              </a>
+
+
+
+            <div class="w-px h-10 bg-gray-400"></div>
+        </div>
+
+        <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 focus:outline-none">
+            <img src="{{ $profile?->foto ? asset('storage/' . $profile->foto) : asset('images/profil-kosong.png') }}"
+                 class="w-10 h-10 rounded-full object-cover border-2 border-white hover:border-gray-300" alt="User">
+            <span class="text-gray-600 hidden md:inline">{{ Auth::user()->name }}</span>
+            <svg class="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"/>
+            </svg>
+        </button>
+
+        <div x-show="open" x-cloak x-transition.top.duration.300ms class="absolute top-14 right-4 w-56 p-2 rounded-md bg-white shadow-xl text-gray-800 font-semibold z-50">
+            <a href="{{ route('dosen.profile.edit') }}" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition w-full">
+                <i class="bi bi-person-circle text-lg"></i>
+                <span>Profile</span>
+            </a>
+            <a href="{{ route('dosen.change-password') }}" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition w-full">
+                <i class="bi bi-gear-fill text-lg"></i>
+                <span>Ubah Password</span>
+            </a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition w-full text-left">
+                    <i class="bi bi-box-arrow-left text-lg"></i>
+                    <span>Log Out</span>
+                </button>
+            </form>
+        </div>
+
+    </div>
+    @endif
+
+
     </div>
   </div>
 </nav>

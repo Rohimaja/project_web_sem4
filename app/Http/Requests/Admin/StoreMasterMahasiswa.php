@@ -27,7 +27,7 @@ class StoreMasterMahasiswa extends FormRequest
         $id = $id ?? $this->route('master_mahasiswa');
 
         return [
-            'nim' => ['required', 'max:10', Rule::unique('mahasiswas', 'nim')->ignore($id),],
+            'nim' => ['required', 'max:10','min:8', Rule::unique('mahasiswas', 'nim')->ignore($id),],
             'nama' => 'required|max:100',
             'jenis_kelamin' => 'required',
             'agama' => 'required',
@@ -49,9 +49,10 @@ class StoreMasterMahasiswa extends FormRequest
 
     public function messages(){
         return [
-            'nim.required' => 'Nip tidak boleh kosong',
-            'nim.max' => 'Nip Maksimal 18 Karakter',
-            'nim.unique' => 'Nip sudah terdaftar',
+            'nim.required' => 'Nim tidak boleh kosong',
+            'nim.max' => 'Nim Maksimal 10 Karakter',
+            'nim.min' => 'Nim Minimal 8 Karakter',
+            'nim.unique' => 'Nim sudah terdaftar',
 
             'nama.required' => 'Nama tidak boleh kosong',
             'nama.max' => 'Nama maksimal 100 karakter',

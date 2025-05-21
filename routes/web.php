@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,9 @@ Route::middleware(['auth'])->get('/dashboard', function () {
 Route::get('/mahasiswa/dashboard', function () {
     return view('mahasiswa.dashboard', ['title'=>'Dashboard', 'rute' =>'mahasiswa -> Dashboard']);
 })->middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.dashboard');
+
+Route::get('/getMatkulByProdi', [PresensiController::class, 'getMatkulByProdi']);
+
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -115,9 +115,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     function loadMatkul(prodiId, semester, oldMatkulId = null) {
         if (prodiId || semester) {
-            fetch(
-                `/admin/getMatkulByProdi?prodi=${prodiId}&semester=${semester}`
-            )
+            fetch(`/getMatkulByProdi?prodi=${prodiId}&semester=${semester}`)
                 .then((response) => response.json())
                 .then((data) => {
                     const mataKuliahSelect = $("#matkul");

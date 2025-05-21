@@ -23,16 +23,33 @@ class StorePresensi extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        // return [
+        //     'tgl_presensi' => 'required',
+        //     'jam_awal' => 'required',
+        //     'jam_akhir' => 'required|after:jam_awal',
+        //     'dosen_id' => 'required',
+        //     'prodi_id' => 'required',
+        //     'semester' => 'required',
+        //     'matkul_id' => 'required',
+        //     'ruangan_id' => 'required',
+        // ];
+
+        $rules = [
             'tgl_presensi' => 'required',
             'jam_awal' => 'required',
             'jam_akhir' => 'required|after:jam_awal',
-            'dosen_id' => 'required',
             'prodi_id' => 'required',
             'semester' => 'required',
             'matkul_id' => 'required',
             'ruangan_id' => 'required',
         ];
+
+        // Hanya validasi dosen_id jika role-nya admin
+        if (auth()->user()->role === 'admin') {
+            $rules['dosen_id'] = 'required';
+        }
+
+        return $rules;
     }
 
     public function messages(){

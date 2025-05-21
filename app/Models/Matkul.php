@@ -21,13 +21,18 @@ class Matkul extends Model
     ];
 
     public function prodi()
-{
-    return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
-}
+    {
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
+    }
 
-public function tahun()
-{
-    return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id', 'id');
-}
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class);
+    }
+
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id', 'id');
+    }
 
 }

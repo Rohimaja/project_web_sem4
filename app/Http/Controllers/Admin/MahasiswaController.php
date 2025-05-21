@@ -64,7 +64,7 @@ class MahasiswaController extends Controller
                     'name' => $request->nama,
                     'nim' => $request->nim,
                     'role' => 'mahasiswa', // default role admin
-                    'password' => Hash::make('password123'), // default password sementara
+                    'password' => Hash::make($request->nim), // default password sementara
                 ]);
 
                 $fotoPath = null;
@@ -123,7 +123,7 @@ class MahasiswaController extends Controller
      */
     public function show(string $id)
     {
-        $mahasiswa = Mahasiswa::with(relations: ['prodi', 'tahun','province','regency','district','village'])->findOrFail($id);
+        $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','province','regency','district','village'])->findOrFail($id);
         return response()->json($mahasiswa);
 
     }
@@ -153,6 +153,7 @@ class MahasiswaController extends Controller
             'no_telp' => trim($request->no_telp),
             'alamat' => trim($request->alamat),
             'tahun_masuk' => trim($request->tahun_masuk),
+            'password' => trim($request->new_password),
         ]);
 
         try {
@@ -209,7 +210,7 @@ class MahasiswaController extends Controller
                 $userData['password'] = Hash::make($request->new_password);
             }
 
-            $user->update($userData);
+                $user->update($userData);
             });
 
             return redirect()->route('admin.master-mahasiswa.index')->with([

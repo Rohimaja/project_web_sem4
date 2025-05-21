@@ -50,46 +50,111 @@
         </div>
     </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const forms = document.querySelectorAll('.form-hapus');
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const forms = document.querySelectorAll('.form-hapus');
 
-        forms.forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault(); // Jangan langsung submit
+    //     forms.forEach(form => {
+    //         form.addEventListener('submit', function (e) {
+    //             e.preventDefault(); // Jangan langsung submit
 
-                Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: "Data yang dihapus tidak bisa dikembalikan!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit(); // Baru submit form kalau user tekan "Ya"
-                    }
-                });
-            });
+    //             Swal.fire({
+    //                 title: 'Apakah Anda yakin?',
+    //                 text: "Data yang dihapus tidak bisa dikembalikan!",
+    //                 icon: 'warning',
+    //                 showCancelButton: true,
+    //                 confirmButtonColor: '#d33',
+    //                 cancelButtonColor: '#3085d6',
+    //                 confirmButtonText: 'Ya, hapus!',
+    //                 cancelButtonText: 'Batal'
+    //             }).then((result) => {
+    //                 if (result.isConfirmed) {
+    //                     form.submit(); // Baru submit form kalau user tekan "Ya"
+    //                 }
+    //             });
+    //         });
+    //     });
+
+    //     @if (session('status') && session('message'))
+    //         Swal.fire({
+    //             icon: '{{ session('status') }}',
+    //             title: '{{ ucfirst(session('status')) }}',
+    //             text: '{{ session('message') }}',
+    //             timer: 2000,
+    //             timerProgressBar: true,
+    //             showConfirmButton: false,
+    //             // willClose: () => {
+    //             //     @if (session('redirect'))
+    //             //         window.location.href = '{{ session('redirect') }}';
+    //             //     @endif
+    //             // }
+    //         });
+    //     @endif
+    // });
+
+
+
+
+document.addEventListener('submit', function (e) {
+    if (e.target.classList.contains('form-hapus')) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                e.target.submit();
+            }
         });
+    }
+
+    if (e.target.classList.contains('form-presensi')) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Pastikan data sudah sesuai!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Ya, simpan!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                e.target.submit();
+            }
+        });
+    }
+});
 
         @if (session('status') && session('message'))
-            Swal.fire({
-                icon: '{{ session('status') }}',
-                title: '{{ ucfirst(session('status')) }}',
-                text: '{{ session('message') }}',
-                timer: 2000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-                // willClose: () => {
-                //     @if (session('redirect'))
-                //         window.location.href = '{{ session('redirect') }}';
-                //     @endif
-                // }
+            window.addEventListener('pageshow', function (event) {
+                if (!event.persisted) {
+                    Swal.fire({
+                        icon: '{{ session('status') }}',
+                        title: '{{ ucfirst(session('status')) }}',
+                        text: '{{ session('message') }}',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    });
+                    if (window.history.replaceState) {
+                        window.history.replaceState(null, null, window.location.href);
+                    }
+                }
             });
         @endif
-    });
+
+
+
+
 
 
     </script>

@@ -66,7 +66,8 @@ $(document).ready(function () {
                             // item.prodi?.jenjang & item.prodi?.nama_prodi ?? "-",
                             // `<div style="text-align:center;">${item.semester}</div>`, // Semester ditengah
                             `<div class="flex gap-2 justify-center">
-                                <button class="btn-detail px-2 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded-md" data-id="${item.id}">
+                                <button @click="openView = true; $nextTick(() => loadMahasiswaDetail(${item.id}))"
+                                        class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">
                                     <i class="bi bi-eye text-lg"></i>
                                 </button>
                                 <a href="/admin/master-mahasiswa/${item.id}/edit" class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">
@@ -91,55 +92,55 @@ $(document).ready(function () {
     });
 });
 
-$(document).on("click", ".btn-detail", function () {
-    const id = $(this).data("id");
+// $(document).on("click", ".btn-detail", function () {
+//     const id = $(this).data("id");
+
+//     // Tampilkan modal detail (Alpine.js atau manual)
+//     if (typeof openView !== "undefined") {
+//         openView = true;
+//     }
+
+//     // Panggil fungsi untuk ambil detail mahasiswa
+//     loadMahasiswaDetail(id);
+// });
+
+window.loadMahasiswaDetail = function (id) {
     $.ajax({
-        url: `/admin/master-mahasiswa/${id}`, // sesuaikan jika prefix route-nya /admin/...
-        type: "GET",
-        success: function (data) {
-            const html = `
-                <div class="flex justify-center mb-4">
-                    <div class="w-24 h-24 rounded-full overflow-hidden">
-                        <img src="/storage/${
-                            data.foto
-                        }" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <div><strong>Nama:</strong> ${data.nama}</div>
-                    <div><strong>NIM:</strong> ${data.nim}</div>
-                    <div><strong>Jenis Kelamin:</strong> ${
-                        data.jenis_kelamin
-                    }</div>
-                    <div><strong>Agama:</strong> ${data.agama ?? "-"}</div>
-                    <div><strong>TTL:</strong> ${data.tempat_lahir}, ${
-                data.tgl_lahir
-            }</div>
-                    <div><strong>Email:</strong> ${data.email}</div>
-                    <div><strong>Telepon:</strong> ${data.no_telp ?? "-"}</div>
-                    <div><strong>Alamat:</strong> ${data.alamat}</div>
-                    <div><strong>Provinsi:</strong> ${
-                        data.province?.name ?? "-"
-                    }</div>
-                    <div><strong>Kabupaten:</strong> ${
-                        data.regency?.name ?? "-"
-                    }</div>
-                    <div><strong>Kecamatan:</strong> ${
-                        data.district?.name ?? "-"
-                    }</div>
-                    <div><strong>Kelurahan:</strong> ${
-                        data.village?.name ?? "-"
-                    }</div>
-                    <div><strong>Prodi:</strong> ${data.prodi?.jenjang ?? ""} ${
-                data.prodi?.nama_prodi ?? ""
-            }</div>
-                </div>
-            `;
-            $("#modal-body").html(html);
-            document.querySelector("#modal-detail").__x.$data.open = true;
+        url: "/admin/master-mahasiswa/" + id,
+        method: "GET",
+        success: function (res) {
+            console.log(res);
+
+            // Isi konten modal
+            if (res.foto) {
+                $("#foto").attr("src", "/storage/" + res.foto);
+            } else {
+                $("#foto").attr("src", "/images/profil-kosong.png");
+            }
+            $("#nama").val(res.nama);
+            $("#nim").val(res.nim);
+            $("#rfid").val(res.rfid);
+            $("#jenis_kelamin").val(res.jenis_kelamin);
+            $("#agama").val(res.agama);
+            $("#tempat_lahir").val(res.tempat_lahir);
+            $("#tgl_lahir").val(res.tgl_lahir);
+            $("#email").val(res.email);
+            $("#no_telp").val(res.no_telp);
+            $("#alamat").val(res.alamat);
+            $("#prodi-mahasiswa").val(
+                res.prodi.jenjang + " " + res.prodi.nama_prodi
+            );
+            $("#no_telp").val(res.no_telp);
+            $("#tahun_masuk").val(res.tahun_masuk);
+            $("#semester-mahasiswa").val(res.semester);
+            $("#provinsi").val(res.province.name);
+            $("#kota").val(res.regency.name);
+            $("#kecamatan").val(res.district.name);
+            $("#kelurahan").val(res.village.name);
+            // Tambah field lainnya sesuai response JSON
         },
         error: function () {
-            alert("Gagal mengambil data mahasiswa.");
+            alert("Gagal mengambil data dosen");
         },
     });
-});
+};

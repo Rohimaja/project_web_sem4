@@ -21,13 +21,12 @@ class MatkulController extends Controller
     public function index()
     {
         $title = 'Data Mata Kuliah';
-        // $matkul = Matkul::all();
-        // $prodi = Matkul::with('prodi')->get();
-        // $tahun = Matkul::with('tahunAjaran')->get();
-        $matkul = Matkul::with( ['prodi', 'tahun'])->get();
+        $prodi = Prodi::all();
+        $tahun = TahunAjaran::all();
+        $matkul = Matkul::with( ['prodi', 'tahunAjaran'])->get();
 
 
-        return view('admin.master_data.matkul', compact('title', 'matkul'));
+        return view('admin.master_data.matkul', compact('title','prodi','tahun', 'matkul'));
     }
 
     /**
@@ -193,6 +192,32 @@ class MatkulController extends Controller
 
         // Gabungkan semuanya
         return $kodeProdi . $tahunSekarang . $newNumber;
+    }
+
+
+
+    public function getFilterMatkul(Request $request){
+        $prodi = $request->query('prodi');
+        $semester = $request->query('semester');
+        $tahun = $request->query('tahun_ajaran');
+
+        $query = Matkul::query()->with('prodi','tahunAjaran');
+
+        if ($prodi) {
+            $query->where('prodi_id', $prodi);
+        }
+
+        if ($semester) {
+            $query->where('semester', $semester);
+        }
+
+        if ($tahun) {
+            $query->where('tahun_ajaran_id', $tahun);
+        }
+
+        $matkul = $query->get();
+
+        return response()->json($matkul);
     }
 
     public function validateField(Request $request)

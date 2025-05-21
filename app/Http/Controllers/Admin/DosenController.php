@@ -118,13 +118,10 @@ class DosenController extends Controller
     {
         try {
             // Cari data mahasiswa berdasarkan ID
-            $dosen = Dosen::with('prodi')->findOrFail($id);
+            $dosen = Dosen::with('prodi','province','regency','district','village')->findOrFail($id);
 
             // Kirimkan data mahasiswa sebagai response JSON
-            return response()->json([
-                'status' => 'success',
-                'data' => $dosen
-            ]);
+            return response()->json($dosen);
         } catch (\Exception $e) {
             // Jika ada kesalahan, kembalikan pesan error
             return response()->json([
