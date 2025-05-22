@@ -18,7 +18,7 @@ class TahunAjaranController extends Controller
     public function index()
     {
         $title = 'Data Tahun Ajaran';
-        $tahun = TahunAjaran::all();
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
         return view('admin.master_data.tahunAjaran',compact('title','tahun'));
 
     }

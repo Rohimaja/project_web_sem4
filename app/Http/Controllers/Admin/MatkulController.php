@@ -22,7 +22,7 @@ class MatkulController extends Controller
     {
         $title = 'Data Mata Kuliah';
         $prodi = Prodi::all();
-        $tahun = TahunAjaran::all();
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
         $matkul = Matkul::with( ['prodi', 'tahunAjaran'])->get();
 
 
@@ -35,7 +35,7 @@ class MatkulController extends Controller
     public function create()
     {
         $prodi = Prodi::all(); // Ambil semua data prodi
-        $tahun = TahunAjaran::all(); // Ambil semua data prodi
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
         $title = 'Tambah Data'; // Ambil semua data prodi
         return view('admin.master_data.form-matkul', compact('prodi','tahun', 'title'));
     }
@@ -97,7 +97,7 @@ class MatkulController extends Controller
     {
         $matkul = Matkul::findOrFail($id);
         $prodi = Prodi::all(); // Ambil semua data prodi
-        $tahun = TahunAjaran::all(); // Ambil semua data prodi
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
         $title = 'Update Data'; // Ambil semua data prodi
         return view('admin.master_data.form-matkul', compact('matkul','prodi','tahun', 'title'));
     }

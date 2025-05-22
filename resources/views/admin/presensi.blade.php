@@ -27,21 +27,25 @@
             </div>
 
             <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
-                <table id="data-presensi" class="text-sm text-left w-full display">
+                <table id="data-presensi" class="text-sm text-left w-full display nowrap pt-2">
                     <thead class="bg-gray-200 dark:bg-gray-500 text-gray-700 dark:text-gray-200 sticky top-0 z-10">
                         <tr>
-                            @foreach (['No', 'Tanggal', 'Dosen', 'Jam Perkuliahan', 'Program Studi', 'Semester', 'Mata Kuliah', 'Ruangan', 'Aksi'] as $header)
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $header }}</th>
-                            @endforeach
+                            <th class="border border-gray-300 px-4 py-2">Tanggal</th>
+                            <th class="border border-gray-300 px-4 py-2">Dosen</th>
+                            <th class="border border-gray-300 px-4 py-2">Jam Perkuliahan</th>
+                            <th class="border border-gray-300 px-4 py-2">Program Studi</th>
+                            <th class="border border-gray-300 px-4 py-2">Semester</th>
+                            <th class="border border-gray-300 px-4 py-2">Mata Kuliah</th>
+                            <th class="border border-gray-300 px-4 py-2">Ruangan</th>
+                            <th class="border border-gray-300 px-4 py-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($presensi as $p)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $loop->iteration }}</td>
                                 <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $p->tgl_presensi }}</td>
                                 <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $p->dosen->nama }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $p->jam_awal . ' - ' . $p->jam_akhir }}</td>
+                                <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ substr($p->jam_awal, 0,5) . ' - ' . substr($p->jam_akhir, 0,5) }}</td>
                                 <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $p->prodi->jenjang . ' ' . $p->prodi->nama_prodi }}</td>
                                 <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $p->semester }}</td>
                                 <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $p->matkul->nama_matkul }}</td>

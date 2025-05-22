@@ -69,7 +69,7 @@ $(document).ready(function () {
         let endDate = $("#end-date").val()
             ? new Date($("#end-date").val())
             : null;
-        let date = new Date(data[1]); // Sesuaikan kolom tanggal pada tabel Anda
+        let date = new Date(data[0]); // Sesuaikan kolom tanggal pada tabel Anda
 
         // Filter berdasarkan "Hari Ini"
         if (filter === "today") {

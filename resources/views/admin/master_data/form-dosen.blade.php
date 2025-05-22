@@ -18,25 +18,25 @@
                 <div class="flex flex-col md:flex-row items-center gap-6 mb-6">
                     <!-- Preview Foto -->
                     <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gray-300 shadow-sm">
-                        <img 
-                            src="{{ isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : asset('images/profil-kosong.png') }}" 
-                            id="previewImage" 
-                            class="w-full h-full object-cover" 
+                        <img
+                            src="{{ isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : asset('images/profil-kosong.png') }}"
+                            id="previewImage"
+                            class="w-full h-full object-cover"
                             alt="Preview Foto"
                         >
                     </div>
-                
+
                     <!-- Info & Tombol -->
                     <div class="flex flex-col gap-3 text-center md:text-left md:ml-4">
                         <p class="text-gray-600 text-sm">Format file yang didukung: <span class="font-medium">JPEG, JPG, PNG</span></p>
-                
+
                         <div class="flex flex-wrap justify-center md:justify-start gap-3">
                             <input type="file" name="foto" id="foto" accept="image/*" class="hidden">
-                            
+
                             <label for="foto" class="px-2 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow cursor-pointer transition">
                                 Unggah Foto
                             </label>
-                            
+
                             <button type="button" id="resetFoto" class="px-2 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md shadow transition">
                                 Hapus Foto
                             </button>
@@ -143,13 +143,13 @@
                         @enderror
                     </div>
 
-                    @if (isset($dosen))
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Password:</label>
-                        <input type="hidden" name="old_password" id="old_password" value="{{$dosen->password ?? ''}}">
-                        <input type="password" class="p-2 border-2 border-gray-400 rounded-sm" name="new_password" id="password" placeholder="Masukkan Password">
+                        @if (isset($dosen))
+                            <label for="" class="mb-1 font-semibold">Password:</label>
+                            <input type="hidden" name="old_password" id="old_password" value="{{$dosen->password ?? ''}}">
+                            <input type="password" class="p-2 border-2 border-gray-400 rounded-sm" name="new_password" id="password" placeholder="Masukkan Password">
+                        @endif
                     </div>
-                    @endif
                 </div>
 
                 <h1 class="font-bold text-gray-800 text-2xl my-2 text-center xl:text-left">Alamat</h1>

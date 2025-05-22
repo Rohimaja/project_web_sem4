@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('kalender-akademik', KalenderAkademikController::class)
     ->except(['show']);
-    Route::get('kalender-akademik/view', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
+    // Route::get('kalender-akademik', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
     Route::post('/validate-field/kalender-akademik', [KalenderAkademikController::class, 'validateField'])->name('admin.validate.field.kalender');
 
 
@@ -72,10 +72,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');
 
     Route::resource('rekap-dosen', RekapDosenController::class);
-    Route::post('admin/rekap-dosen', [RekapDosenController::class, 'rekapDosen'])->name('rekap-dosen.filter');
+    Route::post('rekap-dosen', [RekapDosenController::class, 'rekapDosen'])->name('rekap-dosen.filter');
 
     Route::resource('rekap-mahasiswa', RekapMahasiswaController::class);
-    Route::post('admin/rekap-mahasiswa', [RekapMahasiswaController::class, 'rekapMahasiswa'])->name('rekap-mahasiswa.filter');
+    Route::post('rekap-mahasiswa', [RekapMahasiswaController::class, 'rekapMahasiswa'])->name('rekap-mahasiswa.filter');
+
+
+    Route::post('/rekap-dosen/export/pdf', [RekapDosenController::class, 'exportPdf'])->name('export.dosen.pdf');
+    Route::post('/rekap-dosen/export/excel', [RekapDosenController::class, 'exportExcel'])->name('export.dosen.excel');
+
+    Route::post('/rekap-mahasiswa/export/pdf', [RekapMahasiswaController::class, 'exportPdf'])->name('export.mahasiswa.pdf');
+    Route::post('/rekap-mahasiswa/export/excel', [RekapMahasiswaController::class, 'exportExcel'])->name('export.mahasiswa.excel');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -33,28 +33,38 @@
             </div>
         </div>
 
-            <div class="w-full flex justify-end">
+            <div class="w-full flex justify-end mb-6">
                 <a href="{{route('admin.rekap-dosen.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Reset</a>
                 <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
             </div>
         </form>
 
-      <div class="mt-2 mb-5 flex gap-4">
-        <a href="">
-          <button class="flex items-center px-4 py-2.5 text-white bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-sm font-semibold cursor-pointer">
-            <i class="bi bi-file-earmark-excel mr-2"></i>
-            <span>Export Excel</span>
-          </button>
-        </a>
+    @if ($dosenTerpilih && $tahunTerpilih)
+        <div class="mt-2 mb-5 flex gap-4">
+            <form action="{{route('admin.export.dosen.excel')}}" method="POST">
+                @csrf
+                <input type="hidden" name="dosen" value="{{ request('dosen') }}">
+                <input type="hidden" name="tahun_ajaran" value="{{ request('tahun_ajaran') }}">
 
-        <button @click="openImport = !openImport" class="flex items-center px-4 py-2.5 text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-sm font-semibold cursor-pointer">
-          <i class="bi bi-filetype-pdf mr-2"></i>
-          <span>Export Pdf</span>
-        </button>
-      </div>
+                <button class="flex items-center px-4 py-2.5 text-white bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-sm font-semibold cursor-pointer">
+                    <i class="bi bi-file-earmark-excel mr-2"></i>
+                    <span>Export Excel</span>
+                </button>
+            </form>
+
+            <form action="{{ route('admin.export.dosen.pdf') }}" method="POST">
+                @csrf
+                <input type="hidden" name="dosen" value="{{ request('dosen') }}">
+                <input type="hidden" name="tahun_ajaran" value="{{ request('tahun_ajaran') }}">
+
+                <button type="submit" class="flex items-center px-4 py-2.5 text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-sm font-semibold cursor-pointer">
+                    <i class="bi bi-filetype-pdf mr-2"></i>
+                    <span>Export PDF</span>
+                </button>
+            </form>
+        </div>
 
 
-        @if ($dosenTerpilih)
             <div class="flex flex-col gap-3 mt-3">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
 
@@ -84,7 +94,7 @@
                     @for ($i = 1; $i <= $totalPertemuan; $i++)
                         <th class="border border-gray-300 px-4 py-2 text-center">{{ $i }}</th>
                     @endfor
-                    <th class="border border-gray-300 px-4 py-2">%hadir</th>
+                    <th class="border border-gray-300 px-4 py-2">Hadir</th>
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -130,3 +140,8 @@
 
     </div>
 </x-layout>
+
+<script>
+    const namaDosen = @json($dosenTerpilih->nama ?? '');
+    const nipDosen = @json($dosenTerpilih->nip ?? '');
+</script>

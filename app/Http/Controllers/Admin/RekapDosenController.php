@@ -7,7 +7,11 @@ use App\Models\Dosen;
 use App\Models\Prodi;
 use App\Models\TahunAjaran;
 use App\Services\RekapDosenService;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RekapDosenController extends Controller
 {
@@ -19,7 +23,7 @@ class RekapDosenController extends Controller
         $title = 'Rekap Dosen';
         $judul = 'Rekap Dosen';
         $dosen = Dosen::all();
-        $tahun = TahunAjaran::all();
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
         $dosenTerpilih = $request->dosen ? Dosen::find($request->dosen) : null;
         $tahunTerpilih = $request->tahun_ajaran ? TahunAjaran::find($request->tahun_ajaran) : null;
         $rekap = [];
@@ -27,53 +31,88 @@ class RekapDosenController extends Controller
         return view('admin.rekap_presensi.rekap_dosen', compact('title','judul','dosen','dosenTerpilih','tahunTerpilih','tahun','rekap','totalPertemuan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+
+        public function exportPdf(Request $request, RekapDosenService $service)
     {
-        //
+        try {
+            $data = [
+                // 'nip' => $dosen->nip,
+                // 'nama' => $dosen->nama,
+                // 'prodi' => $dosen->prodi->jenjang . ' ' . $dosen->prodi->nama_prodi,
+                'dosenTerpilih' => Dosen::findOrFail($request->dosen),
+                'tahunTerpilih' => TahunAjaran::findOrFail($request->tahun_ajaran),
+                'rekap' => [],
+                'totalPertemuan' => 16,
+            ];
+
+            if ($request->isMethod('post')) {
+
+            $hasil = $service->getRekap($request->dosen, $request->tahun_ajaran);
+                $data['rekap'] = $hasil['rekap'];
+                $data['totalPertemuan'] = $hasil['totalPertemuan'];
+            }
+
+            $pdf = Pdf::loadView('admin.rekap_presensi.pdf', $data)->setPaper('a4', 'landscape');
+            return $pdf->download('Rekap Kehadiran Dosen.pdf');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
+        }
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+
+
+
+               public function exportExcel(Request $request, RekapDosenService $service)
+        {
+
+
+            // if ($request->isMethod('post')) {
+
+            //     $hasil = $service->getRekapMahasiswa($request->prodi, $request->semester, $request->matkul);
+            //     $data['rekap'] = $hasil['rekap'];
+            //     $data['totalPertemuan'] = $hasil['totalPertemuan'];
+            // }
+                // Validasi input
+                $dosen = $request->dosen;
+                $tahunAjaran = $request->tahun_ajaran;
+
+                // Ambil data rekap
+                $rekapData = $service->getRekap($dosen, $tahunAjaran);
+
+                // Buat export anonymous class
+                $export = new class($rekapData, $dosen, $tahunAjaran) implements FromView {
+                    protected  $rekapData, $dosenId, $tahunId;
+
+                    public function __construct($rekapData, $dosenId, $tahunId)
+                    {
+                        $this->rekapData = $rekapData;
+                        $this->dosenId = $dosenId;
+                        $this->tahunId = $tahunId;
+                    }
+
+                    public function view(): View
+                    {
+                        return view('admin.rekap_presensi.excel', [
+                            'nip' => Dosen::find($this->dosenId)?->nip ?? '-',
+                            'nama' => Dosen::find($this->dosenId)?->nama ?? '-',
+                            'dataPresensi' => $this->rekapData['rekap'],
+                            'totalPertemuan' => $this->rekapData['totalPertemuan'],
+                        ]);
+                    }
+                };
+
+            return Excel::download($export, 'Rekap Kehadiran Dosen.xlsx');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 
     public function rekapDosen(Request $request, RekapDosenService $service)
     {
@@ -93,7 +132,7 @@ class RekapDosenController extends Controller
                 'tahun_ajaran' => 'required|exists:tahun_ajarans,id',
             ]);
 
-            $hasil = $service->getRekapDosen($request->dosen, $request->tahun_ajaran);
+            $hasil = $service->getRekap($request->dosen, $request->tahun_ajaran);
             $data['rekap'] = $hasil['rekap'];
             $data['totalPertemuan'] = $hasil['totalPertemuan'];
         }

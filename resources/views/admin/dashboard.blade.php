@@ -1,7 +1,11 @@
 <x-layout>
   <div>
     <x-slot:title>{{ $title }}</x-slot:title>
-    <p class="dark:text-white">Selamat Datang, <b>{{Auth::user()->name}}</b></p>
+    {{-- <p class="dark:text-white">Selamat Datang, <b>{{Auth::user()->name}}</b></p> --}}
+    <p class="mb-4">Hari ini: <span class="text-md text-gray-800">
+      {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
+    </span>
+    </p>
     <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mb-5">
       <a href="{{route('admin.master-mahasiswa.index')}}">
         <div class="w-[310px] md:w-full group bg-gradient-to-br from-cyan-100 to-cyan-300 dark:from-cyan-800 dark:to-cyan-600 rounded-xl shadow-md p-4 border-b-4 border-blue-800 dark:border-blue-600
@@ -13,7 +17,7 @@
           </div>
         </div>
       </a>
-      
+
       <a href="{{route('admin.master-dosen.index')}}">
         <div class="w-[310px] md:w-full group bg-gradient-to-br from-purple-100 to-purple-300 dark:from-purple-800 dark:to-purple-600 rounded-xl shadow-md p-4 border-b-4 border-purple-800 dark:border-purple-600
         transition-all duration-300 ease-in-out hover:scale-95 hover:border-b-0 cursor-pointer">
@@ -65,7 +69,7 @@
                 {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('F, d-m-Y') }} -
                 {{ \Carbon\Carbon::now()->addMonth()->locale('id')->translatedFormat('F, d-m-Y') }}
               </span>
-            </p>              
+            </p>
           </div>
           <div class="p-6 overflow-x-autu">
             <div id="chart" class="w-full h-48 min-w-[300px]"></div>
@@ -119,20 +123,18 @@
                 <th class="px-4 py-2 text-left">Mata Kuliah</th>
                 <th class="px-4 py-2 text-left">Ruangan</th>
                 <th class="px-4 py-2 text-left">Jam Mulai</th>
-                <th class="px-4 py-2 text-left">Jam Akhir</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-gray-700 dark:text-gray-200">
-              @foreach (range(1, 20) as $i)
+              @foreach ($dosenMengajar as $dm)
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                <td class="px-4 py-2">{{ $i }}</td>
-                <td class="px-4 py-2">P Budiyanto</td>
-                <td class="px-4 py-2">MIK</td>
-                <td class="px-4 py-2">2</td>
-                <td class="px-4 py-2">English</td>
-                <td class="px-4 py-2">3.2</td>
-                <td class="px-4 py-2">08.00</td>
-                <td class="px-4 py-2">10.00</td>
+                <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                <td class="px-4 py-2">{{$dm->dosen->nama}}</td>
+                <td class="px-4 py-2">{{$dm->prodi->nama_prodi}}</td>
+                <td class="px-4 py-2">{{$dm->semester}}</td>
+                <td class="px-4 py-2">{{$dm->matkul->nama_matkul}}</td>
+                <td class="px-4 py-2">{{$dm->ruangan->nama_ruangan}}</td>
+                <td class="px-4 py-2">{{$dm->jam_awal .' - '. $dm->jam_akhir}}</td>
               </tr>
               @endforeach
             </tbody>
@@ -164,3 +166,7 @@
     </div>
   </div>
 </x-layout>
+
+<script>
+        const chartData = @json($mingguan);
+</script>

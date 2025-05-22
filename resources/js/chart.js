@@ -1,3 +1,60 @@
+// document.addEventListener("DOMContentLoaded", function () {
+//     const options = {
+//         chart: {
+//             type: "bar",
+//             height: 300,
+//         },
+//         plotOptions: {
+//             bar: {
+//                 columnWidth: "80%",
+//             },
+//         },
+//         series: [
+//             {
+//                 name: "Hadir",
+//                 data: [25, 30, 28, 32],
+//             },
+//             {
+//                 name: "Izin",
+//                 data: [5, 4, 6, 3],
+//             },
+//             {
+//                 name: "Alpha",
+//                 data: [2, 1, 1, 0],
+//             },
+//         ],
+//         xaxis: {
+//             categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
+//             labels: {
+//                 style: {
+//                     colors: "#555",
+//                 },
+//             },
+//         },
+//         yaxis: {
+//             labels: {
+//                 style: {
+//                     colors: "#555",
+//                 },
+//             },
+//         },
+//         dataLabels: {
+//             enabled: true,
+//             style: {
+//                 colors: ["#555"],
+//             },
+//         },
+//         colors: ["#2563eb", "#f59e0b", "#ef4444"],
+//     };
+
+//     const chartContainer = document.querySelector("#chart");
+
+//     if (chartContainer) {
+//         const chart = new ApexCharts(chartContainer, options);
+//         chart.render();
+//     }
+// });
+
 document.addEventListener("DOMContentLoaded", function () {
     const options = {
         chart: {
@@ -9,20 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 columnWidth: "80%",
             },
         },
-        series: [
-            {
-                name: "Hadir",
-                data: [25, 30, 28, 32],
-            },
-            {
-                name: "Izin",
-                data: [5, 4, 6, 3],
-            },
-            {
-                name: "Alpha",
-                data: [2, 1, 1, 0],
-            },
-        ],
+        series: chartData,
         xaxis: {
             categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
             labels: {
@@ -34,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         yaxis: {
             labels: {
                 style: {
-                    colors: "#555",
+                    colors: ["#555"],
                 },
             },
         },
@@ -44,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 colors: ["#555"],
             },
         },
-        colors: ["#2563eb", "#f59e0b", "#ef4444"],
+        colors: ["#2563eb", "#f59e0b", "#555", "#ef4444"],
     };
 
     const chartContainer = document.querySelector("#chart");
@@ -90,3 +134,32 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     chart.render();
 });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     const options = {
+//         chart: {
+//             type: "bar",
+//             height: 300,
+//         },
+//         series: chartData,
+//         xaxis: {
+//             categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
+//         },
+//         colors: ["#2563eb", "#f59e0b", "#ef4444"],
+//         plotOptions: {
+//             bar: {
+//                 borderRadius: 6,
+//                 columnWidth: "60%",
+//             },
+//         },
+//         dataLabels: {
+//             enabled: true,
+//         },
+//     };
+
+//     const chart = new ApexCharts(
+//         document.querySelector("#grafik-kehadiran"),
+//         options
+//     );
+//     chart.render();
+// });
