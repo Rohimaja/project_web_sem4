@@ -25,12 +25,12 @@
               <i class="bi bi-moon"></i>
             </template>
           </button>
-          <a href="{{ route('admin.kalender-akademik.view') }}" class="relative group">
+          {{-- <a href="{{ route('admin.kalender-akademik.view') }}" class="relative group">
             <i class="bi bi-calendar3 text-gray-600 dark:text-white text-lg mb-1"></i>
             <span class="absolute left-1/2 top-full mt-1 -translate-x-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
               Kalender Akademik
             </span>
-          </a>
+          </a> --}}
 
           <div class="w-px h-10 bg-gray-400 dark:bg-gray-500"></div>
         </div>
@@ -84,12 +84,12 @@
                 <i class="bi bi-moon"></i>
               </template>
             </button>
-            <a href="{{ route('admin.kalender-akademik.view') }}" class="relative group">
+            {{-- <a href="{{ route('dosen.kalender-akademik.view') }}" class="relative group">
               <i class="bi bi-calendar3 text-gray-600 text-lg mb-1"></i>
               <span class="absolute left-1/2 top-full mt-1 -translate-x-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                   Kalender Akademik
               </span>
-            </a>
+            </a> --}}
             <div class="w-px h-10 bg-gray-400"></div>
           </div>
           <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 focus:outline-none">
@@ -131,22 +131,25 @@
       <div class="relative flex items-center gap-2" x-data="{ open: false }">
         <div class="relative flex gap-5 items-center mr-2">
           <div x-data="{ isDark: false }">
-              <button @click="isDark = !isDark" class="text-gray-600 text-lg hover:text-black">
-                  <template x-if="!isDark">
-                      <i class="bi bi-sun"></i> <!-- Matahari -->
-                  </template>
-                  <template x-if="isDark">
-                      <i class="bi bi-moon"></i> <!-- Bulan -->
-                  </template>
-              </button>
+            <button @click="isDark = !isDark;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', isDark)"
+                class="text-gray-600 dark:text-white text-lg hover:text-black">
+            <template x-if="!isDark">
+              <i class="bi bi-sun"></i>
+            </template>
+            <template x-if="isDark">
+              <i class="bi bi-moon"></i>
+            </template>
+            </button>
           </div>
 
-          <a href="{{ route('admin.kalender-akademik.view') }}" class="relative group">
+          {{-- <a href="{{ route('mahasiswa.kalender-akademik.view') }}" class="relative group">
             <i class="bi bi-calendar3 text-gray-600 text-lg mb-1"></i>
             <span class="absolute left-1/2 top-full mt-1 -translate-x-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                 Kalender Akademik
             </span>
-          </a><div class="w-px h-10 bg-gray-400"></div>
+          </a><div class="w-px h-10 bg-gray-400"></div> --}}
         </div>
 
         <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 focus:outline-none">
@@ -160,18 +163,18 @@
             </svg>
         </button>
 
-        <div x-show="open" x-cloak x-transition.top.duration.300ms class="absolute top-14 right-4 w-56 p-2 rounded-md bg-white shadow-xl text-gray-800 font-semibold z-50">
-            <a href="{{ route('dosen.profile.edit') }}" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition w-full">
+        <div x-show="open" x-cloak x-transition.top.duration.300ms class="absolute top-14 right-4 w-56 p-2 rounded-md bg-white shadow-xl text-gray-800 dark:bg-gray-800 dark:text-white font-semibold z-50">
+            <a href="{{ route('dosen.profile.edit') }}" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition w-full">
                 <i class="bi bi-person-circle text-lg"></i>
                 <span>Profile</span>
             </a>
-            <a href="{{ route('dosen.change-password') }}" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition w-full">
+            <a href="{{ route('dosen.change-password') }}" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition w-full">
                 <i class="bi bi-gear-fill text-lg"></i>
                 <span>Ubah Password</span>
             </a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 transition w-full text-left">
+                <button type="submit" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition w-full text-left">
                     <i class="bi bi-box-arrow-left text-lg"></i>
                     <span>Log Out</span>
                 </button>

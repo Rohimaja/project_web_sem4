@@ -144,73 +144,7 @@
           </li>
       </ul>
     @endif
-
     </div>
-
-
-    @if (Auth::user()->role === 'mahasiswa')
-    <div class="font-[sans-serif]">
-      <ul class="space-y-2">
-        <li>
-          <a href="{{route('dosen.dashboard')}}">
-            <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
-              <i class="text-[20px] bi bi-house-door-fill"></i>
-              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Dashboard</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="{{route('dosen.presensi.index')}}">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
-              <i class="text-[20px] bi bi-check-square-fill"></i>
-              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Presensi</span>
-            </div>
-          </a>
-        </li>
-        <hr class="my-2 text-gray-600">
-        <li>
-          <a href="{{route('dosen.jadwal')}}">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
-              <i class="text-[20px] bi bi-clock-fill"></i>
-              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
-            </div>
-          </a>
-        </li>
-        <li x-data="{open: false}">
-            <div @click="open  = !open" class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
-              <i class="text-[20px] bi bi-clipboard-data-fill"></i>
-              <div class="flex justify-between w-full items-center font-semibold">
-                <span class="text-[15px] ml-4 text-gray-200">Laporan</span>
-                <span x-bind:class="open ? 'rotate-180' : 'rotate-0'" class="text-sm">
-                  <i class="text-[20px] bi bi-chevron-down font-semibold"></i>
-                </span>
-              </div>
-            </div>
-
-            <div x-show="open" class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200">
-              <a href="{{route('dosen.rekap-mahasiswa.index')}}" class="mt-2 w-4/5">
-                <h1 class="cursor-pointer p-2 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 rounded-md mt-1">Rekap Mahasiswa</h1>
-              </a>
-              <a href="{{route('dosen.rekap-dosen.index')}}" class="mt-2 w-4/5">
-                <h1 class="cursor-pointer p-2 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 rounded-md mt-1">Rekap Dosen</h1>
-              </a>
-              {{-- <a href="{{route('admin.laporan.dosen')}}" class="mt-2 w-4/5">
-                <h1 class="cursor-pointer p-2 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 rounded-md mt-1">Dosen</h1>
-              </a>
-            </div>
-          </li>
-
-        {{-- <li>
-          <a href="/admin/laporan">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-600 active:bg-blue-800 cursor-pointer duration-300 text-white">
-              <i class="text-[20px] bi bi-file-earmark-text-fill"></i>
-              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Laporan</span>
-            </div>
-          </a>
-        </li> --}}
-      </ul>
-    </div>
-    @endif
 
     @if (Auth::user()->role === 'mahasiswa')
     <div class="font-[sans-serif]">

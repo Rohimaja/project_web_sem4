@@ -135,6 +135,81 @@ document.addEventListener("DOMContentLoaded", () => {
     chart.render();
 });
 
+// MAHASEWA MAHASEWA MAHASEWA
+let chartInstance = null;
+
+function renderChart() {
+    // Hapus chart sebelumnya jika ada
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+
+    const isDark = document.documentElement.classList.contains("dark");
+
+    const options = {
+        chart: {
+            type: "bar",
+            height: 300,
+            toolbar: { show: false },
+            foreColor: isDark ? "#e5e7eb" : "#374151", // gray-200 or gray-700
+            background: "transparent",
+        },
+        series: [
+            {
+                name: "Hadir",
+                data: [5, 6],
+            },
+            {
+                name: "Izin",
+                data: [1, 0],
+            },
+            {
+                name: "Alpha",
+                data: [1, 1],
+            },
+        ],
+        xaxis: {
+            categories: ["Minggu 1 (1–7 Mei)", "Minggu 2 (8–14 Mei)"],
+            title: { text: "Minggu" },
+            labels: { style: { colors: isDark ? "#d1d5db" : "#4b5563" } },
+        },
+        yaxis: {
+            title: { text: "Jumlah Kehadiran" },
+            min: 0,
+            forceNiceScale: true,
+            labels: { style: { colors: isDark ? "#d1d5db" : "#4b5563" } },
+        },
+        colors: ["#10B981", "#F59E0B", "#EF4444"],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "55%",
+                endingShape: "rounded",
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        legend: {
+            position: "top",
+            labels: { colors: isDark ? "#d1d5db" : "#4b5563" },
+        },
+    };
+
+    chartInstance = new ApexCharts(
+        document.querySelector("#grafik-kehadiran-mhs"),
+        options
+    );
+    chartInstance.render();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    renderChart();
+});
+
+// Buat renderChart bisa dipanggil dari Alpine
+window.renderChart = renderChart;
+
 // document.addEventListener("DOMContentLoaded", () => {
 //     const options = {
 //         chart: {
