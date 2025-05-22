@@ -21,6 +21,38 @@ Route::middleware(['auth'])->get('/dashboard', function () {
     };
 });
 
+// Route Mahasiswa
+Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
+    Route::get('/mahasiswa/dashboard', function () {
+        return view('mahasiswa.dashboard', [
+            'title' => 'Dashboard',
+            'rute' => 'mahasiswa -> Dashboard'
+        ]);
+    })->name('mahasiswa.dashboard');
+
+    Route::get('/mahasiswa/presensi', function () {
+        return view('mahasiswa.presensi', [
+            'title' => 'Presensi',
+            'rute' => 'mahasiswa -> Presensi'
+        ]);
+    })->name('mahasiswa.presensi');
+
+    Route::get('/mahasiswa/jadwal', function () {
+        return view('mahasiswa.jadwal', [
+            'title' => 'Jadwal',
+            'rute' => 'mahasiswa -> Jadwal'
+        ]);
+    })->name('mahasiswa.jadwal');
+
+    Route::get('/mahasiswa/rekap', function () {
+        return view('mahasiswa.rekap_mahasiswa', [
+            'title' => 'Rekap Mahasiswa',
+            'rute' => 'mahasiswa -> Rekap Mahasiswa'
+        ]);
+    })->name('mahasiswa.rekap');
+});
+
+
 // Route::middleware('auth')->get('/dashboard', function () {
 //     if (auth('admin')->check()) return redirect()->route('admin.dashboard');
 //     if (auth('dosen')->check()) return redirect()->route('dosen.dashboard');

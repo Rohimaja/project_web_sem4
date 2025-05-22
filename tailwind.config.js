@@ -17,6 +17,9 @@ export default {
             },
             colors: {
                 customblue: "#1E88E4",
+                darkBg: "#1E293B", // kamu bisa ganti sesuai kebutuhan
+                darkCard: "#334155",
+                darkBorder: "#475569",
             },
         },
     },
