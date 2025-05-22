@@ -6,14 +6,14 @@
         <div class="w-full h-max max-w-full mt-5 p-8 bg-gray-150 rounded-sm shadow-xl">
 
             @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $err)
-                <li>{{ $err }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $err)
+                            <li>{{ $err }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <form action="{{route('dosen.presensi.store')}}" method="POST" class="form-presensi">
             @csrf
@@ -53,7 +53,6 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row">
-
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label class="mb-1 font-semibold">Pilih Ruangan:</label>
                         <select id="ruangan" name="ruangan_id" class="w-full" required>

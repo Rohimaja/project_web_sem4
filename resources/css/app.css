@@ -44,3 +44,51 @@
   top: 50%;
   transform: translateY(-50%);
 } */
+
+/* Tambahan untuk dark mode Select2 */
+/* Aktif saat <html class="dark"> */
+.dark .select2-container--default .select2-selection--single {
+    background-color: #4b5563 !important; /* bg-gray-600 */
+    color: #f9fafb !important; /* text-white */
+    border-color: #4b5563 !important;
+}
+
+.dark .select2-container--default .select2-selection--single::after {
+    color: #d1d5db !important; /* gray-300 */
+}
+
+.dark .select2-container--default .select2-selection__rendered {
+    color: #f9fafb !important;
+}
+
+.dark .select2-dropdown {
+    background-color: #374151 !important; /* bg-gray-700 */
+    color: #f9fafb !important;
+}
+
+.dark .select2-results__option--highlighted {
+    background-color: #6b7280 !important; /* bg-gray-500 */
+}
+
+.select2-search__field {
+    background-color: #ffffff !important; /* white */
+    color: #111827 !important; /* gray-900 */
+    border: 1px solid #d1d5db !important; /* gray-300 */
+}
+
+/* 🌚 Dark mode */
+
+.dataTables_filter input {
+    background-color: #f0f9ff; /* ganti dengan warna background yang kamu inginkan */
+    border: 1px solid #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: #1e293b;
+    transition: background-color 0.3s;
+}
+
+.dataTables_filter input:focus {
+    outline: none;
+    background-color: #e0f2fe;
+    border-color: #3b82f6;
+}

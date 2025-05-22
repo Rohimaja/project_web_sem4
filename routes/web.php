@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KalenderAkademikController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -40,11 +42,13 @@ Route::middleware(['auth'])->get('/dashboard', function () {
 //     return view('dosen.dashboard',['title'=> 'Dashboard', 'rute'=> 'dosen -> Dashboard']);
 // })->middleware(['auth', 'role:dosen'])->name('dosen.dashboard');
 
-Route::get('/mahasiswa/dashboard', function () {
-    return view('mahasiswa.dashboard', ['title'=>'Dashboard', 'rute' =>'mahasiswa -> Dashboard']);
-})->middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.dashboard');
+// Route::get('/mahasiswa/dashboard', function () {
+//     return view('mahasiswa.dashboard', ['title'=>'Dashboard', 'rute' =>'mahasiswa -> Dashboard']);
+// })->middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.dashboard');
 
 Route::get('/getMatkulByProdi', [PresensiController::class, 'getMatkulByProdi']);
+Route::get('/kalender-akademik', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
+
 
 
 // Route::middleware('auth')->group(function () {
@@ -69,6 +73,11 @@ Route::get('/getMatkulByProdi', [PresensiController::class, 'getMatkulByProdi'])
 
 //     return response()->json($response->json());
 // });
+
+// Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
+//     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+//     Route::get('/presensi',[DashboardController::class,'index'])->name('presensi');
+//   });
 
 
 Route::get('/wilayah/{type}/{id?}', function ($type, $id = null) {

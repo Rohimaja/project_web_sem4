@@ -1,20 +1,40 @@
 <?php
 
-use App\Http\Controllers\Dosen\DashboardController;
 use App\Http\Controllers\Admin\KalenderAkademikController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Dosen\PresensiController;
-use App\Http\Controllers\Dosen\ProfileController;
 use App\Http\Controllers\Dosen\RekapDosenController;
 use App\Http\Controllers\Dosen\RekapMahasiswaController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Dosen\DashboardController;
+use App\Http\Controllers\Dosen\JadwalController;
+use App\Http\Controllers\Dosen\PresensiController;
+use App\Http\Controllers\Dosen\ProfileController;
+
 
 Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
+    Route::get('/presensi',[PresensiController::class,'index'])->name('presensi');
+
     Route::resource('kalender-akademik', KalenderAkademikController::class)
     ->except(['show']);
     Route::get('kalender-akademik/view', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
     Route::post('/validate-field/kalender-akademik', [KalenderAkademikController::class, 'validateField'])->name('admin.validate.field.kalender');
 
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+
+    Route::get('/jadwal',[JadwalController::class,'index'])->name('jadwal');
+
+
+
+    Route::get('/rekap-dosen/export/pdf', [RekapDosenController::class, 'exportPdf'])->name('export.dosen.pdf');
+    Route::get('/rekap-dosen/export/excel', [RekapDosenController::class, 'exportExcel'])->name('export.dosen.excel');
+
+    Route::post('/rekap-mahasiswa/export/pdf', [RekapMahasiswaController::class, 'exportPdf'])->name('export.mahasiswa.pdf');
+    Route::post('/rekap-mahasiswa/export/excel', [RekapMahasiswaController::class, 'exportExcel'])->name('export.mahasiswa.excel');
+
+
+    // Route::resource('rekap-dosen', RekapDosenController::class);
+    // Route::resource('rekap-mahasiswa', RekapMahasiswaController::class);
+
+
 
 
 
@@ -57,7 +77,9 @@ Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->grou
     // // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');
 
     Route::resource('rekap-dosen', RekapDosenController::class);
-    Route::post('admin/rekap-dosen', [RekapDosenController::class, 'rekapDosen'])->name('rekap-dosen.filter');
+    Route::post('rekap-dosen', [RekapDosenController::class, 'rekapDosen'])->name('rekap-dosen.filter');
+    // Route::get('/getFilterMahasiswa', [MahasiswaController::class, 'getFilterMahasiswa']);
+
 
     Route::resource('rekap-mahasiswa', RekapMahasiswaController::class);
     Route::get('/getMatkulDosen', [RekapMahasiswaController::class, 'getMatkulDosen']);

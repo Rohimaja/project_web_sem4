@@ -40,25 +40,62 @@
         </div>
     </div>
 
-        <div class="w-full flex justify-end">
+        <div class="w-full flex justify-end mb-5">
             <a href="{{route('dosen.rekap-mahasiswa.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Reset</a>
             <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
         </div>
     </form>
 
+    @if ($prodiTerpilih && $matkulTerpilih && $semesterTerpilih)
       <div class="mt-4 flex gap-4">
-        <a href="">
-          <button class="flex items-center px-4 py-2.5 text-white bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-sm font-semibold cursor-pointer">
-            <i class="bi bi-file-earmark-excel mr-2"></i>
-            <span>Export Excel</span>
-          </button>
-        </a>
 
-        <button @click="openImport = !openImport" class="flex items-center px-4 py-2.5 text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-sm font-semibold cursor-pointer">
-          <i class="bi bi-filetype-pdf mr-2"></i>
-          <span>Export Pdf</span>
-        </button>
+        <form action="{{route('dosen.export.mahasiswa.excel')}}" method="POST">
+            @csrf
+            <input type="hidden" name="prodi" value="{{ request('prodi') }}">
+            <input type="hidden" name="semester" value="{{ request('semester') }}">
+            <input type="hidden" name="matkul" value="{{ request('matkul') }}">
+
+            <button class="flex items-center px-4 py-2.5 text-white bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-sm font-semibold cursor-pointer">
+                <i class="bi bi-file-earmark-excel mr-2"></i>
+                <span>Export Excel</span>
+            </button>
+        </form>
+
+        <form action="{{ route('dosen.export.mahasiswa.pdf') }}" method="POST">
+            @csrf
+            <input type="hidden" name="prodi" value="{{ request('prodi') }}">
+            <input type="hidden" name="semester" value="{{ request('semester') }}">
+            <input type="hidden" name="matkul" value="{{ request('matkul') }}">
+
+            <button type="submit" class="flex items-center px-4 py-2.5 text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-sm font-semibold cursor-pointer">
+                <i class="bi bi-filetype-pdf mr-2"></i>
+                <span>Export PDF</span>
+            </button>
+        </form>
+
       </div>
+
+            <div class="flex flex-col gap-3 mt-3">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
+
+                <label for="nip" class="w-20 font-semibold">Program Studi:</label>
+                {{-- <input type="text" id="nip" disabled name="nip" class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-auto " value="{{$dosenTerpilih->nip}}"> --}}
+                    <span class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-full">{{$prodiTerpilih->nama_prodi ?? ''}}</span>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
+                <label for="nama" class="w-20 font-semibold">Semester:</label>
+                {{-- <span type="text" id="nama" disabled name="nama" class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-auto" value="{{$dosenTerpilih->nama}}"> --}}
+                    <span class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-full">{{$semesterTerpilih ?? ''}}</span>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
+                <label for="nama" class="w-20 font-semibold">Mata Kuliah:</label>
+                {{-- <span type="text" id="nama" disabled name="nama" class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-auto" value="{{$dosenTerpilih->nama}}"> --}}
+                    <span class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-full">{{$matkulTerpilih->nama_matkul ?? ''}}</span>
+                </div>
+            </div>
+        @endif
 
       <div x-data="{ hovering: false }" class="overflow-x-auto w-60 sm:w-150 md:w-240 xl:min-w-full pb-3">
         <table id="data-rekap-mahasiswa" class="text-sm text-left w-full pt-4">
@@ -130,3 +167,9 @@
     </div>
   </div>
 </x-layout>
+
+<script>
+    const namaProdi = @json($prodiTerpilih->nama_prodi ?? '');
+    const namaMatkul = @json($matkulTerpilih->nama_matkul ?? '');
+    const semester = @json($semesterTerpilih ?? '');
+</script>
