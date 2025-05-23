@@ -132,64 +132,12 @@ class RekapDosenController extends Controller
                 }
             };
 
-            return Excel::download($export, 'rekap_dosen.xlsx');
+            return Excel::download($export, 'Rekap Kehadiran Dosen.xlsx');
     }
 
 
 
-
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function rekapDosen(Request $request, RekapDosenService $service)
+    public function getFilterRekap(Request $request, RekapDosenService $service)
     {
         $data['title'] = 'Rekap Dosen';
         $data['judul'] = 'Rekap Dosen';
@@ -203,16 +151,16 @@ class RekapDosenController extends Controller
         $data['rekap'] = [];
         $data['totalPertemuan'] = 16;
 
-        if ($request->isMethod('post')) {
-            $request->validate([
-                'dosen' => 'required|exists:dosens,id',
-                'tahun_ajaran' => 'required|exists:tahun_ajarans,id',
-            ]);
+        // if ($request->isMethod('post')) {
+        //     $request->validate([
+        //         'dosen' => 'required|exists:dosens,id',
+        //         'tahun_ajaran' => 'required|exists:tahun_ajarans,id',
+        //     ]);
 
-            $hasil = $service->getFilterRekapDosen($data['dosenTerpilih']->id, $request->prodi_id, $request->tahun_ajaran_id);
-            $data['rekap'] = $hasil['rekap'];
-            $data['totalPertemuan'] = $hasil['totalPertemuan'];
-        }
+        // }
+        $hasil = $service->getRekap($data['dosenTerpilih']->id, $request->tahun_ajaran);
+        $data['rekap'] = $hasil['rekap'];
+        $data['totalPertemuan'] = $hasil['totalPertemuan'];
 
         return response()->json($data);
 

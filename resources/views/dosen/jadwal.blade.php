@@ -19,7 +19,7 @@
           <label for="" class="mb-1 font-semibold">Semester:</label>
           <select type="text" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 rounded-sm" placeholder="Masukkan Nip">
             <option value="" hidden selected>Pilih Semester</option>
-            <option value="Seemster 1">Seemster 1</option>
+            <option value="Seemster 1">Semester 1</option>
             <option value="Semester 2">Semester 2</option>
             <option value="Semester 3">Semester 3</option>
             <option value="Semester 4">Semester 4</option>
@@ -91,7 +91,7 @@
               <td class="border border-gray-300 px-4 py-2">R.204</td>
               <td class="border border-gray-300 px-4 py-2">Tatap Muka</td>
             </tr>
-          </tbody>          
+          </tbody>
         </table>
       </div>
     </div>

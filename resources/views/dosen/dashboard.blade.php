@@ -22,7 +22,7 @@
         </div>
 
         <!-- Kotak Info -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Box 1 -->
           <div class="bg-blue-50 rounded-md p-5 border border-blue-200 hover:shadow-lg transition duration-200">
             <div class="flex items-center justify-between">
@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
 
       <!-- KANAN: Grafik -->
@@ -82,22 +82,20 @@
                 <th class="px-4 py-2 text-left">Semester</th>
                 <th class="px-4 py-2 text-left">Mata Kuliah</th>
                 <th class="px-4 py-2 text-left">Ruangan</th>
-                <th class="px-4 py-2 text-left">Jam Mulai</th>
-                <th class="px-4 py-2 text-left">Jam Akhir</th>
+                <th class="px-4 py-2 text-left">Jam Perkuliahan</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 text-gray-700">
-              @foreach (range(1, 5) as $i)
-              <tr class="hover:bg-gray-50">
-                <td class="px-4 py-2">{{ $i }}</td>
-                <td class="px-4 py-2">MIK</td>
-                <td class="px-4 py-2">2</td>
-                <td class="px-4 py-2">English</td>
-                <td class="px-4 py-2">3.2</td>
-                <td class="px-4 py-2">08.00</td>
-                <td class="px-4 py-2">10.00</td>
-              </tr>
-              @endforeach
+                @foreach ($presensiHariIni as $p)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-2">{{$p->prodi->nama_prodi}}</td>
+                    <td class="px-4 py-2">{{$p->semester}}</td>
+                    <td class="px-4 py-2">{{$p->matkul->nama_matkul}}</td>
+                    <td class="px-4 py-2">{{$p->ruangan->nama_ruangan}}</td>
+                    <td class="px-4 py-2">{{substr($p->jam_awal,0,5) .' - '. substr($p->jam_akhir,0,5)}}</td>
+                </tr>
+                @endforeach
             </tbody>
           </table>
         </div>

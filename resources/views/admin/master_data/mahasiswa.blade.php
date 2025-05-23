@@ -83,31 +83,31 @@
                     <table id="data-mahasiswa" class="text-sm text-left w-full pt-2">
                         <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                             <tr>
-                                <th class="border border-gray-300 px-4 py-2">No</th>
-                                <th class="border border-gray-300 px-4 py-2">Foto</th>
-                                <th class="border border-gray-300 px-4 py-2">NIM</th>
-                                <th class="border border-gray-300 px-4 py-2">Nama</th>
-                                <th class="border border-gray-300 px-4 py-2">Jenis Kelamin</th>
-                                <th class="border border-gray-300 px-4 py-2">Email</th>
-                                <th class="border border-gray-300 px-4 py-2">Program Studi</th>
-                                <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
+                                <th class=" px-4 py-2">No</th>
+                                <th class=" px-4 py-2">Foto</th>
+                                <th class=" px-4 py-2">NIM</th>
+                                <th class=" px-4 py-2">Nama</th>
+                                <th class=" px-4 py-2">Jenis Kelamin</th>
+                                <th class=" px-4 py-2">Email</th>
+                                <th class=" px-4 py-2">Program Studi</th>
+                                <th class=" px-4 py-2 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="">
                             @foreach ($mahasiswa as $m)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
-                                    <td class="border border-gray-300 px-4 py-2">
+                                    <td class=" px-4 py-2">{{$loop->iteration}}</td>
+                                    <td class=" px-4 py-2">
                                         <div  class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
                                             <img src="{{ $m->foto ? asset('storage/' . $m->foto) : asset('images/profil-kosong.png') }}" alt="Photo">
                                         </div>
                                     </td>
-                                    <td class="border border-gray-300 px-4 py-2">{{$m->nim}}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{$m->nama}}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{$m->jenis_kelamin}}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{$m->email}}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{$m->prodi->jenjang .' '. $m->prodi->nama_prodi}}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">
+                                    <td class=" px-4 py-2">{{$m->nim}}</td>
+                                    <td class=" px-4 py-2">{{$m->nama}}</td>
+                                    <td class=" px-4 py-2">{{$m->jenis_kelamin}}</td>
+                                    <td class=" px-4 py-2">{{$m->email}}</td>
+                                    <td class=" px-4 py-2">{{$m->prodi->jenjang .' '. $m->prodi->nama_prodi}}</td>
+                                    <td class=" px-4 py-2 text-center">
                                         <div class="flex justify-center gap-2">
                                             <button @click="openView = true; $nextTick(() => loadMahasiswaDetail({{ $m->id }}))" class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">
                                                 <i class="bi bi-eye text-lg"></i>

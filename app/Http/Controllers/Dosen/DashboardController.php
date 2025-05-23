@@ -18,7 +18,9 @@ class DashboardController extends Controller
     {
         $title = 'Dashboard';
         $user = Auth::user()->dosen;
-        $presensiHariIni = Presensi::where('dosen_id', $user->id)->whereDate('tgl_presensi', Carbon::today())->count();
+        $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();
+        // Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get(),
+
         // $mahasiswa = Mahasiswa::count();
         // $dosen = Dosen::count();
         // $matkul = Matkul::count();

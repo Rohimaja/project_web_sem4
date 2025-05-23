@@ -11,118 +11,7 @@ $("#tahun-ajaran").select2({
 });
 
 $(document).ready(function () {
-    let table = $("#data-rekap-dosen").DataTable({
-        dom: "Bfrtip",
-        buttons: [
-            {
-                extend: "pdfHtml5",
-                title: "REKAP KEHADIRAN DOSEN",
-                text: "Export ke PDF",
-                className: "dt-btn-pdf", // Tambahkan className
-                orientation: "landscape",
-                pageSize: "A4",
-                customize: function (doc) {
-                    // Menambahkan informasi mahasiswa dan informasi pencetakan
-                    doc.content.unshift({
-                        columns: [
-                            {
-                                text: [
-                                    {
-                                        text: "NIP Dosen  : " + nipDosen + "\n",
-                                        lineHeight: 1,
-                                    },
-                                    {
-                                        text:
-                                            "Nama Dosen  : " + namaDosen + "\n",
-                                        lineHeight: 1,
-                                    },
-                                ],
-                                fontSize: 10, // Ukuran font lebih kecil
-                                alignment: "left",
-                                margin: [0, 0],
-                            },
-                        ],
-                        margin: [0, 0, 0, 15], // Margin yang lebih kecil
-                    });
-
-                    doc.footer = function (currentPage, pageCount) {
-                        return {
-                            columns: [
-                                {
-                                    text: "M = Mengajar\n - = Tidak terselenggara perkuliahan", // Keterangan status kehadiran
-                                    alignment: "left",
-                                    fontSize: 10,
-                                    margin: [45, 10],
-                                },
-                                {
-                                    text:
-                                        "Page " +
-                                        currentPage +
-                                        " of " +
-                                        pageCount +
-                                        " | Exported on: " +
-                                        new Date().toLocaleString(),
-                                    alignment: "right",
-                                    fontSize: 10,
-                                    margin: [45, 10],
-                                },
-                            ],
-                        };
-                    };
-
-                    // Tambahkan gaya untuk tabel
-                    var table = doc.content[2].table; // Mengakses tabel yang diekspor
-                    table.widths = Array(table.body[0].length).fill("auto"); // Mengatur lebar kolom agar otomatis
-                    table.body.forEach(function (row, rowIndex) {
-                        row.forEach(function (cell) {
-                            cell.border = [true, true, true, true]; // Menambahkan border ke setiap sel
-                            // cell.fillColor =
-                            //     rowIndex % 2 === 0 ? "#f2f2f2" : null; // Menambahkan warna latar belakang untuk baris genap
-                            if (rowIndex === 0) {
-                                cell.fillColor = "#dce6f1"; // Biru muda untuk header
-                                cell.color = "#000"; // Pastikan teks hitam agar terlihat
-                                cell.bold = true; // Tebalkan teks header
-                                cell.alignment = "center";
-                            } else {
-                                cell.fillColor =
-                                    rowIndex % 2 === 0 ? "#f2f2f2" : null; // Warna latar baris data
-                            }
-                            cell.margin = [1, 1, 1, 1]; // Mengatur margin sel ke 0
-                            cell.padding = [1, 1, 1, 1]; // Mengatur padding sel untuk mengurangi jarak di dalam sel
-                            cell.fontSize = 9; // Ukuran font lebih kecil untuk sel
-                        });
-                    });
-
-                    // Menambahkan border untuk tabel secara keseluruhan
-                    doc.content[2].layout = {
-                        hLineWidth: function (i) {
-                            return 0.5;
-                        },
-                        vLineWidth: function (i) {
-                            return 0.5;
-                        },
-                        hLineColor: function (i) {
-                            return "#000";
-                        },
-                        vLineColor: function (i) {
-                            return "#000";
-                        },
-                        paddingLeft: function (i) {
-                            return 1;
-                        },
-                        paddingRight: function (i) {
-                            return 1;
-                        },
-                        paddingTop: function (i) {
-                            return 1;
-                        },
-                        paddingBottom: function (i) {
-                            return 1;
-                        },
-                    };
-                },
-            },
-        ],
+    const table = $("#data-rekap-dosen").DataTable({
         scrollX: true,
 
         searching: false, // Aktifkan pencarian
@@ -134,9 +23,129 @@ $(document).ready(function () {
         scrollX: false, // Aktifkan scroll horizontal
         autoWidth: false, // Hindari ukuran otomatis
     });
+
+    $("#tahun-ajaran").on("change", function () {
+        const tahunId = $(this).val();
+
+        if (tahunId) {
+            fetch(`/dosen/getFilterRekap?tahun_ajaran=${tahunId}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    table.clear(); // Kosongkan isi DataTable
+
+                    data.rekap.forEach((item, index) => {
+                        const row = [
+                            index + 1,
+                            item.nama_prodi,
+                            item.semester,
+                            item.nama_matkul,
+                        ];
+
+                        for (let i = 0; i < data.totalPertemuan; i++) {
+                            const tanggal = item.tanggal_pertemuan[i] ?? null;
+                            const status = tanggal ? "M" : "-";
+
+                            const bgClass =
+                                status === "M"
+                                    ? "bg-green-500 text-white"
+                                    : "bg-gray-500 text-white";
+
+                            const cell = `<div class="border border-gray-300 px-4 py-2 font-semibold ${bgClass}" title="${
+                                tanggal ?? ""
+                            }">${status}</div>`;
+                            row.push(cell);
+                        }
+
+                        row.push(item.total_pertemuan);
+                        table.row.add(row);
+                    });
+
+                    table.draw(); // Refresh tampilan
+                })
+                .catch((error) => console.error("Gagal ambil data:", error));
+        }
+    });
+
     $("div.dt-buttons").hide();
 
     document.querySelector("#btn-pdf").addEventListener("click", function () {
         table.button(".dt-btn-pdf").trigger();
     });
 });
+
+// $("#tahun-ajaran").on("change", function () {
+//     const tahunId = $("#tahun-ajaran").val();
+//     // const semester = document.getElementById("semester").value; // Ambil semester yang dipilih
+//     // const prodiId = document.getElementById("prodi").value; // Ambil prodi yang dipilih
+
+//     // Pastikan salah satu filter dipilih untuk menghindari request kosong
+//     if (tahunId) {
+//         // Buat URL untuk mengirim filter sebagai parameter query
+//         fetch(`/dosen/getFilterRekap?tahun_ajaran=${tahunId}`)
+//             .then((response) => response.json())
+//             .then((data) => {
+//                 // Hapus data sebelumnya dari DataTable
+//                 table.clear();
+
+//                 // Tambahkan data yang baru dari hasil filter
+//                 data.forEach((item, index) => {
+//                     table.row.add([
+//                         `<div style="text-align:center;">${index + 1}</div>`, // Semester ditengah
+//                         item.nama_prodi,
+//                         item.semester,
+//                         item.nama_matkul,
+//                         `${item.prodi?.jenjang ?? ""} ${
+//                             item.prodi?.nama_prodi ?? ""
+//                         }` || "-",
+
+//                         // item.prodi?.jenjang & item.prodi?.nama_prodi ?? "-",
+//                         // `<div style="text-align:center;">${item.semester}</div>`, // Semester ditengah
+//                     ]);
+//                 });
+
+//                 // Perbarui tampilan tabel setelah menambahkan data
+//                 table.draw();
+//             })
+//             .catch((error) => console.error("Error fetching data:", error));
+//     }
+// });
+
+// $("#tahun-ajaran").on("change", function () {
+//     const tahunId = $(this).val();
+
+//     if (tahunId) {
+//         fetch(`/dosen/getFilterRekap?tahun_ajaran=${tahunId}`)
+//             .then((response) => response.json())
+//             .then((data) => {
+//                 table.clear(); // Kosongkan isi DataTable
+
+//                 data.rekap.forEach((item, index) => {
+//                     // Buat array kolom awal
+//                     console.log(data.rekap);
+//                     const row = [
+//                         index + 1,
+//                         item.nama_prodi,
+//                         item.semester,
+//                         item.nama_matkul,
+//                     ];
+
+//                     // Loop total pertemuan dan isi 'M' atau '-'
+//                     for (let i = 0; i < data.totalPertemuan; i++) {
+//                         const tanggal = item.tanggal_pertemuan[i] ?? null;
+//                         const status = tanggal ? "M" : "-";
+//                         const cell = `<span title="${
+//                             tanggal ?? ""
+//                         }">${status}</span>`;
+//                         row.push(cell);
+//                     }
+
+//                     row.push(item.total_pertemuan);
+
+//                     table.row.add(row);
+//                 });
+
+//                 table.draw(); // Refresh tampilan
+//             })
+//             .catch((error) => console.error("Gagal ambil data:", error));
+//     }
+// });

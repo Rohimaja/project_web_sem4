@@ -78,6 +78,7 @@ Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->grou
 
     Route::resource('rekap-dosen', RekapDosenController::class);
     Route::post('rekap-dosen', [RekapDosenController::class, 'rekapDosen'])->name('rekap-dosen.filter');
+    Route::get('/getFilterRekap', [RekapDosenController::class, 'getFilterRekap']);
     // Route::get('/getFilterMahasiswa', [MahasiswaController::class, 'getFilterMahasiswa']);
 
 

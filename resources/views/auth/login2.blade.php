@@ -18,16 +18,10 @@
 
               <div>
                     <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                    <input type="text" name="username" id="username" :value="old('username')" required
+                    <input type="text" name="username" id="username" value="{{old('username', request()->cookie('cookie_username'))}}" required autofocus
                         class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan username...">
                     <x-input-error :messages="$errors->get('username')" class="mt-2" />
-
               </div>
-              {{-- <div>
-                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                    <input type="text" name="username" id="username" required
-                        class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan username...">
-              </div> --}}
 
               <div x-data="{ show: false }">
                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
@@ -39,7 +33,7 @@
 
               <div class="flex items-center justify-between text-sm">
                   <label class="flex items-center">
-                      <input type="checkbox" class="mr-2" name="remember">
+                      <input type="checkbox" class="mr-2" name="remember" id="remember" {{ request()->cookie('cookie_ingat') ? 'checked' : '' }}>
                       Remember me
                   </label>
                   @if (Route::has('password.request'))

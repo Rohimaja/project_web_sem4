@@ -7,7 +7,7 @@
         <form action="{{route('admin.rekap-dosen.filter')}}" method="POST">
             @csrf
       <div class="flex flex-col md:flex-row">
-            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+            {{-- <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                 <label class="mb-1 font-semibold">Pilih Dosen:</label>
                 <select id="dosen" name="dosen">
                     <option value="" hidden selected>Pilih Program Studi</option>
@@ -18,9 +18,9 @@
                         </option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
 
-            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0">
+            <div class="flex flex-col w-full mb-4 mr-0">
                 <label class="mb-1 font-semibold">Pilih Tahun Ajaran:</label>
                 <select id="tahun-ajaran" name="tahun_ajaran" class="w-full" >
                     <option value="" hidden selected>Pilih Tahun Ajaran</option>
@@ -33,10 +33,10 @@
             </div>
         </div>
 
-            <div class="w-full flex justify-end">
+            {{-- <div class="w-full flex justify-end">
                 <a href="{{route('dosen.rekap-dosen.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Reset</a>
                 <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
-            </div>
+            </div> --}}
         </form>
 
       <div class="mt-2 mb-5 flex gap-4">
