@@ -1,11 +1,10 @@
 <x-layout>
     @vite(['resources/js/pages/admin/data-presensi.js'])
-    <div class="h-full">
+    <div class="h-full dark:text-white">
         <x-slot:title>{{ $title }}</x-slot:title>
         <p class="text-gray-800 dark:text-gray-200">Data Presensi Hari ini</p>
 
         <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
-
             <div class="flex flex-col md:flex-row">
                 <div class="flex flex-col w-full mb-4 mr-0">
                     <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Filter Presensi:</label>
@@ -16,7 +15,9 @@
                     </select>
                 </div>
             </div>
+        </div>
 
+        <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
             <div class="mb-10 flex">
                 <a href="{{ route('admin.presensi.create') }}">
                     <button class="flex items-center px-4 py-2.5 text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold cursor-pointer">
@@ -26,18 +27,18 @@
                 </a>
             </div>
 
-            <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
+            <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
                 <table id="data-presensi" class="text-sm text-left w-full display nowrap pt-2">
                     <thead class="bg-gray-200 dark:bg-gray-500 text-gray-700 dark:text-gray-200 sticky top-0 z-10">
                         <tr>
-                            <th class="border border-gray-300 px-4 py-2">Tanggal</th>
-                            <th class="border border-gray-300 px-4 py-2">Dosen</th>
-                            <th class="border border-gray-300 px-4 py-2">Jam Perkuliahan</th>
-                            <th class="border border-gray-300 px-4 py-2">Program Studi</th>
-                            <th class="border border-gray-300 px-4 py-2">Semester</th>
-                            <th class="border border-gray-300 px-4 py-2">Mata Kuliah</th>
-                            <th class="border border-gray-300 px-4 py-2">Ruangan</th>
-                            <th class="border border-gray-300 px-4 py-2">Aksi</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Tanggal</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Dosen</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Jam Perkuliahan</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Program Studi</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Semester</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Mata Kuliah</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Ruangan</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

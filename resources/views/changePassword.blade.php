@@ -1,7 +1,7 @@
 <x-layout>
     <div>
         <x-slot:title>{{ $title }}</x-slot:title>
-        <p>Ubah Profil dan Password Admin Di Sini</p>
+        <p class="dark:text-white">Ubah Profil dan Password Admin Di Sini</p>
 
         @php
             if (auth()->user()->role === 'admin') {
@@ -14,7 +14,7 @@
         @endphp
 
       <div class="mt-5">
-        <div class="bg-white shadow-md w-full">
+        <div class="bg-white shadow-md w-full dark:bg-gray-800 dark:text-white ">
 
             {{-- <form action="{{route('admin.password.update')}}" method="post"> --}}
             <form action="{{$route}}" method="post">
@@ -64,7 +64,7 @@
             </span>
             </div>
           </div>
-          <div class="p-4">
+          <div class="p-4 flex justify-end">
             <button class="flex items-center px-5 py-2.5 text-white bg-green-500 hover:bg-green-600 active:bg-green-700 rounded-sm font-semibold cursor-pointer">
               Submit
             </button>

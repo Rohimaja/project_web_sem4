@@ -2,7 +2,7 @@
   <div>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- <p class="dark:text-white">Selamat Datang, <b>{{Auth::user()->name}}</b></p> --}}
-    <p class="mb-4">Hari ini: <span class="text-md text-gray-800">
+    <p class="mb-4 dark:text-white">Hari ini: <span class="text-md text-gray-800 dark:text-white">
       {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
     </span>
     </p>
