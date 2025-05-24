@@ -72,20 +72,6 @@
 
     <div class="flex flex-col gap-6">
       
-      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 border border-gray-100 dark:border-gray-700 flex flex-col">
-        <div class="bg-green-50 dark:bg-green-900 rounded-md p-5 border border-green-200 dark:border-green-700 hover:shadow-lg transition duration-200">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-sm font-medium text-green-700 dark:text-green-200">Sudah Presensi Hari Ini</h3>
-              <p class="text-4xl font-bold text-green-600 dark:text-green-400 mt-2">1 Kelas</p>
-            </div>
-
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700 flex flex-col">
-                <h2 class="text-xl font-semibold text-gray-400 dark:text-gray-200 mb-4">Grafik Kehadiran</h2>
-                <div id="grafik-kehadiran-mhs" class="w-full h-64 bg-gray-100 dark:bg-gray-700 rounded-md"></div>
-            </div>
-        </div>
-
       <div x-data="{ openModal: false, photoPreview: '{{ asset('images/profil.jpg') }}' }"
         class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 h-full">
 
