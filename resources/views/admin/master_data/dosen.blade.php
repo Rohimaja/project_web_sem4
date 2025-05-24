@@ -45,30 +45,30 @@
 
             <div x-data="{openView: false}">
                 <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
-                    <table id="data-dosen" class="text-sm text-left w-full pt-1 border-collapse border border-gray-300 dark:border-gray-700">
+                    <table id="data-dosen" class="text-sm text-left w-full pt-1 border-collapse  dark:border-gray-700">
                         <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 sticky top-0 z-10">
                             <tr>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4">No</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4">Foto</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4">NIP</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4">Nama</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4">Email</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 text-center">Aksi</th>
+                                <th class=" dark:border-gray-600 px-4">No</th>
+                                <th class=" dark:border-gray-600 px-4">Foto</th>
+                                <th class=" dark:border-gray-600 px-4">NIP</th>
+                                <th class=" dark:border-gray-600 px-4">Nama</th>
+                                <th class=" dark:border-gray-600 px-4">Email</th>
+                                <th class=" dark:border-gray-600 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($dosen as $d)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                    <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$loop->iteration}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-700 px-4 py-2">
+                                    <td class=" dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$loop->iteration}}</td>
+                                    <td class=" dark:border-gray-700 px-4 py-2">
                                         <div class="w-10 h-10 bg-red-200 dark:bg-red-700 rounded-full overflow-hidden">
                                             <img src="{{ $d->foto ? asset('storage/' . $d->foto) : asset('images/profil-kosong.png') }}" alt="Photo" class="object-cover w-full h-full">
                                         </div>
                                     </td>
-                                    <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nip}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nama}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->email}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-center">
+                                    <td class=" dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nip}}</td>
+                                    <td class=" dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nama}}</td>
+                                    <td class=" dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->email}}</td>
+                                    <td class=" dark:border-gray-700 px-4 py-2 text-center">
                                         <div class="flex justify-center gap-2">
                                             <button @click="openView = true; $nextTick(() => loadDosenDetail({{ $d->id }}))" class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-500">
                                                 <i class="bi bi-eye text-lg"></i>
@@ -152,8 +152,6 @@
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                     {{-- <label for="" class="mb-1 font-semibold">Provinsi:</label>
                                     <input type="text" readonly id="provinsi" name="provinsi_id" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm"> --}}
-                                    <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Jabatan Fungsional:</label>
-                                    <input type="text" readonly id="jabfung" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100">
                                 </div>
                             </div>
 
@@ -167,9 +165,6 @@
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                     <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
                                     <input type="text" readonly id="kota" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm" >
-                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2 md:mr-8">
-                                    <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Golongan:</label>
-                                    <input type="text" readonly id="golongan" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100">
                                 </div>
                             </div>
 
@@ -177,26 +172,23 @@
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                     <label for="" class="mb-1 font-semibold">Kecamatan:</label>
                                     <input type="text" readonly id="kecamatan"  class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm">
-                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
-                                    <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Status:</label>
-                                    <input type="text" readonly id="status" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100">
                                 </div>
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                     <label for="" class="mb-1 font-semibold">Kelurahan:</label>
                                     <input type="text" readonly id="kelurahan" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm">
                                 </div>
                             </div>
+
                             <div class="flex flex-col md:flex-row">
-                                <div class="flex flex-col items-start w-full mb-4 md:w-full">
-                                    <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Alamat:</label>
-                                    <textarea id="alamat" readonly rows="3" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100 resize-none"></textarea>
+                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                                    <label for="" class="mb-1 font-semibold">Alamat:</label>
+                                    <input type="text" id="alamat" readonly class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm">
                                 </div>
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                     {{-- <label for="" class="mb-1 font-semibold">Alamat:</label>
                                     <input type="text" id="alamat" readonly class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm"> --}}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

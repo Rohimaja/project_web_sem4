@@ -53,21 +53,21 @@
                 <table id="data-prodi" class="text-sm text-left w-full pt-2">
                     <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
                         <tr>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Kode Prodi</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Jenjang</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Nama Program Studi</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">Aksi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">No</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Kode Prodi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Jenjang</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Nama Program Studi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($prodi as $p )
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$loop->iteration}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$p->kode_prodi}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$p->jenjang}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$p->nama_prodi}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$loop->iteration}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$p->kode_prodi}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$p->jenjang}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$p->nama_prodi}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2 text-center">
                                     <div class="flex justify-center gap-2">
                                         <a href="{{route('admin.master-prodi.edit', $p->id)}}">
                                             <button class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">

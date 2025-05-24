@@ -18,31 +18,31 @@
                 <table id="data-presensi" class="text-sm text-left w-full display pt-2">
                     <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white sticky top-0 z-10">
                         <tr>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Hari</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Jam Perkuliahan</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Durasi</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Dosen</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Program Studi</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Semester</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Ruangan</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Aksi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">No</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Hari</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Jam Perkuliahan</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Durasi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Dosen</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Program Studi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Semester</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Ruangan</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="dark:text-white">
                         @foreach ($jadwal as $j)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$loop->iteration}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->hari}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->jam}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->durasi .' SKS'}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->dosen->nama}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->prodi->jenjang .' '.$j->prodi->nama_prodi}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->semester}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->matkul->nama_matkul}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$j->ruangan->nama_ruangan}}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$loop->iteration}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->hari}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->jam}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->durasi .' SKS'}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->dosen->nama}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->prodi->jenjang .' '.$j->prodi->nama_prodi}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->semester}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->matkul->nama_matkul}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{$j->ruangan->nama_ruangan}}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2 text-center">
                                     <div class="flex justify-center gap-2">
                                         <a href="{{route('admin.master-jadwal.show', $j->id)}}">
                                             <button class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">

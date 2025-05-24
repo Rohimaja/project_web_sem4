@@ -110,18 +110,18 @@
                         <tbody>
                             @foreach ($mahasiswa as $m)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$loop->iteration}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                                    <td class=" dark:border-gray-600 px-4 py-2">{{$loop->iteration}}</td>
+                                    <td class=" dark:border-gray-600 px-4 py-2">
                                         <div class="w-10 h-10 bg-red-200 dark:bg-red-400 rounded-full overflow-hidden">
                                             <img src="{{ $m->foto ? asset('storage/' . $m->foto) : asset('images/profil-kosong.png') }}" alt="Photo">
                                         </div>
                                     </td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$m->nim}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$m->nama}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$m->jenis_kelamin}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$m->email}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$m->prodi->jenjang .' '. $m->prodi->nama_prodi}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
+                                    <td class=" dark:border-gray-600 px-4 py-2">{{$m->nim}}</td>
+                                    <td class=" dark:border-gray-600 px-4 py-2">{{$m->nama}}</td>
+                                    <td class=" dark:border-gray-600 px-4 py-2">{{$m->jenis_kelamin}}</td>
+                                    <td class=" dark:border-gray-600 px-4 py-2">{{$m->email}}</td>
+                                    <td class=" dark:border-gray-600 px-4 py-2">{{$m->prodi->jenjang .' '. $m->prodi->nama_prodi}}</td>
+                                    <td class=" dark:border-gray-600 px-4 py-2 text-center">
                                         <div class="flex justify-center gap-2">
                                             <button @click="openView = true; $nextTick(() => loadMahasiswaDetail({{ $m->id }}))" class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 dark:bg-gray-500 dark:hover:bg-gray-600 dark:active:bg-gray-700 text-white rounded-md">
                                                 <i class="bi bi-eye text-lg"></i>

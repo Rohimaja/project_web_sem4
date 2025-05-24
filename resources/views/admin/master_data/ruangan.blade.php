@@ -53,17 +53,17 @@
             <table id="data-ruangan" class="text-sm text-left w-full pt-1">
                 <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
                     <tr>
-                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
-                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Ruangan</th>
-                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">Aksi</th>
+                        <th class=" dark:border-gray-600 px-4 py-2">No</th>
+                        <th class=" dark:border-gray-600 px-4 py-2">Ruangan</th>
+                        <th class=" dark:border-gray-600 px-4 py-2 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($ruangan as $r)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-800 dark:text-gray-100">{{$loop->iteration}}</td>
-                            <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-800 dark:text-gray-100">{{$r->nama_ruangan}}</td>
-                            <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
+                            <td class=" dark:border-gray-600 px-4 py-2 text-gray-800 dark:text-gray-100">{{$loop->iteration}}</td>
+                            <td class=" dark:border-gray-600 px-4 py-2 text-gray-800 dark:text-gray-100">{{$r->nama_ruangan}}</td>
+                            <td class=" dark:border-gray-600 px-4 py-2 text-center">
                                 <div class="flex justify-center gap-2">
                                     <a href="{{route('admin.master-ruangan.edit', $r->id)}}">
                                         <button class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">
