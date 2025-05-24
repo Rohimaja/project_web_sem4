@@ -1,47 +1,74 @@
 <x-layout>
-        @vite(['resources/js/pages/admin/rekap-mahasiswa.js'])
+         @vite(['resources/js/pages/admin/rekap-mahasiswa.js'])
   <div class="h-full">
     <x-slot:title>{{ $title }}</x-slot:title>
     <p>Lihat Rekap Presensi Mahasiswa </p>
     <div class="w-full h-max max-w-full mt-5 p-8 bg-white rounded-sm shadow-xl">
-        <form action="{{route('dosen.rekap-mahasiswa.filter')}}" method="post">
+        <form action="{{route(Auth::user()->role . '.rekap-mahasiswa.filter')}}" method="post">
             @csrf
-    <div class="flex flex-col xl:flex-row">
-        <!-- Program Studi -->
-        <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4"
-            <label class="mb-1 font-semibold">Pilih Program Studi:</label>
-            <select id="prodi-dosen" name="prodi">
-                <option value="" hidden selected>Pilih Program Studi</option>
-                @foreach ($prodi as $p)
-                    <option value="{{ $p->id }}">
-                        {{ $p->jenjang .' '. $p->nama_prodi }}
-                    </option>
-                @endforeach
-            </select>
+
+        <div class="flex flex-col xl:flex-row">
+            @if (Auth::user()->role === 'admin')
+            <!-- Program Studi -->
+            <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4"
+                <label class="mb-1 font-semibold">Pilih Program Studi:</label>
+                <select id="prodi" name="prodi">
+                    <option value="" hidden selected>Pilih Program Studi</option>
+                    @foreach ($prodi as $p)
+                        <option value="{{ $p->id }}">
+                            {{ $p->jenjang .' '. $p->nama_prodi }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Semester (copy template atas, ganti datanya) -->
+            <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4"
+                <label class="mb-1 font-semibold">Pilih Semester:</label>
+                <select id="semester" name="semester">
+                    <option value="" hidden selected>Pilih Semester</option>
+                    @for ($i = 1; $i <= 14; $i++)
+                    <option value="{{$i}}"> Semester {{$i}} </option>
+                    @endfor
+                </select>
+            </div>
+    @endif
+
+    {{-- <div class="flex flex-col xl:flex-row"> --}}
+        @if (Auth::user()->role === 'dosen')
+            <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4"
+                <label class="mb-1 font-semibold">Pilih Program Studi:</label>
+                <select id="prodi-dosen" name="prodi">
+                    <option value="" hidden selected>Pilih Program Studi</option>
+                    @foreach ($prodi as $p)
+                        <option value="{{ $p->id }}">
+                            {{ $p->jenjang .' '. $p->nama_prodi }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4"
+                <label class="mb-1 font-semibold">Pilih Semester:</label>
+                <select id="semester-dosen" name="semester">
+                    <option value="" hidden selected>Pilih Semester</option>
+                    @for ($i = 1; $i <= 14; $i++)
+                    <option value="{{$i}}"> Semester {{$i}} </option>
+                    @endfor
+                </select>
+            </div>
+        @endif
+
+            <div class="flex flex-col w-full mb-4 xl:w-1/3"
+                <label class="mb-1 font-semibold">Pilih Mata Kuliah:</label>
+                <select id="matkul" name="matkul">
+
+                </select>
+            </div>
         </div>
 
-        <!-- Semester (copy template atas, ganti datanya) -->
-        <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4"
-            <label class="mb-1 font-semibold">Pilih Semester:</label>
-            <select id="semester-dosen" name="semester">
-                <option value="" hidden selected>Pilih Semester</option>
-                @for ($i = 1; $i <= 14; $i++)
-                <option value="{{$i}}"> Semester {{$i}} </option>
-                @endfor
-            </select>
-        </div>
-
-        <!-- Agama (copy template atas, ganti datanya) -->
-        <div class="flex flex-col w-full mb-4 xl:w-1/3"
-            <label class="mb-1 font-semibold">Pilih Mata Kuliah:</label>
-            <select id="matkul" name="matkul">
-
-            </select>
-        </div>
-    </div>
-
-        <div class="w-full flex justify-end mb-5">
-            <a href="{{route('dosen.rekap-mahasiswa.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Reset</a>
+        <div class="w-full flex justify-end mb-6">
+            <a href="{{route(Auth::user()->role .'.rekap-mahasiswa.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Reset</a>
             <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
         </div>
     </form>
@@ -49,7 +76,7 @@
     @if ($prodiTerpilih && $matkulTerpilih && $semesterTerpilih)
       <div class="mt-4 flex gap-4">
 
-        <form action="{{route('dosen.export.mahasiswa.excel')}}" method="POST">
+        <form action="{{route(Auth::user()->role . '.export.mahasiswa.excel')}}" method="post">
             @csrf
             <input type="hidden" name="prodi" value="{{ request('prodi') }}">
             <input type="hidden" name="semester" value="{{ request('semester') }}">
@@ -61,7 +88,7 @@
             </button>
         </form>
 
-        <form action="{{ route('dosen.export.mahasiswa.pdf') }}" method="POST">
+        <form action="{{ route(Auth::user()->role .'.export.mahasiswa.pdf') }}" method="POST">
             @csrf
             <input type="hidden" name="prodi" value="{{ request('prodi') }}">
             <input type="hidden" name="semester" value="{{ request('semester') }}">

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\KalenderAkademikController;
@@ -11,8 +11,8 @@ use App\Http\Controllers\Admin\MatkulController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProdiController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\RekapDosenController;
-use App\Http\Controllers\Admin\RekapMahasiswaController;
+use App\Http\Controllers\RekapPresensi\RekapDosenAdminController;
+use App\Http\Controllers\RekapPresensi\RekapMahasiswaController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -27,12 +27,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('kalender-akademik', KalenderAkademikController::class)
     ->except(['show']);
-    // Route::get('kalender-akademik', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
+    Route::get('kalender-akademik/view', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
     Route::post('/validate-field/kalender-akademik', [KalenderAkademikController::class, 'validateField'])->name('admin.validate.field.kalender');
 
 
     // Route::get('/dashboard', fn () => view('admin.dashboard',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']))->name('dashboard');
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'indexAdmin'])->name('dashboard');
     Route::resource('master-admin', AdminController::class);
     Route::post('/validate-field/admin', [AdminController::class, 'validateField'])->name('admin.validate.field.admin');
 
@@ -71,15 +71,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');
 
-    Route::resource('rekap-dosen', RekapDosenController::class);
-    Route::post('rekap-dosen', [RekapDosenController::class, 'rekapDosen'])->name('rekap-dosen.filter');
+    Route::resource('rekap-dosen', RekapDosenAdminController::class);
+    Route::post('rekap-dosen', [RekapDosenAdminController::class, 'rekapDosen'])->name('rekap-dosen.filter');
 
     Route::resource('rekap-mahasiswa', RekapMahasiswaController::class);
     Route::post('rekap-mahasiswa', [RekapMahasiswaController::class, 'rekapMahasiswa'])->name('rekap-mahasiswa.filter');
 
 
-    Route::post('/rekap-dosen/export/pdf', [RekapDosenController::class, 'exportPdf'])->name('export.dosen.pdf');
-    Route::post('/rekap-dosen/export/excel', [RekapDosenController::class, 'exportExcel'])->name('export.dosen.excel');
+    Route::post('/rekap-dosen/export/pdf', [RekapDosenAdminController::class, 'exportPdf'])->name('export.dosen.pdf');
+    Route::post('/rekap-dosen/export/excel', [RekapDosenAdminController::class, 'exportExcel'])->name('export.dosen.excel');
 
     Route::post('/rekap-mahasiswa/export/pdf', [RekapMahasiswaController::class, 'exportPdf'])->name('export.mahasiswa.pdf');
     Route::post('/rekap-mahasiswa/export/excel', [RekapMahasiswaController::class, 'exportExcel'])->name('export.mahasiswa.excel');
@@ -88,7 +88,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
     Route::put('/change-password', [PasswordController::class, 'update'])->name('password.update');
-    Route::post('/validate-field/change-password', [ProfileController::class, 'validateField'])->name('admin.validate.field.profile');
+    Route::post('/validate-field/password', [PasswordController::class, 'validateField'])->name('admin.validate.field.password');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\RekapPresensi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
 use App\Models\Matkul;
+use App\Models\Presensi;
 use App\Models\Prodi;
 use App\Models\TahunAjaran;
 use App\Services\RekapMahasiswaService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -29,7 +31,7 @@ class RekapMahasiswaController extends Controller
         $prodiTerpilih = $request->prodi ? Prodi::find($request->prodi) : null;
         $matkulTerpilih = $request->matkul ? Matkul::find($request->matkul) : null;
         $semesterTerpilih = $request->input('semester') ?? null;
-        return view('admin.rekap_presensi.rekap_mahasiswa', compact('title','prodi','prodiTerpilih','matkulTerpilih','semesterTerpilih','matkul','rekap','totalPertemuan'));
+        return view('rekap.rekap-mahasiswa', compact('title','prodi','prodiTerpilih','matkulTerpilih','semesterTerpilih','matkul','rekap','totalPertemuan'));
     }
 
 
@@ -57,12 +59,12 @@ class RekapMahasiswaController extends Controller
                 $data['totalPertemuan'] = $hasil['totalPertemuan'];
             }
 
-            $pdf = Pdf::loadView('admin.rekap_presensi.mahasiswa_pdf', $data)->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('rekap.export.mahasiswa-pdf', $data)->setPaper('a4', 'portrait');
             return $pdf->download('Rekap Kehadiran Mahasiswa.pdf');
 
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with([
-                'status' => 'Gagal',
+                'status' => 'error',
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ]);
         }
@@ -103,7 +105,7 @@ class RekapMahasiswaController extends Controller
 
                     public function view(): View
                     {
-                        return view('admin.rekap_presensi.mahasiswa_excel', [
+                        return view('rekap.export.mahasiswa-excel', [
                             'prodi' => Prodi::find($this->prodiId)?->nama_prodi ?? '-',
                             'semester' => $this->semester,
                             'matkul' => Matkul::find($this->matkulId)?->nama_matkul ?? '-',
@@ -114,64 +116,6 @@ class RekapMahasiswaController extends Controller
                 };
 
             return Excel::download($export, 'Rekap Kehadiran Mahasiswa.xlsx');
-    }
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
         public function rekapMahasiswa(Request $request, RekapMahasiswaService $service)
@@ -198,6 +142,33 @@ class RekapMahasiswaController extends Controller
             $data['totalPertemuan'] = $hasil['totalPertemuan'];
         }
 
-        return view('admin.rekap_presensi.rekap_mahasiswa', $data);
+        return view('rekap.rekap-mahasiswa', $data);
+    }
+
+            public function getMatkulDosen(Request $request)
+    {
+        $prodi = $request->query('prodi');
+        $semester = $request->query('semester');
+        $dosen = Auth::user()->dosen;
+
+        $tahunAjaranAktif = TahunAjaran::where('status',  true)->first();
+        $matkulId = Presensi::where('dosen_id',$dosen->id)->distinct()->pluck('matkul_id');
+
+        $query = Matkul::query()->whereIn('id', $matkulId)->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+
+
+        // $query = Presensi::where('dosen_id', $dosen->id)->with('matkul:id,kode_matku,nama_matkul')->select('kode_matkul')->distinct()->get()->pluck('matkul');
+
+        if ($prodi) {
+            $query->where('prodi_id', $prodi);
+        }
+
+        if ($semester) {
+            $query->where('semester', $semester);
+        }
+
+        $matkul = $query->get(['id', 'nama_matkul']);
+
+        return response()->json($matkul);
     }
 }

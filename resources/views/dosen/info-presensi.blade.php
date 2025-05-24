@@ -4,6 +4,12 @@
         <p>Tinjau detail kehadiran perkuliahan, mulai dari pengajar hingga peserta kelas</p>
 
       <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white rounded-sm shadow-xl">
+        <div class="mb-5 justify-start flex">
+          <a href="{{route('dosen.presensi.index')}}">
+            <button class="px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Back</button>
+          </a>
+        </div>
+
         <h1 class="mb-2 text-2xl font-semibold text-gray-700">Dosen Pengajar</h1>
         <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
           <table id="tbl-pres" class="text-sm text-left w-full pt-2">
@@ -155,11 +161,11 @@
             </tbody>
           </table>
         </div>
-        <div class="mt-5 justify-end flex">
+        {{-- <div class="mt-5 justify-end flex">
           <a href="{{route('dosen.presensi.index')}}">
             <button class="px-5 py-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Batal</button>
           </a>
-        </div>
+        </div> --}}
       </div>
     </div>
   </x-layout>

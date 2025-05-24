@@ -12,6 +12,8 @@
                 <select id="filter-presensi" name="prodi_id">
                     <option value="" hidden selected>Pilih Program Studi</option>
                     <option value="today">Hari ini</option>
+                    <option value="week">Minggu ini</option>
+                    <option value="month">Bulan ini</option>
                     <option value="all">Semua Periode</option>
                 </select>
             </div>
@@ -27,10 +29,9 @@
             </div>
 
             <div class="overflow-x-auto w-68 sm:w-150 md:w-full mt-3 pb-3">
-                <table id="data-presensi" class="text-sm text-left w-full display pt-2">
+                <table id="data-presensi" class="text-sm text-left w-full display nowrap pt-2" width="100%">
                     <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10">
                         <tr>
-                            <th class="border border-gray-300 px-4 py-2">No</th>
                             <th class="border border-gray-300 px-4 py-2">Tanggal</th>
                             <th class="border border-gray-300 px-4 py-2">Dosen</th>
                             <th class="border border-gray-300 px-4 py-2">Jam Perkuliahan</th>
@@ -44,7 +45,6 @@
                     <tbody class="">
                         @foreach ($presensi as $p)
                             <tr class="hover:bg-gray-50">
-                                <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$p->tgl_presensi}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$p->dosen->nama}}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{$p->jam_awal .' - '.$p->jam_akhir}}</td>

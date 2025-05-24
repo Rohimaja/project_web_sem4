@@ -80,6 +80,41 @@ $(document).ready(function () {
             }
         }
 
+        // Filter Minggu Ini
+        if (filter === "week") {
+            let today = new Date();
+            let firstDay = new Date(
+                today.setDate(today.getDate() - today.getDay())
+            );
+            let lastDay = new Date(firstDay);
+            lastDay.setDate(firstDay.getDate() + 6);
+
+            firstDay.setHours(0, 0, 0, 0);
+            lastDay.setHours(23, 59, 59, 999);
+
+            if (date < firstDay || date > lastDay) {
+                return false;
+            }
+        }
+
+        // Filter Bulan Ini
+        if (filter === "month") {
+            let today = new Date();
+            let firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+            let lastDay = new Date(
+                today.getFullYear(),
+                today.getMonth() + 1,
+                0
+            );
+
+            firstDay.setHours(0, 0, 0, 0);
+            lastDay.setHours(23, 59, 59, 999);
+
+            if (date < firstDay || date > lastDay) {
+                return false;
+            }
+        }
+
         // Filter berdasarkan range tanggal
         if (filter === "all") {
             if (startDate && date < startDate) {

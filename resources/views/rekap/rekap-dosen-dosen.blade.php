@@ -7,25 +7,25 @@
         <form action="{{route('admin.rekap-dosen.filter')}}" method="POST">
             @csrf
       <div class="flex flex-col md:flex-row">
-            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+            {{-- <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                 <label class="mb-1 font-semibold">Pilih Dosen:</label>
                 <select id="dosen" name="dosen">
                     <option value="" hidden selected>Pilih Program Studi</option>
-                    @foreach ($dosen as $d)
-                        <option value="{{ $d->id }}" {{optional($dosenTerpilih)->id == $d->id ? 'selected' : ''}}>
+                    @foreach ($prodi as $p)
+                        <option value="{{ $p->id }}">
 
-                            {{ $d->nama}}
+                            {{ $p->jenjang .' '. $p->nama_prodi}}
                         </option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
 
-            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0">
+            <div class="flex flex-col w-full mb-4 mr-0">
                 <label class="mb-1 font-semibold">Pilih Tahun Ajaran:</label>
                 <select id="tahun-ajaran" name="tahun_ajaran" class="w-full" >
                     <option value="" hidden selected>Pilih Tahun Ajaran</option>
                         @foreach ($tahun as $t)
-                            <option value="{{ $t->id }}" {{optional($tahunTerpilih)->id == $t->id ? 'selected' : ''}}>
+                            <option value="{{ $t->id }}">
                                 {{ $t->tahun_awal .'/'. $t->tahun_akhir .' '. $t->keterangan}}
                             </option>
                         @endforeach
@@ -33,53 +33,26 @@
             </div>
         </div>
 
-            <div class="w-full flex justify-end mb-6">
-                <a href="{{route('admin.rekap-dosen.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Reset</a>
-                <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
-            </div>
         </form>
 
-    @if ($dosenTerpilih && $tahunTerpilih)
-        <div class="mt-2 mb-5 flex gap-4">
-            <form action="{{route('admin.export.dosen.excel')}}" method="POST">
-                @csrf
-                <input type="hidden" name="dosen" value="{{ request('dosen') }}">
-                <input type="hidden" name="tahun_ajaran" value="{{ request('tahun_ajaran') }}">
+      <div class="mt-2 mb-5 flex gap-4">
+        <a href="{{route('dosen.export.dosen.excel')}}">
+          <button class="flex items-center px-4 py-2.5 text-white bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-sm font-semibold cursor-pointer">
+            <i class="bi bi-file-earmark-excel mr-2"></i>
+            <span>Export Excel</span>
+          </button>
+        </a>
 
-                <button class="flex items-center px-4 py-2.5 text-white bg-green-700 hover:bg-green-800 active:bg-green-900 rounded-sm font-semibold cursor-pointer">
-                    <i class="bi bi-file-earmark-excel mr-2"></i>
-                    <span>Export Excel</span>
-                </button>
-            </form>
-
-            <form action="{{ route('admin.export.dosen.pdf') }}" method="POST">
-                @csrf
-                <input type="hidden" name="dosen" value="{{ request('dosen') }}">
-                <input type="hidden" name="tahun_ajaran" value="{{ request('tahun_ajaran') }}">
-
-                <button type="submit" class="flex items-center px-4 py-2.5 text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-sm font-semibold cursor-pointer">
-                    <i class="bi bi-filetype-pdf mr-2"></i>
-                    <span>Export PDF</span>
-                </button>
-            </form>
-        </div>
+        <a href="{{route('dosen.export.dosen.pdf')}}">
+            <button class="flex items-center px-4 py-2.5 text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-sm font-semibold cursor-pointer">
+            <i class="bi bi-filetype-pdf mr-2"></i>
+            <span>Export Pdf</span>
+            </button>
+        </a>
+      </div>
 
 
-            <div class="flex flex-col gap-3 mt-3">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
 
-                <label for="nip" class="w-20 font-semibold">NIP:</label>
-                {{-- <input type="text" id="nip" disabled name="nip" class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-auto " value="{{$dosenTerpilih->nip}}"> --}}
-                    <span class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-full">{{$dosenTerpilih->nip ?? ''}}</span>
-                </div>
-
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
-                <label for="nama" class="w-20 font-semibold">Nama:</label>
-                {{-- <span type="text" id="nama" disabled name="nama" class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-auto" value="{{$dosenTerpilih->nama}}"> --}}
-                    <span class="border border-gray-300 bg-gray-300 rounded px-3 py-2 w-full">{{$dosenTerpilih->nama ?? ''}}</span>
-                </div>
-            </div>
-        @endif
 
 
       <div x-data="{ hovering: false }" class="overflow-x-auto w-60 sm:w-150 md:w-240 xl:min-w-full mt-1 pb-3">
@@ -94,7 +67,7 @@
                     @for ($i = 1; $i <= $totalPertemuan; $i++)
                         <th class="border border-gray-300 px-4 py-2 text-center">{{ $i }}</th>
                     @endfor
-                    <th class="border border-gray-300 px-4 py-2">Hadir</th>
+                    <th class="border border-gray-300 px-4 py-2">%hadir</th>
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -140,8 +113,3 @@
 
     </div>
 </x-layout>
-
-<script>
-    const namaDosen = @json($dosenTerpilih->nama ?? '');
-    const nipDosen = @json($dosenTerpilih->nip ?? '');
-</script>

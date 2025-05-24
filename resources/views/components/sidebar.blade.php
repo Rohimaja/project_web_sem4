@@ -120,6 +120,14 @@
             </div>
           </a>
         </li>
+        <li>
+          <a href="{{ route('dosen.jadwal') }}">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
+              <i class="text-[20px] bi bi-clock-fill"></i>
+              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
+            </div>
+          </a>
+        </li>
 
         <hr class="my-2 text-gray-600">
         <li x-data="{open: false}">
@@ -158,7 +166,7 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('mahasiswa.presensi') }}">
+          <a href="{{ route('mahasiswa.presensi.index') }}">
             <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
               <i class="text-[20px] bi bi-check-square-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Presensi</span>
@@ -269,9 +277,9 @@ class="fixed z-50 w-64 bg-blue-900 h-full overflow-y-auto top-16 left-0 p-4 ease
           <a href="{{route('admin.master-jadwal.index')}}" class="mt-2 w-4/5">
             <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Jadwal</h1>
           </a>
-          <a href="{{route('admin.kalender-akademik.index')}}" class="mt-2 w-4/5">
+          {{-- <a href="{{route('admin.kalender-akademik.index')}}" class="mt-2 w-4/5">
             <h1 class="cursor-pointer p-2 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 rounded-md mt-1">Kalender Akademik</h1>
-          </a>
+          </a> --}}
         </div>
       </li>
       <hr class="my-2 text-gray-600">
@@ -353,9 +361,6 @@ class="fixed z-50 w-64 bg-blue-900 h-full overflow-y-auto top-16 left-0 p-4 ease
           </a>
           <a href="{{route('admin.master-jadwal.index')}}" class="mt-2 w-4/5">
             <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Jadwal</h1>
-          </a>
-          <a href="{{route('admin.kalender-akademik.index')}}" class="mt-2 w-4/5">
-            <h1 class="cursor-pointer p-2 hover:bg-blue-800 active:bg-blue-700 rounded-md mt-1">Kalender Akademik</h1>
           </a>
         </div>
       </li>
