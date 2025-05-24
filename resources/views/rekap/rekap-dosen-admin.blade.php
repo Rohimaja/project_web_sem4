@@ -1,11 +1,47 @@
 <x-layout>
-    @vite(['resources/js/pages/admin/rekap-dosen.js'])
-    <div class="h-full">
-        <x-slot:title>{{ $title }}</x-slot:title>
-        <p class="text-gray-800 dark:text-gray-200">Lihat Rekap Presensi Dosen </p>
+         @vite(['resources/js/pages/admin/rekap-dosen.js'])
+  <div class="h-full">
+    <x-slot:title>{{ $title }}</x-slot:title>
+    <p>Lihat Rekap Presensi Dosen </p>
+    <div class="w-full h-max max-w-full mt-5 p-8 bg-white rounded-sm shadow-xl">
+        <form action="{{route('admin.rekap-dosen.filter')}}" method="POST">
+            @csrf
+      <div class="flex flex-col md:flex-row">
+            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                <label class="mb-1 font-semibold">Pilih Dosen:</label>
+                <select id="dosen" name="dosen">
+                    <option value="" hidden selected>Pilih Program Studi</option>
+                    @foreach ($dosen as $d)
+                        <option value="{{ $d->id }}">
 
-        <div class="w-full h-max max-w-full mt-5 p-8 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
-            <form action="{{ route('admin.rekap-dosen.filter') }}" method="POST">
+                            {{ $d->nama}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0">
+                <label class="mb-1 font-semibold">Pilih Tahun Ajaran:</label>
+                <select id="tahun-ajaran" name="tahun_ajaran" class="w-full" >
+                    <option value="" hidden selected>Pilih Tahun Ajaran</option>
+                        @foreach ($tahun as $t)
+                            <option value="{{ $t->id }}">
+                                {{ $t->tahun_awal .'/'. $t->tahun_akhir .' '. $t->keterangan}}
+                            </option>
+                        @endforeach
+                </select>
+            </div>
+        </div>
+
+            <div class="w-full flex justify-end mb-6">
+                <a href="{{route('admin.rekap-dosen.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">Reset</a>
+                <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+            </div>
+        </form>
+
+    @if ($dosenTerpilih && $tahunTerpilih)
+        <div class="mt-2 mb-5 flex gap-4">
+            <form action="{{route('admin.export.dosen.excel')}}" method="POST">
                 @csrf
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
@@ -140,8 +176,3 @@
         </div>
     </div>
 </x-layout>
-
-<script>
-    const namaDosen = @json($dosenTerpilih->nama ?? '');
-    const nipDosen = @json($dosenTerpilih->nip ?? '');
-</script>

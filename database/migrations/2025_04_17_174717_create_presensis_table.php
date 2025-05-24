@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('matkul_id')->constrained('matkuls');
             $table->foreignId('ruangan_id')->constrained('ruangans');
             $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans');
-            $table->string('link_zoom','100');
+            $table->string('link_zoom','100')->nullable();
             $table->timestamps();
         });
     }

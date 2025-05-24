@@ -45,25 +45,43 @@ $(document).ready(function () {
 
                     // Tambahkan data yang baru dari hasil filter
                     data.forEach((item, index) => {
+                        const fotoUrl = item.foto
+                            ? `/storage/${item.foto}`
+                            : "/images/profil-kosong.png";
+
                         table.row.add([
-                            `<div style="text-align:center;">${
-                                index + 1
-                            }</div>`, // Semester ditengah
+                            `<div style="text-align:left;">${index + 1}</div>`, // Semester ditengah
                             `<div class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
-                                <img src="/storage/${item.foto}" alt="Photo" class="w-full h-full object-cover">
+                                <img src="${fotoUrl}" alt="Photo" class="w-full h-full object-cover">
                             </div>`,
-                            `<div style="text-align:left;">${item.nim}</div>`, // Semester ditengah
-                            `<div style="text-align:left;">${item.nama}</div>`, // Semester ditengah
+                            // `<div style="text-align:left;">${item.nim}</div>`, // Semester ditengah
+                            // `<div style="text-align:left;">${item.nama}</div>`, // Semester ditengah
                             // `<div style="text-align:left;">${
                             //     item.rfid ? item.rfid : "-"
                             // }</div>`, // Semester ditengah
+                            item.nim,
+                            item.nama,
                             item.jenis_kelamin,
                             item.email,
                             `${item.prodi?.jenjang ?? ""} ${
                                 item.prodi?.nama_prodi ?? ""
                             }` || "-",
 
-                            // item.prodi?.jenjang & item.prodi?.nama_prodi ?? "-",
+                            // `<td class="border border-gray-300 px-4 py-2 text-center">${
+                            //     index + 1
+                            // }</td>`,
+                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">
+                            //     <div class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
+                            //         <img src="/storage/${item.foto}" alt="Photo" class="w-full h-full object-cover">
+                            //     </div>
+                            // </td>`,
+                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.nim}</td>`,
+                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.nama}</td>`,
+                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.jenis_kelamin}</td>`,
+                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.email}</td>`,
+                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${
+                            //     item.prodi?.jenjang ?? ""
+                            // } ${item.prodi?.nama_prodi ?? ""}</td>`, // item.prodi?.jenjang & item.prodi?.nama_prodi ?? "-",
                             // `<div style="text-align:center;">${item.semester}</div>`, // Semester ditengah
                             `<div class="flex gap-2 justify-center">
                                 <button @click="openView = true; $nextTick(() => loadMahasiswaDetail(${item.id}))"

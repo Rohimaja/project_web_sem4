@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('detail_presensis', function (Blueprint $table) {
             $table->foreignId('presensi_id')->constrained('presensis');
             $table->foreignId('mahasiswa_id')->constrained('mahasiswas');
-            $table->dateTime('waktu_presensi');
+            $table->dateTime('waktu_presensi')->nullable();
             $table->tinyInteger('status');
-            $table->string('alasan');
+            $table->string('alasan')->nullable();
+            $table->string('bukti',100)->nullable();
         });
     }
 

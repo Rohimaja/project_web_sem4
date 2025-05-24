@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dosen;
+namespace App\Http\Controllers\RekapPresensi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Http\Request;
 
-class RekapDosenController extends Controller
+class RekapDosenDosenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,7 +29,7 @@ class RekapDosenController extends Controller
         $data['dosenTerpilih'] = Auth::user()->dosen;
         // $data['dosenTerpilih'] = Dosen::findOrFail($request->dosen);
         // $data['tahunTerpilih'] = TahunAjaran::findOrFail($request->tahun_ajaran);
-        $data['tahun'] = TahunAjaran::all();
+        $data['tahun'] = TahunAjaran::orderBy('tahun_awal')->get();
         $data['rekap'] = [];
         $data['totalPertemuan'] = 16;
 
@@ -45,7 +45,7 @@ class RekapDosenController extends Controller
         $data['totalPertemuan'] = $hasil['totalPertemuan'];
 
 
-        return view('dosen.rekap_presensi.rekap_dosen', $data);
+        return view('rekap.rekap-dosen-dosen', $data);
     }
 
     //     public function exportPdf(Request $request)
@@ -87,13 +87,9 @@ class RekapDosenController extends Controller
             'totalPertemuan' => $rekapData['totalPertemuan'],
         ];
 
-        $pdf = Pdf::loadView('dosen.rekap_presensi.pdf', $data)->setPaper('a4', 'landscape');
-        return $pdf->download('rekap-kehadiran-dosen.pdf');
+        $pdf = Pdf::loadView('rekap.export.dosen-pdf', $data)->setPaper('a4', 'portrait');
+        return $pdf->download('Rekap Kehadiran Dosen.pdf');
     }
-
-
-
-
 
 
 
@@ -120,7 +116,7 @@ class RekapDosenController extends Controller
 
                 public function view(): View
                 {
-                    return view('dosen.rekap_presensi.excel', [
+                    return view('rekap.export.dosen-excel', [
                         'nip' => $this->dosen->nip,
                         'nama' => $this->dosen->nama,
                         'prodi' => $this->dosen->prodi->jenjang . ' ' . $this->dosen->prodi->nama_prodi,
@@ -132,64 +128,12 @@ class RekapDosenController extends Controller
                 }
             };
 
-            return Excel::download($export, 'rekap_dosen.xlsx');
+            return Excel::download($export, 'Rekap Kehadiran Dosen.xlsx');
     }
 
 
 
-
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function rekapDosen(Request $request, RekapDosenService $service)
+    public function getFilterRekap(Request $request, RekapDosenService $service)
     {
         $data['title'] = 'Rekap Dosen';
         $data['judul'] = 'Rekap Dosen';
@@ -199,20 +143,13 @@ class RekapDosenController extends Controller
         $data['dosenTerpilih'] = Auth::user()->dosen;
         // $data['dosenTerpilih'] = Dosen::findOrFail($request->dosen);
         // $data['tahunTerpilih'] = TahunAjaran::findOrFail($request->tahun_ajaran);
-        $data['tahun'] = TahunAjaran::all();
+        $data['tahun'] = TahunAjaran::orderBy('tahun_awal')->get();
         $data['rekap'] = [];
         $data['totalPertemuan'] = 16;
 
-        if ($request->isMethod('post')) {
-            $request->validate([
-                'dosen' => 'required|exists:dosens,id',
-                'tahun_ajaran' => 'required|exists:tahun_ajarans,id',
-            ]);
-
-            $hasil = $service->getFilterRekapDosen($data['dosenTerpilih']->id, $request->prodi_id, $request->tahun_ajaran_id);
-            $data['rekap'] = $hasil['rekap'];
-            $data['totalPertemuan'] = $hasil['totalPertemuan'];
-        }
+        $hasil = $service->getRekap($data['dosenTerpilih']->id, $request->tahun_ajaran);
+        $data['rekap'] = $hasil['rekap'];
+        $data['totalPertemuan'] = $hasil['totalPertemuan'];
 
         return response()->json($data);
 

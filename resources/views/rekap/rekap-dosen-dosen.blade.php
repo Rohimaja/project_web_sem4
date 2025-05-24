@@ -111,8 +111,3 @@
         </div>
     </div>
 </x-layout>
-
-<script>
-    const namaDosen = @json($dosenTerpilih->nama ?? '');
-    const nipDosen = @json($dosenTerpilih->nip ?? '');
-</script>

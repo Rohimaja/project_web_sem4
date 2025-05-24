@@ -6,7 +6,7 @@ $(document).ready(function () {
         scrollX: true, // Aktifkan scroll horizontal
         autoWidth: false, // Hindari ukuran otomatis
     });
-    $("div.dt-search").hide();
+    // $("div.dt-search").hide();
 });
 
 window.loadAdminDetail = function (id) {

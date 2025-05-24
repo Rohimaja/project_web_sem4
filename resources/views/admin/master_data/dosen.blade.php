@@ -150,24 +150,50 @@
                                     <input type="text" readonly id="prodi" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100">
                                 </div>
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                                    {{-- <label for="" class="mb-1 font-semibold">Provinsi:</label>
+                                    <input type="text" readonly id="provinsi" name="provinsi_id" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm"> --}}
                                     <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Jabatan Fungsional:</label>
                                     <input type="text" readonly id="jabfung" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100">
                                 </div>
                             </div>
+
+                        <h1 class="font-bold text-gray-800 text-lg my-2 text-center xl:text-left mt-3">Alamat</h1>
+                        <hr class="my-2 text-gray-600 mb-6">
                             <div class="flex flex-col md:flex-row">
+                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                                    <label for="" class="mb-1 font-semibold">Provinsi:</label>
+                                    <input type="text" readonly id="provinsi" name="provinsi_id" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm">
+                                </div>
+                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                                    <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
+                                    <input type="text" readonly id="kota" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm" >
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2 md:mr-8">
                                     <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Golongan:</label>
                                     <input type="text" readonly id="golongan" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100">
                                 </div>
+                            </div>
+
+                            <div class="flex flex-col md:flex-row">
+                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                                    <label for="" class="mb-1 font-semibold">Kecamatan:</label>
+                                    <input type="text" readonly id="kecamatan"  class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm">
                                 <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
                                     <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Status:</label>
                                     <input type="text" readonly id="status" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100">
+                                </div>
+                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                                    <label for="" class="mb-1 font-semibold">Kelurahan:</label>
+                                    <input type="text" readonly id="kelurahan" class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm">
                                 </div>
                             </div>
                             <div class="flex flex-col md:flex-row">
                                 <div class="flex flex-col items-start w-full mb-4 md:w-full">
                                     <label for="" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Alamat:</label>
                                     <textarea id="alamat" readonly rows="3" class="bg-gray-100 dark:bg-gray-800 w-full p-2 border-2 border-gray-300 dark:border-gray-700 rounded-sm text-gray-900 dark:text-gray-100 resize-none"></textarea>
+                                </div>
+                                <div class="flex flex-col items-start w-full mb-4 md:w-1/2">
+                                    {{-- <label for="" class="mb-1 font-semibold">Alamat:</label>
+                                    <input type="text" id="alamat" readonly class="bg-gray-100 w-full p-2 border-2 border-gray-300 rounded-sm"> --}}
                                 </div>
                             </div>
 

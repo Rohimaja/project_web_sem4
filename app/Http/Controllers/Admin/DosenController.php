@@ -24,7 +24,7 @@ class DosenController extends Controller
     {
         $title = 'Data Dosen';
         $dosen = Dosen::all();
-        $prodi = Dosen::with(relations: ['prodi'])->get();
+        $prodi = Dosen::with( ['prodi'])->get();
         return view('admin.master_data.dosen',compact('title','dosen','prodi'));
 
     }

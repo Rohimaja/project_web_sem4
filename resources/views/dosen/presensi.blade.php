@@ -15,6 +15,8 @@
                     <select id="filter-presensi" name="prodi_id" class="dark:bg-gray-700 dark:text-white dark:border-gray-600">
                         <option value="" hidden selected>Filter Presensi</option>
                         <option value="today">Hari ini</option>
+                        <option value="week">Minggu ini</option>
+                        <option value="month">Bulan ini</option>
                         <option value="all">Semua Periode</option>
                     </select>
                 </div>
@@ -35,29 +37,29 @@
                 <table id="data-presensi" class="text-sm text-left w-full display pt-2 dark:text-white">
                     <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
                         <tr>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Tanggal</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Dosen</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Jam Perkuliahan</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Program Studi</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Semester</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Ruangan</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Aksi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">No</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Tanggal</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Dosen</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Jam Perkuliahan</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Program Studi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Semester</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Ruangan</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($presensi as $p)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $loop->iteration }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $p->tgl_presensi }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $p->dosen->nama }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $p->jam_awal .' - '.$p->jam_akhir }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $p->prodi->jenjang .' '.$p->prodi->nama_prodi }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $p->semester }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $p->matkul->nama_matkul }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{ $p->ruangan->nama_ruangan }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $loop->iteration }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->tgl_presensi }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->dosen->nama }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->jam_awal .' - '.$p->jam_akhir }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->prodi->jenjang .' '.$p->prodi->nama_prodi }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->semester }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->matkul->nama_matkul }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->ruangan->nama_ruangan }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2 text-center">
                                     <div class="flex justify-center gap-2">
                                         <a href="{{ route('dosen.presensi.show', $p->id) }}">
                                             <button class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">

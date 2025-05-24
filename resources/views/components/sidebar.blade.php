@@ -120,6 +120,14 @@
             </div>
           </a>
         </li>
+        <li>
+          <a href="{{ route('dosen.jadwal') }}">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
+              <i class="text-[20px] bi bi-clock-fill"></i>
+              <span class="text-[15px] ml-4 text-gray-200 font-semibold">Jadwal</span>
+            </div>
+          </a>
+        </li>
 
         <hr class="my-2 text-gray-600">
         <li x-data="{open: false}">
@@ -158,8 +166,8 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('mahasiswa.presensi') }}">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 dark:active:bg-gray-500 active:bg-blue-500 cursor-pointer duration-300 text-white">
+          <a href="{{ route('mahasiswa.presensi.index') }}">
+            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 active:bg-blue-500 cursor-pointer duration-300 text-white">
               <i class="text-[20px] bi bi-check-square-fill"></i>
               <span class="text-[15px] ml-4 text-gray-200 font-semibold">Presensi</span>
             </div>

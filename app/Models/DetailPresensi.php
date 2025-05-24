@@ -15,7 +15,8 @@ class DetailPresensi extends Model
         'mahasiswa_id',
         'waktu_presensi',
         'status',
-        'alasan'
+        'alasan',
+        'bukti'
     ];
 
         public $timestamps = false;

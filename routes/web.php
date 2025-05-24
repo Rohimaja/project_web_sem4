@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KalenderAkademikController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Mahasiswa\MahasiswaController;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,36 +23,10 @@ Route::middleware(['auth'])->get('/dashboard', function () {
     };
 });
 
-// Route Mahasiswa
-Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
-    Route::get('/mahasiswa/dashboard', function () {
-        return view('mahasiswa.dashboard', [
-            'title' => 'Dashboard',
-            'rute' => 'mahasiswa -> Dashboard'
-        ]);
-    })->name('mahasiswa.dashboard');
+    // Route::get('kalender-akademik', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
 
-    Route::get('/mahasiswa/presensi', function () {
-        return view('mahasiswa.presensi', [
-            'title' => 'Presensi',
-            'rute' => 'mahasiswa -> Presensi'
-        ]);
-    })->name('mahasiswa.presensi');
 
-    Route::get('/mahasiswa/jadwal', function () {
-        return view('mahasiswa.jadwal', [
-            'title' => 'Jadwal',
-            'rute' => 'mahasiswa -> Jadwal'
-        ]);
-    })->name('mahasiswa.jadwal');
-
-    Route::get('/mahasiswa/rekap', function () {
-        return view('mahasiswa.rekap_mahasiswa', [
-            'title' => 'Rekap Mahasiswa',
-            'rute' => 'mahasiswa -> Rekap Mahasiswa'
-        ]);
-    })->name('mahasiswa.rekap');
-});
+    Route::get('/rfid/presensi',[MahasiswaController::class,'prosesPresensi']);
 
 
 // Route::middleware('auth')->get('/dashboard', function () {
@@ -125,3 +101,4 @@ Route::get('/wilayah/{type}/{id?}', function ($type, $id = null) {
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
 require __DIR__.'/dosen.php';
+require __DIR__.'/mahasiswa.php';

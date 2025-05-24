@@ -97,14 +97,14 @@
                     <table id="data-mahasiswa" class="text-sm text-left w-full pt-2">
                         <thead class="bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-100 sticky top-0 z-10">
                             <tr>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Foto</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">NIM</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Nama</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Jenis Kelamin</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Email</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Program Studi</th>
-                                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">Aksi</th>
+                                <th class=" px-4 py-2">No</th>
+                                <th class=" px-4 py-2">Foto</th>
+                                <th class=" px-4 py-2">NIM</th>
+                                <th class=" px-4 py-2">Nama</th>
+                                <th class=" px-4 py-2">Jenis Kelamin</th>
+                                <th class=" px-4 py-2">Email</th>
+                                <th class=" px-4 py-2">Program Studi</th>
+                                <th class=" px-4 py-2 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

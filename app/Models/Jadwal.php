@@ -22,9 +22,14 @@ class Jadwal extends Model
         'semester'
     ];
 
-        public function detailjadwal()
+        public function detailJadwal()
     {
         return $this->hasMany(DetailJadwal::class, 'jadwal_id', 'id');
+    }
+
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id', 'id');
     }
 
     public function prodi()

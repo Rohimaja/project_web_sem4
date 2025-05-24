@@ -102,9 +102,28 @@ public function authenticate(): void
         RateLimiter::hit($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'username' => trans('auth.failed'),
+            'username' => 'Login gagal. Pastikan username dan password benar.',
+            // 'username' => trans('auth.failed'),
         ]);
     }
+
+        // Cek apakah user ditemukan dan password cocok
+    // if (! $user) {
+    //     RateLimiter::hit($this->throttleKey());
+
+    //     throw ValidationException::withMessages([
+    //         'username' => $isEmail ? 'Email tidak terdaftar' : 'NIM tidak ditemukan',
+    //         // 'password' => 'Password yang Anda masukkan salah.',
+    //     ]);
+    // }
+
+    //     if (! \Hash::check($this->password, $user->password)) {
+    //     RateLimiter::hit($this->throttleKey());
+
+    //     throw ValidationException::withMessages([
+    //         'password' => 'Password yang Anda masukkan salah.',
+    //     ]);
+    // }
 
     // Validasi kombinasi field dan role
     if ($isEmail && $user->role === 'mahasiswa') {
@@ -131,6 +150,15 @@ public function authenticate(): void
     }
 
     Auth::login($user, $this->boolean('remember'));
+
+        // ✅ Simpan username/NIM ke cookie jika 'remember' dicentang
+    if ($this->boolean('remember')) {
+        cookie()->queue('cookie_username', $this->username, 60 * 24 * 30); // 30 hari
+        cookie()->queue('cookie_ingat', true, 60 * 24 * 30);
+    } else {
+        cookie()->queue(cookie()->forget('cookie_username'));
+        cookie()->queue(cookie()->forget('cookie_ingat'));
+    }
 
     RateLimiter::clear($this->throttleKey());
 }

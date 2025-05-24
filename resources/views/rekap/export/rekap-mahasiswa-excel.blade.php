@@ -6,25 +6,27 @@
         table { border-collapse: collapse; width: 100%; margin-top: 10px; }
         th, td { border: 1px solid #000; padding: 4px; text-align: center; }
         th { background-color: #dce6f1; }
-        .header-info td { border: none; padding: 2px 2px; text-align: left; }
+        .header-info td { border: none; padding: 1px 1px; text-align: left; }
+        .header-info td:first-child {width: 100px; white-space: nowrap;}
     </style>
 </head>
 <body>
 
-    <h3 align="center">REKAP KEHADIRAN DOSEN</h3>
+    <h3 align="center">REKAP KEHADIRAN MAHASISWA</h3>
 
     <table class="header-info">
-        <tr><td>ProgramStudi</td><td>: {{ $prodiTerpilih->nama_prodi }}</td></tr>
-        <tr><td>Semester</td><td>: {{ $semester }}</td></tr>
-        <tr><td>Mata Kuliah</td><td>: {{ $matkulTerpilih->nama_matkul }}</td></tr>
+        <tr><td>Nim</td><td>: {{ $nim }}</td></tr>
+        <tr><td>Nama</td><td>: {{ $nama }}</td></tr>
+        <tr><td>Program Studi</td><td>: {{ $prodi }}</td></tr>
+        <tr><td>Semester</td><td>: {{ reset($rekap)['semester'] ?? '-' }}</td></tr>
     </table>
 
     <table>
         <thead>
                 <tr>
                     <th class="border border-gray-300 px-4 py-2">No</th>
-                    <th class="border border-gray-300 px-4 py-2">Nim</th>
-                    <th class="border border-gray-300 px-4 py-2">Nama</th>
+                    <th class="border border-gray-300 px-4 py-2">Kode Mata Kuliah</th>
+                    <th class="border border-gray-300 px-4 py-2">Nama Mata Kuliah</th>
                     @for ($i = 1; $i <= 16; $i++)
                         <th class="border border-gray-300 px-4 py-2 text-center">{{ $i }}</th>
                     @endfor
@@ -39,8 +41,8 @@
 
                 <tr class="hover:bg-gray-50">
                     <td class="border border-gray-300 px-4 py-2">{{$loop->iteration}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{$item['nim'] ?? ''}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{$item['nama_mahasiswa'] ?? ''}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{$item['kode_matkul'] ?? ''}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{$item['nama_matkul'] ?? ''}}</td>
                     @for ($i = 1; $i <= $totalPertemuan; $i++)
                         @php
                             $tanggal = $item['tanggal_pertemuan'][$i] ?? null;
@@ -75,7 +77,12 @@
             </tbody>
     </table>
 
-    <p style="margin-top: 20px;">Keterangan: M = Mengajar, - = Tidak ada perkuliahan</p>
+    <p style="margin-top: 20px;">Keterangan:</p>
+    <p>H = Hadir</p>
+    <p>I = Izin</p>
+    <p>S = Sakit</p>
+    <p>A = Alpha</p>
+    <p>- = Tidak ada perkuliahan</p>
 
 </body>
 </html>
@@ -162,7 +169,7 @@
         <strong>Total Pertemuan:</strong> {{ $totalPertemuan }}
     </div>
 
-    <p style="margin-top: 20px;">Keterangan: M = Mengajar, - = Tidak ada perkuliahan</p>
+    <p style="margin-top: 20px;">: M = Mengajar, - = Tidak ada perkuliahan</p>
 
 </body>
 </html> --}}

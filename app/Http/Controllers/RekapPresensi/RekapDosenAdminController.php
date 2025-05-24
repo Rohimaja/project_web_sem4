@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\RekapPresensi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Facades\Excel;
 
-class RekapDosenController extends Controller
+class RekapDosenAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class RekapDosenController extends Controller
         $tahunTerpilih = $request->tahun_ajaran ? TahunAjaran::find($request->tahun_ajaran) : null;
         $rekap = [];
         $totalPertemuan = 16;
-        return view('admin.rekap_presensi.rekap_dosen', compact('title','judul','dosen','dosenTerpilih','tahunTerpilih','tahun','rekap','totalPertemuan'));
+        return view('rekap.rekap-dosen-admin', compact('title','judul','dosen','dosenTerpilih','tahunTerpilih','tahun','rekap','totalPertemuan'));
     }
 
 
@@ -36,12 +36,10 @@ class RekapDosenController extends Controller
         public function exportPdf(Request $request, RekapDosenService $service)
     {
         try {
+            $dosen = Dosen::findOrFail($request->dosen);
             $data = [
-                // 'nip' => $dosen->nip,
-                // 'nama' => $dosen->nama,
-                // 'prodi' => $dosen->prodi->jenjang . ' ' . $dosen->prodi->nama_prodi,
-                'dosenTerpilih' => Dosen::findOrFail($request->dosen),
-                'tahunTerpilih' => TahunAjaran::findOrFail($request->tahun_ajaran),
+                'nip' => $dosen->nip,
+                'nama' => $dosen->nama,
                 'rekap' => [],
                 'totalPertemuan' => 16,
             ];
@@ -49,11 +47,11 @@ class RekapDosenController extends Controller
             if ($request->isMethod('post')) {
 
             $hasil = $service->getRekap($request->dosen, $request->tahun_ajaran);
-                $data['rekap'] = $hasil['rekap'];
+                $data['dataPresensi'] = $hasil['rekap'];
                 $data['totalPertemuan'] = $hasil['totalPertemuan'];
             }
 
-            $pdf = Pdf::loadView('admin.rekap_presensi.pdf', $data)->setPaper('a4', 'landscape');
+            $pdf = Pdf::loadView('rekap.export.dosen-pdf', $data)->setPaper('a4', 'portrait');
             return $pdf->download('Rekap Kehadiran Dosen.pdf');
 
         } catch (\Exception $e) {
@@ -98,7 +96,7 @@ class RekapDosenController extends Controller
 
                     public function view(): View
                     {
-                        return view('admin.rekap_presensi.excel', [
+                        return view('rekap.export.dosen-excel', [
                             'nip' => Dosen::find($this->dosenId)?->nip ?? '-',
                             'nama' => Dosen::find($this->dosenId)?->nama ?? '-',
                             'dataPresensi' => $this->rekapData['rekap'],
@@ -122,21 +120,21 @@ class RekapDosenController extends Controller
         $data['prodi'] = Prodi::all();
         $data['dosenTerpilih'] = Dosen::findOrFail($request->dosen);
         $data['tahunTerpilih'] = TahunAjaran::findOrFail($request->tahun_ajaran);
-        $data['tahun'] = TahunAjaran::all();
+        $data['tahun'] = TahunAjaran::orderBy('tahun_awal')->get();
         $data['rekap'] = [];
         $data['totalPertemuan'] = 16;
 
         if ($request->isMethod('post')) {
-            $request->validate([
-                'dosen' => 'required|exists:dosens,id',
-                'tahun_ajaran' => 'required|exists:tahun_ajarans,id',
-            ]);
+            // $request->validate([
+            //     'dosen' => 'required|exists:dosens,id',
+            //     'tahun_ajaran' => 'required|exists:tahun_ajarans,id',
+            // ]);
 
             $hasil = $service->getRekap($request->dosen, $request->tahun_ajaran);
             $data['rekap'] = $hasil['rekap'];
             $data['totalPertemuan'] = $hasil['totalPertemuan'];
         }
 
-        return view('admin.rekap_presensi.rekap_dosen', $data);
+        return view('rekap.rekap-dosen-admin', $data);
     }
 }

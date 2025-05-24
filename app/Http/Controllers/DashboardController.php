@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\DetailPresensi;
 use App\Models\Dosen;
@@ -11,11 +11,12 @@ use App\Models\Prodi;
 
 
 use Carbon\Carbon;
+use Auth;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function indexAdmin()
     {
         $data = [
         'title' => 'Dashboard',
@@ -64,5 +65,32 @@ class DashboardController extends Controller
 
         return view('admin.dashboard',$data);
 
+    }
+
+        public function indexDosen()
+    {
+        $title = 'Dashboard';
+        $user = Auth::user()->dosen;
+        $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();
+        // Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get(),
+
+        // $mahasiswa = Mahasiswa::count();
+        // $dosen = Dosen::count();
+        // $matkul = Matkul::count();
+        // $prodi = Prodi::count();
+        return view('dosen.dashboard',compact('title','user','presensiHariIni'));
+
+    }
+
+    public function indexMahasiswa(){
+        $title = 'Dashboard';
+        // $admin = Admin::all();
+        // $admin = Admin::with(relations: ['province','regency','district','village'])->get();
+        $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();
+        $mahasiswa = Auth::user()->mahasiswa;
+        $biodata = Mahasiswa::with('prodi','province','regency','district','village')->findOrFail($mahasiswa->id);
+
+
+        return view('mahasiswa.dashboard',compact('title','presensiHariIni','biodata'));
     }
 }
