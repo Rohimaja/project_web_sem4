@@ -27,13 +27,13 @@ class StoreMasterAdmin extends FormRequest
         $id = $id ?? $this->route('master_admin');
 
         return [
-            'nama' => 'required|max:100',
+            'nama' => 'required|max:100|regex:/^[A-Za-z\s]+$/',
             'jenis_kelamin' => 'required',
             'agama' => 'required',
-            'tempat_lahir' => 'required|max:100',
+            'tempat_lahir' => 'required|max:100|regex:/^[A-Za-z\s]+$/',
             'tgl_lahir' => 'required|before:today',
             'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-            'email' => ['required','email','max:100',Rule::unique('admins', 'email')->ignore($id),],
+            'email' => ['required','email:rfc,dns','max:100',Rule::unique('admins', 'email')->ignore($id),],
             'alamat' => 'required|max:200',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
             'province_id' => 'required',
@@ -45,20 +45,22 @@ class StoreMasterAdmin extends FormRequest
 
     public function messages(){
         return [
-            'nama.required' => 'Nama tidak boleh kosong',
-            'nama.max' => 'Nama maksimal 100 karakter',
+            'nama.required' => 'Nama wajib diisi',
+            'nama.max' => 'Nama tidak boleh melebihi 100 karakter',
+            'nama.regex' =>'Nama hanya boleh mengandung huruf',
 
             'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
             'agama.required' => 'Agama harus dipilih',
 
             'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-            'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
+            'tempat_lahir.max' => 'Tempat Lahir tidak boleh melebihi 100 karakter',
+            'tempat_lahir.regex' =>'Tempat Lahir hanya boleh mengandung huruf',
 
             'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
-            'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
+            'tgl_lahir.before' => 'Tanggal lahir harus sebelum hari ini',
 
             'no_telp.required' => 'Nomor Telepon wajib diisi',
-            'no_telp.max' => 'Nomor Telepon maksimal 20 karakter',
+            'no_telp.max' => 'Nomor Telepon tidak boleh melebihi 20 karakter',
             'no_telp.regex' => 'Nomor Telepon hanya boleh berisi angka',
 
             'email.required' => 'Email tidak boleh kosong',
@@ -67,7 +69,7 @@ class StoreMasterAdmin extends FormRequest
             'email.unique' => 'Email sudah digunakan',
 
             'alamat.required' => 'Alamat tidak boleh kosong',
-            'alamat.max' => 'Alamat maksimal 200 karakter',
+            'alamat.max' => 'Alamat tidak boleh melebihi 200 karakter',
 
             'prodi_id.required' => 'Program Studi wajib dipilih',
 

@@ -56,6 +56,13 @@
 // });
 
 document.addEventListener("DOMContentLoaded", function () {
+    const jumlahMinggu = chartData[0]?.data.length || 4;
+
+    const categories = [];
+    for (let i = 1; i <= jumlahMinggu; i++) {
+        categories.push(`Minggu ${i}`);
+    }
+
     const options = {
         chart: {
             type: "bar",
@@ -68,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         series: chartData,
         xaxis: {
-            categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
+            categories: categories,
             labels: {
                 style: {
                     colors: "#555",
@@ -101,20 +108,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // DOSEN DOSEN DOSEN
 document.addEventListener("DOMContentLoaded", () => {
+    const jumlahMinggu = chartData[0]?.data.length || 4;
+
+    const categories = [];
+    for (let i = 1; i <= jumlahMinggu; i++) {
+        categories.push(`Minggu ${i}`);
+    }
+
     const options = {
         chart: {
             type: "bar",
             height: 250,
             toolbar: { show: false },
         },
-        series: [
-            {
-                name: "Jumlah Presensi",
-                data: [5, 4, 6, 3], // Minggu 1 - 4
-            },
-        ],
+        series: chartData,
+        //     {
+        //         name: "Jumlah Presensi",
+        //         data: [5, 4, 6, 3], // Minggu 1 - 4
+        //     },
+        // ],
         xaxis: {
-            categories: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
+            categories: categories,
         },
         colors: ["#1E88E5"],
         plotOptions: {
@@ -128,11 +142,18 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     };
 
-    const chart = new ApexCharts(
-        document.querySelector("#grafik-kehadiran"),
-        options
-    );
-    chart.render();
+    // const chart = new ApexCharts(
+    //     document.querySelector("#grafik-kehadiran"),
+    //     options
+    // );
+    // chart.render();
+
+    const chartContainer = document.querySelector("#grafik-kehadiran");
+
+    if (chartContainer) {
+        const chart = new ApexCharts(chartContainer, options);
+        chart.render();
+    }
 });
 
 // document.addEventListener("DOMContentLoaded", () => {

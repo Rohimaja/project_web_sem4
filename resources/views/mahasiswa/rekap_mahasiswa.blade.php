@@ -9,7 +9,7 @@
             <div class="flex flex-col xl:flex-row mb-5">
                 <div class="flex flex-col w-full mb-4 xl">
                     <label class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Pilih Tahun Ajaran:</label>
-                    <select id="prodi" name="prodi"
+                    <select id="tahun-ajaran" name="tahun_ajaran"
                         class="bg-white dark:bg-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded px-3 py-2">
                         <option value="" hidden selected>Pilih Tahun Ajaran</option>
                         @foreach ($tahun as $t)
@@ -44,15 +44,12 @@
                             <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
                             <th @mouseenter="hovering = true" @mouseleave="hovering = false"
                                 :class="hovering ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 dark:text-white'"
-                                class="border border-gray-300 dark:border-gray-600 px-4 py-2">Nim</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Nama</th>
+                                class="border border-gray-300 dark:border-gray-600 px-4 py-2">Kode Mata Kuliah</th>
+                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
                             @for ($i = 1; $i <= 16; $i++)
                                 <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">{{ $i }}</th>
                             @endfor
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Hadir</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Izin</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Sakit</th>
-                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Alpha</th>
+                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Kehadiran</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
@@ -68,19 +65,16 @@
                                             $status = $item['pertemuan'][$i] ?? '';
                                             $dosen = $item['nama_dosen'][$i] ?? '';
                                             switch ($status) {
-                                                case 'H': $bg = 'bg-green-500'; break;
-                                                case 'I': $bg = 'bg-yellow-500'; break;
-                                                case 'S': $bg = 'bg-blue-500'; break;
-                                                case 'A': $bg = 'bg-red-600'; break;
-                                                default: $bg = 'bg-gray-400'; break;
+                                                case 'H': $bg = 'text-green-500'; break;
+                                                case 'I': $bg = 'text-blue-500'; break;
+                                                case 'S': $bg = 'text-yellow-500'; break;
+                                                case 'A': $bg = 'text-red-500'; break;
+                                                default: $bg = 'text-gray-400'; break;
                                             };
                                         @endphp
-                                        <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 font-semibold text-white {{ $bg }}" title="{{$tanggal .' '. $dosen}}">{{ $status }}</td>
+                                        <td class="dark:border-gray-600 px-4 py-2 font-semibold {{ $bg }}" title="{{$tanggal .' '. $dosen}}">{{ $status }}</td>
                                     @endfor
                                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['kehadiran']}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['izin_persentase']}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['sakit_persentase']}}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['alpha_persentase']}}</td>
                                 </tr>
                             @endforeach
                         @endif
@@ -90,9 +84,11 @@
 
             <div class="mt-6 text-gray-800 dark:text-gray-200">
                 <h2 class="text-2xl font-semibold mb-5">Keterangan:</h2>
-                <p class="mt-2"><span class="text-white font-bold p-1 bg-green-500">H</span> = Hadir Kuliah</p>
-                <p class="mt-2"><span class="text-white font-bold py-1 px-2 bg-yellow-500">I</span> = Izin Kuliah</p>
-                <p class="mt-2"><span class="text-white font-bold p-1 bg-red-500">A</span> = Alpha Kuliah</p>
+                <p class="mt-2 dark:text-white"><span class="text-green-500 font-bold">H  = Hadir</span></p>
+                <p class="mt-2 dark:text-white"><span class="text-blue-500 font-bold">I  = Tidak masuk dengan Izin</span></p>
+                <p class="mt-2 dark:text-white"><span class="text-yellow-500 font-bold">S  = Tidak masuk karena sakit</span></p>
+                <p class="mt-2 dark:text-white"><span class="text-red-500 font-bold">A  = Tidak masuk tanpa keterangan</span></p>
+                <p class="mt-2 dark:text-white"><span class="text-gray-500 font-bold">-  = Tidak terselenggara perkuliahan</span></p>
             </div>
         </div>
     </div>

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class KalenderAkademik extends Model
 {
     //
-    protected $fillable = ['judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai'];
+    protected $fillable = ['judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai','status'];
 
 }

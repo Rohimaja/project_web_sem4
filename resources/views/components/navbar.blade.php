@@ -3,7 +3,7 @@
          x-init="document.documentElement.classList.toggle('dark', isDark)">
         <div class="text-gray-600">
             <button @click="isSideMenuOpen = !isSideMenuOpen" class="cursor-pointer block xl:hidden px-2 py-1 active:bg-gray-200 rounded-sm"><i class="bi bi-list font-bold text-2xl"></i></button>
-            <h1 class="text-lg px-2 font-semibold text-gray-600 hidden xl:block">{{ucfirst(Auth::user()->role)}}</h1>
+                {{-- <h1 class="text-lg px-2 font-semibold text-gray-600 hidden xl:block">{{ $title ?? config('app.name', 'Laravel') }}</h1> --}}
         </div>
 
       @php

@@ -225,7 +225,7 @@ class="fixed z-50 w-64 bg-customblue h-full overflow-y-auto top-16 left-0 p-4 ea
     @if (Auth::user()->role === 'admin')
     <ul class="space-y-2">
       <li>
-        <a href="/admin/dashboard">
+        <a href="{{route('admin.dashboard')}}">
           <div class="p-2.5 mt-4 flex items-center rounded-md px-4 hover:bg-blue-400 dark:hover:bg-gray-700 dark:active:bg-gray-500 active:bg-blue-500 cursor-pointer duration-300 text-white">
             <i class="text-[20px] bi bi-house-door-fill"></i>
             <span class="text-[15px] ml-4 text-gray-200 font-semibold">Dashboard</span>
@@ -275,7 +275,7 @@ class="fixed z-50 w-64 bg-customblue h-full overflow-y-auto top-16 left-0 p-4 ea
             <h1 class="cursor-pointer p-2 hover:bg-blue-400 dark:hover:bg-gray-700 dark:active:bg-gray-500 active:bg-blue-500 rounded-md mt-1">Ruangan</h1>
           </a>
           <a href="{{route('admin.master-jadwal.index')}}" class="mt-2 w-4/5">
-            <h1 class="cursor-pointer p-2 hover:bg-gray-700 active:bg-gray-800 rounded-md mt-1">Jadwal</h1>
+            <h1 class="cursor-pointer p-2 hover:bg-blue-400 dark:hover:bg-gray-700 dark:active:bg-gray-500 active:bg-blue-500 rounded-md mt-1">Jadwal</h1>
           </a>
           <a href="{{route('admin.kalender-akademik.index')}}" class="mt-2 w-4/5">
             <h1 class="cursor-pointer p-2 hover:bg-blue-400 dark:hover:bg-gray-700 dark:active:bg-gray-500 active:bg-blue-500 rounded-md mt-1">Kalender Akademik</h1>

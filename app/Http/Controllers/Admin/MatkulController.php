@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class MatkulController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = 'Data Mata Kuliah';
@@ -25,28 +22,21 @@ class MatkulController extends Controller
         $tahun = TahunAjaran::orderBy('tahun_awal')->get();
         $matkul = Matkul::with( ['prodi', 'tahunAjaran'])->get();
 
-
         return view('admin.master_data.matkul', compact('title','prodi','tahun', 'matkul'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $prodi = Prodi::all(); // Ambil semua data prodi
+        $prodi = Prodi::all();
         $tahun = TahunAjaran::orderBy('tahun_awal')->get();
-        $title = 'Tambah Data'; // Ambil semua data prodi
+        $title = 'Tambah Data';
         return view('admin.master_data.form-matkul', compact('prodi','tahun', 'title'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreMasterMatkul $request)
     {
         $request->merge([
-            'nama_matkul' => trim($request->nama_matkul),
+            'nama_matkul' => ucwords(trim($request->nama_matkul)),
             'durasi_matkul' => trim($request->durasi_matkul),
         ]);
 
@@ -64,13 +54,13 @@ class MatkulController extends Controller
                 ]);
             });
 
-
             return redirect()->route('admin.master-matkul.index')->with([
                 'status' => 'success',
                 'message' => 'Mata Kuliah Berhasil Ditambahkan'
             ]);
+
         } catch (\Exception $e) {
-            Log::error('Gagal menambahkan Mata Kuliah', [
+            Log::error('Gagal menambahkan Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
@@ -82,44 +72,32 @@ class MatkulController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
+        $title = 'Update Data';
         $matkul = Matkul::findOrFail($id);
-        $prodi = Prodi::all(); // Ambil semua data prodi
+        $prodi = Prodi::all();
         $tahun = TahunAjaran::orderBy('tahun_awal')->get();
-        $title = 'Update Data'; // Ambil semua data prodi
         return view('admin.master_data.form-matkul', compact('matkul','prodi','tahun', 'title'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreMasterMatkul $request, $id)
     {
         $request->merge([
-            'nama_matkul' => trim($request->nama_matkul),
+            'nama_matkul' => ucwords(trim($request->nama_matkul)),
             'durasi_matkul' => trim($request->durasi_matkul),
         ]);
 
         try {
-
             DB::transaction(function () use ($request, $id) {
-
                 $matkul = Matkul::findOrFail($id);
                 $matkul->update($request->only(['nama_matkul', 'tahun_ajaran_id', 'semester', 'durasi_matkul','prodi_id']));
             });
-
 
             return redirect()->route('admin.master-matkul.index')->with([
                 'status' => 'success',
@@ -127,7 +105,7 @@ class MatkulController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal Perbarui Mata Kuliah', [
+            Log::error('Gagal Perbarui Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
@@ -139,14 +117,9 @@ class MatkulController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
-
-            // Update atau create data tahun ajaran
             $matkul = Matkul::findOrFail($id);
             $matkul->delete();
 
@@ -156,45 +129,38 @@ class MatkulController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal Hapus Mata Kuliah', [
+            Log::error('Gagal Hapus Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
 
             return redirect()->back()->withInput()->with([
                 'status' => 'error',
-                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()
             ]);
         }
     }
 
     private function generateKodeMatkul($id)
     {
-        // Ambil kode prodi berdasarkan id_prodi
         $prodi = Prodi::findOrFail($id);
 
-        $kodeProdi = $prodi->kode_prodi; // contoh "TI"
-        $tahunSekarang = now()->format('y'); // contoh "25" untuk tahun 2025
+        $kodeProdi = $prodi->kode_prodi;
+        $tahunSekarang = now()->format('y');
 
-        // Cari kode matkul terakhir dengan pola yang sesuai
         $lastKode = Matkul::where('kode_matkul', 'like', $kodeProdi . $tahunSekarang . '%')
             ->orderBy('kode_matkul', 'desc')
             ->first();
 
         if ($lastKode) {
-            // Ambil 3 digit terakhir dan tambah 1
             $lastNumber = (int)substr($lastKode->kode_matkul, -3);
             $newNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
         } else {
-            // Kalau belum ada, mulai dari 001
             $newNumber = '001';
         }
 
-        // Gabungkan semuanya
         return $kodeProdi . $tahunSekarang . $newNumber;
     }
-
-
 
     public function getFilterMatkul(Request $request){
         $prodi = $request->query('prodi');

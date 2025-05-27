@@ -1,7 +1,8 @@
 <x-layout>
+    @vite(['resources/js/components/dashboard.js'])
   <div class="dark:text-white dark:bg-gray-700">
     <x-slot:title>{{ $title }}</x-slot:title>
-    <p class="mb-4">Hari ini: 
+    <p class="mb-4">Hari ini:
       <span class="text-md text-gray-800 dark:text-gray-200">
         {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
       </span>
@@ -34,37 +35,31 @@
       <div class="w-[310px] md:w-3/4 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
         <!-- Header -->
         <div class="mb-3 p-4 rounded-t-xl border-b-2 border-gray-300 dark:border-gray-700 flex justify-between items-center flex-wrap gap-2">
-          <h1 class="text-gray-500 dark:text-gray-300 text-lg font-semibold">Daftar Dosen Mengajar Hari Ini</h1>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Cari..."
-            class="w-full md:w-[200px] text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
+          <h1 class="text-gray-500 dark:text-gray-300 text-lg font-semibold">Daftar Mengajar Hari Ini</h1>
         </div>
 
         <!-- Tabel Scrollable -->
         <div class="px-3 pb-3 overflow-x-auto max-h-[400px] overflow-y-auto">
-          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm" id="dosenTable">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm" id="data-mengajar">
             <thead class="bg-gray-100 dark:bg-gray-700 sticky top-0 z-10 text-gray-700 dark:text-gray-200">
               <tr>
                 <th class="px-4 py-2 text-left">No</th>
+                <th class="px-4 py-2 text-left">Mata Kuliah</th>
+                <th class="px-4 py-2 text-left">Jam Perkuliahan</th>
                 <th class="px-4 py-2 text-left">Program Studi</th>
                 <th class="px-4 py-2 text-left">Semester</th>
-                <th class="px-4 py-2 text-left">Mata Kuliah</th>
                 <th class="px-4 py-2 text-left">Ruangan</th>
-                <th class="px-4 py-2 text-left">Jam Perkuliahan</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-gray-700 dark:text-gray-200">
                 @foreach ($presensiHariIni as $p)
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-2">{{$p->matkul->nama_matkul}}</td>
+                    <td class="px-4 py-2">{{substr($p->jam_awal,0,5) .' - '. substr($p->jam_akhir,0,5)}}</td>
                     <td class="px-4 py-2">{{$p->prodi->nama_prodi}}</td>
                     <td class="px-4 py-2">{{$p->semester}}</td>
-                    <td class="px-4 py-2">{{$p->matkul->nama_matkul}}</td>
                     <td class="px-4 py-2">{{$p->ruangan->nama_ruangan}}</td>
-                    <td class="px-4 py-2">{{substr($p->jam_awal,0,5) .' - '. substr($p->jam_akhir,0,5)}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -105,3 +100,7 @@
     </div>
   </div>
 </x-layout>
+
+<script>
+    const chartData = @json($dosenMingguan ? [$dosenMingguan] : []);
+</script>

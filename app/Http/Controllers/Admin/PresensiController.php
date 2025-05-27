@@ -35,7 +35,7 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        $title = 'Data Presensi';
+        $title = 'Tambah Presensi';
         $prodi = Prodi::all(); // Ambil semua data prodi
         $ruangan = Ruangan::all(); // Ambil semua data prodi
         $matkul = Matkul::all(); // Ambil semua data prodi

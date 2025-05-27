@@ -32,17 +32,23 @@
                   <h2 class="font-bold text-gray-800 dark:text-gray-200">Detail Profile</h2>
               </div>
               <div class="px-8 py-4">
-                  <div class="flex flex-col md:flex-row mb-4">
-                      <div class="flex flex-col w-full">
+                  <div class="flex flex-col md:flex-row">
+                      <div class="flex flex-col w-full mb-4 mr-0 md:mr-4">
                           <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Nama Lengkap:</label>
                           <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{old('nama', $user->admin->nama ?? '')}}">
                       </div>
+                      <div class="flex flex-col w-full">
+                          <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Email:</label>
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->email}}">
+                      </div>
+
                   </div>
                   <div class="flex flex-col md:flex-row">
-                      <div class="flex flex-col w-full mb-4 mr-0 md:mr-4">
-                          <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">NIP:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="209393472384709">
+                        <div class="flex flex-col w-full mb-4 mr-0 md:mr-4">
+                          <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">No Telp:</label>
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->no_telp}}">
                       </div>
+
                       <div class="flex flex-col w-full mb-4">
                           <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Agama:</label>
                           <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->agama ?? ''}}">
@@ -58,20 +64,10 @@
                           <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->jenis_kelamin}}">
                       </div>
                   </div>
-                  <div class="flex flex-col md:flex-row mb-4">
-                      <div class="flex flex-col w-full">
-                          <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Email:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->email}}">
-                      </div>
-                  </div>
                   <div class="flex flex-col md:flex-row">
-                      <div class="flex flex-col w-full mb-4 mr-0 md:mr-4">
-                          <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">No Telp:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->no_telp}}">
-                      </div>
                       <div class="flex flex-col w-full mb-4">
                           <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Alamat:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->province->name .', '. $user->admin->regency->name .', '. $user->admin->district->name .', '. $user->admin->village->nama .', '. $user->admin->alamat  }}">
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->province->name .', '. $user->admin->regency->name .', '. $user->admin->district->name .', '. $user->admin->village->name .', '. $user->admin->alamat  }}">
                       </div>
                   </div>
               </div>

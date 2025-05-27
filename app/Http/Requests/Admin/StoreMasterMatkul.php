@@ -24,7 +24,7 @@ class StoreMasterMatkul extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_matkul' => 'required|max:100',
+            'nama_matkul' => 'required|max:100|regex:/^[A-Za-z0-9\s]+$/',
             'prodi_id' => 'required',
             'semester' => 'required',
             'tahun_ajaran_id' => 'required',
@@ -36,6 +36,7 @@ class StoreMasterMatkul extends FormRequest
         return [
             'nama_matkul.required' => 'Mata Kuliah tidak boleh kosong.',
             'nama_matkul.max' => 'Nama Mata Kuliah maksimal 100 karakter.',
+            'nama_matkul.regex' => 'Nama Mata Kuliah tidak boleh mengandung simbol',
 
             'prodi_id.required' => 'Program Studi wajib dipilih',
 

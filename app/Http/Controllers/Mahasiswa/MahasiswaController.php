@@ -28,7 +28,8 @@ class MahasiswaController extends Controller
         $jadwal = Jadwal::with(['prodi','dosen','matkul','ruangan','detailJadwal' => function ($q) use ($mahasiswa){
             $q->where('mahasiswa_id', $mahasiswa->id);
         }])->orderBy('hari')->get();
-        return view('mahasiswa.jadwal',compact('title','jadwal'));
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
+        return view('mahasiswa.jadwal',compact('title','jadwal','tahun'));
     }
 
     public function rekap(Request $request, RekapMahasiswaService $service){
@@ -55,8 +56,8 @@ class MahasiswaController extends Controller
             'nim' => $mahasiswa->nim,
             'nama' => $mahasiswa->nama,
             'prodi' => $mahasiswa->prodi->jenjang . ' ' . $mahasiswa->prodi->nama_prodi,
-            'semester' => 'Ganjil', // opsional: bisa ambil dari request jika sudah ada filter
-            'matkul' => '-', // opsional: isi jika ada filter mata kuliah
+            'semester' => 'Ganjil',
+            'matkul' => '-',
             'rekap' => $rekapData['rekap'],
             'totalPertemuan' => $rekapData['totalPertemuan'],
         ];
@@ -125,6 +126,45 @@ class MahasiswaController extends Controller
             }
 
             return redirect()->route('dosen.profile.edit')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Di Perbarui'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Perbarui Profile', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+        public function updateProfil(Request $request)
+    {
+        try {
+            $mahasiswa = $request->user()->mahasiswa;
+
+            $request->validate([
+                'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            ]);
+
+            if ($request->hasFile('foto')) {
+                // Hapus foto lama jika ada
+                if ($mahasiswa->foto && Storage::disk('public')->exists($mahasiswa->foto)) {
+                    Storage::disk('public')->delete($mahasiswa->foto);
+                }
+
+                // Simpan foto baru
+                $filename = 'profile/mahasiswa/profile_' . $mahasiswa->id . '.' . $request->file('foto')->extension();
+                $fotoPath = $request->file('foto')->storeAs('foto_mahasiswa', $filename, 'public');
+                $mahasiswa->update(['foto' => $fotoPath]);
+            }
+
+            return redirect()->route('mahasiswa.dashboard')->with([
                 'status' => 'success',
                 'message' => 'Data Berhasil Di Perbarui'
             ]);
@@ -308,6 +348,27 @@ class MahasiswaController extends Controller
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => 'Gagal update presensi'], 404);
             }
+    }
+
+        public function getFilterRekap(Request $request, RekapMahasiswaService $service)
+    {
+        $data['title'] = 'Rekap Dosen';
+        $data['judul'] = 'Rekap Dosen';
+        $mahasiswa = Auth::user()->mahasiswa;
+        // $dosenTerpilih = Auth::user()->dosen;
+        // $data['mahasiswa'] = Auth::user()->mahasiswa;
+        // $data['dosenTerpilih'] = Dosen::findOrFail($request->dosen);
+        // $data['tahunTerpilih'] = TahunAjaran::findOrFail($request->tahun_ajaran);
+        // $data['tahun'] = TahunAjaran::orderBy('tahun_awal')->get();
+        $data['rekap'] = [];
+        $data['totalPertemuan'] = 16;
+
+        $hasil = $service->getFilterRekap($mahasiswa->id, $request->tahun_ajaran);
+        $data['rekap'] = $hasil['rekap'];
+        $data['totalPertemuan'] = $hasil['totalPertemuan'];
+
+        return response()->json($data);
+
     }
 
 }

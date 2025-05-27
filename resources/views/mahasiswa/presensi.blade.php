@@ -45,9 +45,9 @@
                             @endif
                         @else
                             <div class="text-center text-gray-600 dark:text-gray-400">
-                                <p class="text-4xl mb-2">📭</p>
-                                <p class="text-lg font-semibold">Belum Ada Presensi Yang Dibuka</p>
-                                <p class="text-sm">Selamat beristirahat, tidak ada kelas terjadwal untuk Anda.</p>
+                                <p class="text-8xl mb-2">📭</p>
+                                <p class="text-lg font-semibold">Tidak ada sesi perkuliahan berlangsung.</p>
+                                <p class="text-sm">Anda dapat memeriksa kembali jadwal akademik Anda untuk informasi lebih lanjut.</p>
                             </div>
                         @endif
                     </div>
@@ -57,7 +57,7 @@
                     <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Riwayat Presensi</h2>
 
                     <div class="flex-1 space-y-4 max-h-[400px] overflow-y-auto pr-2">
-                        @if ($riwayat)
+                        @if (!$riwayat)
                             @foreach ($riwayat as $r )
                                 <div class="bg-gradient-to-r from-white to-gray-100 dark:from-gray-800 dark:to-gray-700 p-4 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 transition hover:shadow-xl">
                                     <div class="flex justify-between items-center">
@@ -99,7 +99,7 @@
                             <div class="text-center text-gray-600 dark:text-gray-400 mt-10">
                                 <p class="text-8xl mb-2">📭</p>
                                 <p class="text-lg font-semibold">Belum Ada Riwayat Presensi</p>
-                                <p class="text-sm">Riwayat presensi akan muncul setelah Anda melakukan presensi.</p>
+                                <p class="text-sm">Riwayat presensi akan muncul setelah jam perkuliahan selesai.</p>
                             </div>
                         @endif
                     </div>

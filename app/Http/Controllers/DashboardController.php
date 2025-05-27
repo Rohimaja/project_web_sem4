@@ -40,10 +40,18 @@ class DashboardController extends Controller
 
         foreach ($statusMap as $statusValue => $statusLabel) {
             $minggu = [];
+            $startOfMonth = Carbon::now()->startOfMonth();
+            $endOfMonth = Carbon::now()->endOfMonth();
+            $weeksInMonth = ceil($startOfMonth->diffInDays($endOfMonth) / 7);
 
-            for ($i = 1; $i <= 4; $i++) {
+
+            for ($i = 1; $i <= $weeksInMonth; $i++) {
                 $start = Carbon::now()->startOfMonth()->addWeeks($i - 1)->startOfWeek();
                 $end = (clone $start)->endOfWeek();
+
+                // Pastikan tidak melewati akhir bulan
+                if ($start > $endOfMonth) break;
+                if ($end > $endOfMonth) $end = $endOfMonth;
 
                 $count = DetailPresensi::where('status', $statusValue)
                     ->whereHas('presensi', function ($q) use ($start, $end) {
@@ -53,6 +61,19 @@ class DashboardController extends Controller
 
                 $minggu[] = $count;
             }
+
+            // for ($i = 1; $i <= 4; $i++) {
+            //     $start = Carbon::now()->startOfMonth()->addWeeks($i - 1)->startOfWeek();
+            //     $end = (clone $start)->endOfWeek();
+
+            //     $count = DetailPresensi::where('status', $statusValue)
+            //         ->whereHas('presensi', function ($q) use ($start, $end) {
+            //             $q->whereBetween('tgl_presensi', [$start, $end]);
+            //         })
+            //         ->count();
+
+            //     $minggu[] = $count;
+            // }
 
             $chartData[] = [
                 'name' => $statusLabel,
@@ -67,23 +88,89 @@ class DashboardController extends Controller
 
     }
 
+
         public function indexDosen()
     {
-        $title = 'Dashboard';
         $user = Auth::user()->dosen;
-        $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();
-        // Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get(),
 
-        // $mahasiswa = Mahasiswa::count();
-        // $dosen = Dosen::count();
-        // $matkul = Matkul::count();
-        // $prodi = Prodi::count();
-        return view('dosen.dashboard',compact('title','user','presensiHariIni'));
+        $data = [
+            'title' => 'Dashboard',
+            'user' => $user,
+            'presensiHariIni' => Presensi::with(['prodi', 'dosen', 'matkul', 'tahunAjaran', 'ruangan'])
+                ->whereDate('tgl_presensi', Carbon::today())
+                ->where('dosen_id', $user->id)
+                ->get(),
+            'dosenMingguan' => [],
+        ];
 
+        $minggu = [];
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+        $weeksInMonth = ceil($startOfMonth->diffInDays($endOfMonth) / 7);
+
+        for ($i = 1; $i <= $weeksInMonth; $i++) {
+            $start = Carbon::now()->startOfMonth()->addWeeks($i - 1)->startOfWeek();
+            $end = (clone $start)->endOfWeek();
+
+            if ($start > $endOfMonth) break;
+            if ($end > $endOfMonth) $end = $endOfMonth;
+
+            $count = Presensi::where('dosen_id', $user->id)
+                ->whereBetween('tgl_presensi', [$start, $end])
+                ->count();
+
+            $minggu[] = $count;
+        }
+
+        $data['dosenMingguan'] = [
+            'name' => 'Pertemuan Mengajar',
+            'data' => $minggu,
+        ];
+
+        return view('dosen.dashboard', $data);
     }
+
+
+    //     public function indexDosen()
+    // {
+    //     // $title = 'Dashboard';
+    //     // $user = Auth::user()->dosen;
+    //     $data = [
+    //         'title' => 'Dashboard',
+    //         'user' => Auth::user()->dosen,
+    //         'presensiHariIni' => Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get(),
+    //         'dosenMingguan' => []
+    //     ];
+    //     // $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();
+    //     // Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get(),
+
+    //     // $mahasiswa = Mahasiswa::count();
+    //     // $dosen = Dosen::count();
+    //     // $matkul = Matkul::count();
+    //     // $prodi = Prodi::count();
+    //     // $dosenMingguan = [];
+
+    //     for ($i = 1; $i <= 4; $i++) {
+    //         $start = Carbon::now()->startOfMonth()->addWeeks($i - 1)->startOfWeek();
+    //         $end = (clone $start)->endOfWeek();
+
+    //         $count = Presensi::whereBetween('tgl_presensi', [$start, $end])->count();
+
+    //         $dosenMingguan[] = $count;
+    //     }
+
+    //     $data['dosenMingguan'] = [
+    //         'name' => 'Dosen Hadir',
+    //         'data' => $dosenMingguan
+    //     ];
+
+    //     return view('dosen.dashboard',$data);
+
+    // }
 
     public function indexMahasiswa(){
         $title = 'Dashboard';
+        // $user = Auth::user()->mahasiswa;
         // $admin = Admin::all();
         // $admin = Admin::with(relations: ['province','regency','district','village'])->get();
         $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();

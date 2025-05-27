@@ -2,11 +2,11 @@
     @vite(['resources/js/pages/admin/data-presensi.js'])
     <div class="h-full">
         <x-slot:title>{{ $title }}</x-slot:title>
-        <p class="text-gray-800 dark:text-gray-200">Silahkan tambahkan data Admin</p>
+        <p class="text-gray-800 dark:text-gray-200">Silahkan tambahkan Data Presensi</p>
 
         <div class="w-full h-max max-w-full mt-5 p-8 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
 
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger text-red-600 dark:text-red-400">
                     <ul>
                         @foreach ($errors->all() as $err)
@@ -14,7 +14,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif --}}
 
             <form action="{{ route('dosen.presensi.store') }}" method="POST" class="form-presensi">
                 @csrf
@@ -37,7 +37,7 @@
                         <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Pilih Semester:</label>
                         <select id="semester" name="semester" class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 border-2 border-gray-400 rounded-sm" required>
                             <option value="" hidden selected>Pilih Semester</option>
-                            @for ($i = 1; $i <= 14; $i++)
+                            @for ($i = 1; $i <= 8; $i++)
                                 <option value="{{ $i }}" {{ old('semester') == $i ? 'selected' : '' }}>
                                     Semester {{ $i }}
                                 </option>
@@ -49,6 +49,14 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                        <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Pilih Matkul:</label>
+                        <select id="matkul" name="matkul_id" class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 border-2 border-gray-400 rounded-sm" required>
+                            <option value="" hidden selected>Pilih Matkul</option>
+                        </select>
+                        <span class="text-red-600 text-sm" id="matkul_id_error">@error('matkul_id'){{ $message }}@enderror</span>
+                    </div>
+
+                    <div class="flex flex-col w-full mb-4 md:w-1/2 ">
                         <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Pilih Ruangan:</label>
                         <select id="ruangan" name="ruangan_id" class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 border-2 border-gray-400 rounded-sm" required>
                             <option value="" hidden selected>Pilih Ruangan</option>
@@ -59,14 +67,6 @@
                             @endforeach
                         </select>
                         <span class="text-red-600 text-sm" id="ruangan_id_error">@error('ruangan_id'){{ $message }}@enderror</span>
-                    </div>
-
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0">
-                        <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Pilih Matkul:</label>
-                        <select id="matkul" name="matkul_id" class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 border-2 border-gray-400 rounded-sm" required>
-                            <option value="" hidden selected>Pilih Matkul</option>
-                        </select>
-                        <span class="text-red-600 text-sm" id="matkul_id_error">@error('matkul_id'){{ $message }}@enderror</span>
                     </div>
                 </div>
 
@@ -79,14 +79,14 @@
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/3 mr-0 md:mr-4">
-                        <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Jam Awal:</label>
+                        <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Jam Mulai:</label>
                         <input type="time" name="jam_awal" value="{{ old('jam_awal') }}"
                             class="p-2 w-full border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" required>
                         <span class="text-red-600 text-sm" id="jam_awal_error">@error('jam_awal'){{ $message }}@enderror</span>
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/3">
-                        <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Jam Akhir:</label>
+                        <label class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Jam Selesai:</label>
                         <input type="time" name="jam_akhir" value="{{ old('jam_akhir') }}"
                             class="p-2 w-full border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" required>
                         <span class="text-red-600 text-sm" id="jam_akhir_error">@error('jam_akhir'){{ $message }}@enderror</span>

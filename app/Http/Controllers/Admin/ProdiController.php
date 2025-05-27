@@ -14,34 +14,23 @@ use Illuminate\Support\Facades\Validator;
 
 class ProdiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = 'Data Program Studi';
         $prodi = Prodi::all();
         return view('admin.master_data.prodi', compact('title', 'prodi'));
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.master_data.form-prodi',['title' => 'Tambah Data']);
-
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreMasterProdi $request)
     {
         $request->merge([
-            'kode_prodi' => trim($request->kode_prodi),
-            'nama_prodi' => trim($request->nama_prodi),
+            'kode_prodi' => strtoupper(trim($request->kode_prodi)),
+            'nama_prodi' => ucwords(trim($request->nama_prodi)),
         ]);
 
         try {
@@ -53,7 +42,7 @@ class ProdiController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal tambah Program Studi', [
+            Log::error('Gagal tambah Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
@@ -65,17 +54,11 @@ class ProdiController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $title = 'Edit Program Studi';
@@ -83,14 +66,11 @@ class ProdiController extends Controller
         return view('admin.master_data.form-prodi', compact('title', 'prodi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreMasterProdi $request, $id)
     {
         $request->merge([
-            'kode_prodi' => trim($request->kode_prodi),
-            'nama_prodi' => trim($request->nama_prodi),
+            'kode_prodi' => strtoupper(trim($request->kode_prodi)),
+            'nama_prodi' => ucwords(trim($request->nama_prodi)),
         ]);
 
         try {
@@ -116,23 +96,33 @@ class ProdiController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id): RedirectResponse
     {
-        $prodi = Prodi::findOrFail($id);
-        $prodi->delete();
-        // return redirect()->route('admin.master-prodi.index')->with('success', 'Prodi berhasil dihapus.');
-        return redirect()->route('admin.master-prodi.index')->with([
-            'status' => 'success',
-            'message' => 'Data Berhasil Dihapus'
-        ]);
+        try {
+            $prodi = Prodi::findOrFail($id);
+            $prodi->delete();
+
+            return redirect()->route('admin.master-prodi.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Dihapus'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Menghapus Data', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()
+            ]);
+        }
     }
 
     public function validateField(Request $request)
     {
-        $id = $request->input('id'); // ambil id dari form (edit mode)
+        $id = $request->input('id');
         $rules = (new StoreMasterProdi())->rules($id);
         $messages = (new StoreMasterProdi())->messages();
         $field = $request->input('field');
@@ -149,7 +139,6 @@ class ProdiController extends Controller
         return response()->json(['success' => true]);
     }
 
-    // ProdiController.php
     public function getList()
     {
         $data = Prodi::orderBy('nama')->pluck('nama');

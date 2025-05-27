@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 
+    {{-- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script> --}}
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
@@ -60,50 +64,6 @@
         </div>
     </div>
 <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     const forms = document.querySelectorAll('.form-hapus');
-
-    //     forms.forEach(form => {
-    //         form.addEventListener('submit', function (e) {
-    //             e.preventDefault(); // Jangan langsung submit
-
-    //             Swal.fire({
-    //                 title: 'Apakah Anda yakin?',
-    //                 text: "Data yang dihapus tidak bisa dikembalikan!",
-    //                 icon: 'warning',
-    //                 showCancelButton: true,
-    //                 confirmButtonColor: '#d33',
-    //                 cancelButtonColor: '#3085d6',
-    //                 confirmButtonText: 'Ya, hapus!',
-    //                 cancelButtonText: 'Batal'
-    //             }).then((result) => {
-    //                 if (result.isConfirmed) {
-    //                     form.submit(); // Baru submit form kalau user tekan "Ya"
-    //                 }
-    //             });
-    //         });
-    //     });
-
-    //     @if (session('status') && session('message'))
-    //         Swal.fire({
-    //             icon: '{{ session('status') }}',
-    //             title: '{{ ucfirst(session('status')) }}',
-    //             text: '{{ session('message') }}',
-    //             timer: 2000,
-    //             timerProgressBar: true,
-    //             showConfirmButton: false,
-    //             // willClose: () => {
-    //             //     @if (session('redirect'))
-    //             //         window.location.href = '{{ session('redirect') }}';
-    //             //     @endif
-    //             // }
-    //         });
-    //     @endif
-    // });
-
-
-
-
 document.addEventListener('submit', function (e) {
     if (e.target.classList.contains('form-hapus')) {
         e.preventDefault();
@@ -162,12 +122,6 @@ document.addEventListener('submit', function (e) {
             });
         @endif
 
-
-
-
-
-
     </script>
-{{-- <script src="{{ asset('js/init-alpine.js') }}"></script> --}}
 </body>
 </html>

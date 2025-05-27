@@ -1,9 +1,18 @@
 <x-layout>
     <div class="h-full">
-    {{-- @vite(['resources/js/pages/master-admin.js','resources/js/components/image-preview.js']) --}}
     <x-slot:title>{{ $title }}</x-slot:title>
     <p class="dark:text-white">Silahkan tambahkan data Mahasiswa</p>
         <div class="w-full h-max max-w-full mt-5 p-8 bg-white dark:bg-gray-800 dark:text-white rounded-sm shadow-xl">
+
+                        @if ($errors->any())
+                <div class="alert alert-danger text-red-600 dark:text-red-400">
+                    <ul>
+                        @foreach ($errors->all() as $err)
+                            <li>{{ $err }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <form action="{{ isset($mahasiswa) ? route('admin.master-mahasiswa.update', $mahasiswa->id) : route('admin.master-mahasiswa.store') }}" enctype="multipart/form-data" method="POST">
                 @csrf
@@ -18,25 +27,25 @@
                 <div class="flex flex-col md:flex-row items-center gap-6 mb-6">
                     <!-- Preview Foto -->
                     <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gray-300 shadow-sm">
-                        <img 
-                            src="{{ isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : asset('images/profil-kosong.png') }}" 
-                            id="previewImage" 
-                            class="w-full h-full object-cover" 
+                        <img
+                            src="{{ isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : asset('images/profil-kosong.png') }}"
+                            id="previewImage"
+                            class="w-full h-full object-cover"
                             alt="Preview Foto"
                         >
                     </div>
-                
+
                     <!-- Info & Tombol -->
                     <div class="flex flex-col gap-3 text-center md:text-left md:ml-4">
                         <p class="text-gray-600 text-sm">Format file yang didukung: <span class="font-medium">JPEG, JPG, PNG</span></p>
-                
+
                         <div class="flex flex-wrap justify-center md:justify-start gap-3">
                             <input type="file" name="foto" id="foto" accept="image/*" class="hidden">
-                            
+
                             <label for="foto" class="px-2 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow cursor-pointer transition">
                                 Unggah Foto
                             </label>
-                            
+
                             <button type="button" id="resetFoto" class="px-2 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md shadow transition">
                                 Hapus Foto
                             </button>
@@ -244,7 +253,7 @@
                         <label for="" class="mb-1 font-semibold">Semester Tempuh:</label>
                         <select name="semester" id="semester" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
                             <option value="" hidden selected>Pilih Semester tempuh</option>
-                        @for($i = 1; $i<=14; $i++)
+                        @for($i = 1; $i<=8; $i++)
                             <option value="{{ $i }}" @if (old('semester', $mahasiswa->semester ?? '') == $i) selected @endif>
                             Semester {{$i}}
                         @endfor

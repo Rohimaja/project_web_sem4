@@ -1,7 +1,7 @@
 <x-layout>
     <div class="h-full">
         <x-slot:title>{{ $title }}</x-slot:title>
-        <p class="text-gray-800 dark:text-gray-200">Tinjau detail kehadiran perkuliahan, mulai dari pengajar hingga peserta kelas</p>
+        <p class="text-gray-800 dark:text-gray-200">Tinjau detail kehadiran perkuliahan</p>
 
       <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
         <div class="mb-5 justify-start flex">
@@ -11,7 +11,7 @@
           </div>
         <h1 class="mb-2 text-2xl font-semibold text-gray-700 dark:text-gray-100">Dosen Pengajar</h1>
         <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
-          <table id="tbl-pres" class="text-sm text-left w-full pt-2">
+          <table id="detail-presensi" class="text-sm text-left w-full pt-2" width="100%">
             <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 sticky top-0 z-10">
                 <tr>
                     <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Tanggal</th>
@@ -29,14 +29,14 @@
             <tbody class="text-center text-gray-800 dark:text-gray-100">
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->tgl_presensi ?? '-'}}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->jam_awal .' - '.$presensi->jam_akhir ?? '-'}}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{substr($presensi->jam_awal,0,5) .' - '.substr($presensi->jam_akhir,0,5) ?? '-'}}</td>
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->matkul->nama_matkul ?? '-'}}</td>
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->dosen->nama ?? '-'}}</td>
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->prodi->jenjang .' '.$presensi->prodi->nama_prodi ?? '-'}}</td>
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->semester ?? '-'}}</td>
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->ruangan->nama_ruangan ?? '-'}}</td>
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->tahunAjaran->tahun_awal .'/'. $presensi->tahunAjaran->tahun_akhir .' '. $presensi->tahunAjaran->keterangan ?? '-'}}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->link_zoom ?? 'tidak tersedia'}}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->link_zoom ?? '-'}}</td>
                     <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$presensi->link_zoom ? 'Daring' : 'Luring'}}</td>
                 </tr>
             </tbody>
@@ -124,7 +124,7 @@
                                                 <textarea id="alasan" name="alasan" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" x-bind:disabled="!(status == 2 || status == 3)"></textarea>
                                             </div>
                                             <div class="flex justify-end space-x-3">
-                                                <button type="button" @click="openEdit = false" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                                <button type="button" @click="openEdit = false; status: '{{$dp->status}}'" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded hover:bg-gray-300 dark:hover:bg-gray-600">
                                                     Batal
                                                 </button>
                                                 <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">

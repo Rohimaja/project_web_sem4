@@ -22,6 +22,12 @@ $(document).ready(function () {
         },
         scrollX: false, // Aktifkan scroll horizontal
         autoWidth: false, // Hindari ukuran otomatis
+
+        createdRow: function (row, data, dataIndex) {
+            $("td", row).addClass(
+                "border border-gray-300 dark:border-gray-800 px-2 py-1"
+            );
+        },
     });
 
     $("#tahun-ajaran").on("change", function () {
@@ -47,10 +53,10 @@ $(document).ready(function () {
 
                             const bgClass =
                                 status === "M"
-                                    ? "bg-green-500 text-white"
-                                    : "bg-gray-500 text-white";
+                                    ? "text-green-500"
+                                    : "text-gray-500";
 
-                            const cell = `<div class="border border-gray-300 px-4 py-2 font-semibold ${bgClass}" title="${
+                            const cell = `<div class="font-semibold ${bgClass}" title="${
                                 tanggal ?? ""
                             }">${status}</div>`;
                             row.push(cell);
@@ -64,12 +70,6 @@ $(document).ready(function () {
                 })
                 .catch((error) => console.error("Gagal ambil data:", error));
         }
-    });
-
-    $("div.dt-buttons").hide();
-
-    document.querySelector("#btn-pdf").addEventListener("click", function () {
-        table.button(".dt-btn-pdf").trigger();
     });
 });
 

@@ -56,7 +56,7 @@
                         <label class="mb-1 font-semibold text-gray-900 dark:text-gray-300">Pilih Semester:</label>
                         <select id="semester" name="semester" class="w-full p-2 border-2 border-gray-400 rounded-sm bg-white dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" required >
                             <option value="" hidden selected class="text-gray-500 dark:text-gray-400">Pilih Semester</option>
-                                @for($i = 1; $i <= 14; $i++)
+                                @for($i = 1; $i <= 8; $i++)
                                     <option value="{{ $i }}" {{ old('semester') == $i ? 'selected' : '' }}>
                                         Semester {{$i}}
                                     </option>
@@ -105,15 +105,15 @@
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="" class="mb-1 font-semibold text-gray-900 dark:text-gray-300">Durasi</label>
                         <input type="number" name="durasi" value="{{old('durasi')}}" placeholder="Masukkan Durasi Perkuliahan" required
-                            class="p-2 w-full border-2 border-gray-400 rounded-sm bg-white dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400">
+                            class="p-2 w-full border-2 border-gray-400 rounded-sm bg-white dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400" data-validate="jadwal">
                         <span class="text-red-600 text-sm" id="durasi_error">
                             @error('durasi'){{ $message }}@enderror
                         </span>
                     </div>
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold text-gray-900 dark:text-gray-300">Jam Jadwal</label>
-                        <input type="time" name="jam" value="{{old('jam')}}" placeholder="Masukkan Jam Awal" required
-                            class="p-2 w-full border-2 border-gray-400 rounded-sm bg-white dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400">
+                        <input type="time" name="jam" value="{{old('jam')}}" required
+                            class="p-2 w-full border-2 border-gray-400 rounded-sm bg-white dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400" >
                         <span class="text-red-600 text-sm" id="jam_error">
                             @error('jam'){{ $message }}@enderror
                         </span>
@@ -121,11 +121,11 @@
                 </div>
 
                 <div class="w-full flex justify-end mt-7">
-                    <a href="{{route('admin.master-jadwal.index')}}" 
+                    <a href="{{route('admin.master-jadwal.index')}}"
                        class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer transition-colors duration-300">
                         Batal
                     </a>
-                    <button type="submit" 
+                    <button type="submit"
                             class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer transition-colors duration-300">
                         Submit
                     </button>

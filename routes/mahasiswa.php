@@ -16,6 +16,8 @@ Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasi
 
     Route::get('/change-password', [PasswordController::class, 'changePassword'])->name('change-password');
     Route::put('/change-password', [PasswordController::class, 'update'])->name('password.update');
+    Route::get('/getFilterRekap', [MahasiswaController::class, 'getFilterRekap']);
+    Route::put('/update-profil', [MahasiswaController::class, 'updateProfil'])->name('profil.update');
     // Route::post('/validate-field/change-password', [ProfileController::class, 'validateField'])->name('dosen.validate.field.profile');
 
 });

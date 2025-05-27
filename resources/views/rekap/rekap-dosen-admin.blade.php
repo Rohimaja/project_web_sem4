@@ -10,7 +10,7 @@
  <div class="flex flex-col md:flex-row">
        <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
            <label class="mb-1 font-semibold">Pilih Dosen:</label>
-           <select id="dosen" name="dosen" class="bg-white dark:bg-gray-700 dark:text-white border dark:border-gray-600 rounded px-3 py-2">
+           <select id="dosen" name="dosen" class="bg-white dark:bg-gray-700 dark:text-white border dark:border-gray-600 rounded px-3 py-2" required>
                <option value="" hidden selected>Pilih Program Studi</option>
                @foreach ($dosen as $d)
                    <option value="{{ $d->id }}">{{ $d->nama }}</option>
@@ -20,7 +20,7 @@
 
        <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0">
            <label class="mb-1 font-semibold">Pilih Tahun Ajaran:</label>
-           <select id="tahun-ajaran" name="tahun_ajaran" class="bg-white dark:bg-gray-700 dark:text-white border dark:border-gray-600 rounded px-3 py-2 w-full">
+           <select id="tahun-ajaran" name="tahun_ajaran" class="bg-white dark:bg-gray-700 dark:text-white border dark:border-gray-600 rounded px-3 py-2 w-full" required>
                <option value="" hidden selected>Pilih Tahun Ajaran</option>
                @foreach ($tahun as $t)
                    <option value="{{ $t->id }}">
@@ -65,12 +65,12 @@
    <div class="flex flex-col gap-3 mt-3">
        <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
            <label for="nip" class="w-20 font-semibold">NIP:</label>
-           <span class="border border-gray-300 dark:border-gray-600 bg-gray-300 dark:bg-gray-700 rounded px-3 py-2 w-full">{{$dosenTerpilih->nip ?? ''}}</span>
+           <span class="border border-gray-100 dark:border-gray-600 bg-gray-150 dark:bg-gray-700 rounded px-3 py-2 w-full">{{$dosenTerpilih->nip ?? ''}}</span>
        </div>
 
        <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
            <label for="nama" class="w-20 font-semibold">Nama:</label>
-           <span class="border border-gray-300 dark:border-gray-600 bg-gray-300 dark:bg-gray-700 rounded px-3 py-2 w-full">{{$dosenTerpilih->nama ?? ''}}</span>
+           <span class="border border-gray-100 dark:border-gray-600 bg-gray-150 dark:bg-gray-700 rounded px-3 py-2 w-full">{{$dosenTerpilih->nama ?? ''}}</span>
        </div>
    </div>
 @endif
@@ -80,7 +80,7 @@
        <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white sticky top-0 z-10">
            <tr>
                <th @mouseenter="hovering = true" @mouseleave="hovering = false"
-                   :class="hovering ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 dark:text-white'" 
+                   :class="hovering ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 dark:text-white'"
                    class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Program Studi</th>
                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Semester</th>
@@ -104,8 +104,8 @@
                            $tanggal = $item['tanggal_pertemuan'][$i] ?? null;
                            $status = $tanggal ? 'M' : '-';
                            $bg = match($status) {
-                               'M' => 'bg-green-500 text-white',
-                               '-' => 'bg-gray-500 text-white',
+                               'M' => 'text-green-500',
+                               '-' => 'text-gray-500',
                            };
                        @endphp
                        <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 font-semibold {{ $bg }}" title="{{ $tanggal }}">{{ $status }}</td>
@@ -120,8 +120,8 @@
 
 <div class="mt-6">
    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-5">Keterangan:</h2>
-   <p class="mt-2"><span class="text-white font-bold p-1 bg-green-500">M</span> = Mengajar</p>
-   <p class="mt-2"><span class="text-white font-bold p-1 bg-gray-500">-</span> = Tidak Terselenggara Perkuliahan</p>
+   <p class="mt-2"><span class="text-green-500 font-bold p-1">M</span> = Mengajar</p>
+   <p class="mt-2"><span class="text-gray-500 font-bold p-1 ">-</span> = Tidak Terselenggara Perkuliahan</p>
 </div>
 
 </div>

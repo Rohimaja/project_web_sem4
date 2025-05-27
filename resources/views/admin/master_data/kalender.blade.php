@@ -1,9 +1,9 @@
 <x-layout>
     @vite(['resources/js/pages/admin/kalender-akademik.js'])
 
-    <div class="relative">
-        <x-slot:title>{{ $title ?? 'Kalender Akademik' }}</x-slot:title>
-        <p class="dark:text-white">Lihat Kalender Akademik</p>
+    <div class="relative dark:text-white">
+        <x-slot:title>{{ $title}}</x-slot:title>
+        <p class="dark:text-gray-300">Seluruh Daftar Kegiatan Akademik</p>
 
         @if(session('success'))
             <div class="p-4 mb-4 text-green-800 dark:text-green-200 rounded-lg bg-green-100 dark:bg-green-900" role="alert">
@@ -22,7 +22,7 @@
             </div>
 
             <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
-                <table id="kalenderTable" class="text-sm text-left w-full pt-2 text-gray-900 dark:text-gray-100">
+                <table id="data-kalender" class="text-sm text-left w-full pt-1 display nowrap">
                     <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
                         <tr>
                             <th class=" dark:border-gray-600 px-4 py-2">No</th>
@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                         @foreach ($kalenders as $item)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
                                 <td class=" dark:border-gray-600 px-4 py-2">{{ $loop->iteration }}</td>
                                 <td class=" dark:border-gray-600 px-4 py-2">{{ $item->judul }}</td>
                                 <td class=" dark:border-gray-600 px-4 py-2">{{ $item->deskripsi ?? '-' }}</td>

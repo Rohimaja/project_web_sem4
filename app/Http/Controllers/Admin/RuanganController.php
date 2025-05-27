@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RuanganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = 'Data Ruangan';
@@ -22,31 +19,16 @@ class RuanganController extends Controller
         return view('admin.master_data.ruangan', compact('title', 'ruangan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $title = 'Data Ruangan';
-        // $ruangan = Ruangan::all();
         return view('admin.master_data.form-ruangan', compact('title'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreMasterRuangan $request)
     {
         $request->merge([
-            'nama_ruangan' =>trim($request->nama_ruangan),
-        ]);
-
-        $request->validate([
-            'nama_ruangan' => 'required|max:150|unique:ruangans,nama_ruangan',
-        ],[
-            'nama_ruangan.required' => 'Nama Ruangan tidak boleh kosong',
-            'nama_ruangan.max' => 'Nama Ruangan Maksimal 150 karakter',
-            'nama_ruangan.unique' => 'Nama Ruangan Sudah terdaftar',
+            'nama_ruangan' =>ucwords(trim($request->nama_ruangan)),
         ]);
 
         try {
@@ -58,7 +40,7 @@ class RuanganController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal tambah Ruangan', [
+            Log::error('Gagal Tambah Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
@@ -70,17 +52,11 @@ class RuanganController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $title = 'Edit Ruangan';
@@ -88,18 +64,10 @@ class RuanganController extends Controller
         return view('admin.master_data.form-ruangan', compact('title', 'ruangan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreMasterRuangan $request, string $id)
     {
-
-        $request->validate([
-            'nama_ruangan' => 'required|max:150|unique:ruangans,nama_ruangan,'.$id,
-        ],[
-            'nama_ruangan.required' => 'Nama Ruangan tidak boleh kosong',
-            'nama_ruangan.max' => 'Nama Ruangan Maksimal 150 karakter',
-            'nama_ruangan.unique' => 'Nama Ruangan Sudah terdaftar',
+        $request->merge([
+            'nama_ruangan' =>ucwords(trim($request->nama_ruangan)),
         ]);
 
         try {
@@ -113,7 +81,7 @@ class RuanganController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal Perbarui Ruangan', [
+            Log::error('Gagal Perbarui Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
@@ -125,9 +93,6 @@ class RuanganController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
@@ -141,7 +106,7 @@ class RuanganController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Gagal Hapus Ruangan', [
+            Log::error('Gagal Hapus Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
@@ -156,12 +121,11 @@ class RuanganController extends Controller
     public function validateField(Request $request)
     {
         {
-            $id = $request->input('id'); // ambil id dari form (edit mode)
+            $id = $request->input('id'); 
             $rules = (new StoreMasterRuangan())->rules($id);
             $messages = (new StoreMasterRuangan())->messages();
             $field = $request->input('field');
             $value = $request->input('value');
-
 
             $validator = Validator::make([$field => $value], [
                 $field => $rules[$field] ?? '',

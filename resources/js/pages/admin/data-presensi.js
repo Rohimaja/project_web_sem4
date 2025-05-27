@@ -11,7 +11,7 @@ $("#dosen").select2({
 });
 
 $("#matkul").select2({
-    placeholder: "Cari Matkul",
+    placeholder: "Pilih Prodi dan semester dahulu",
     width: "100%", // agar lebar mengikuti class seperti w-full
     allowClear: true,
 });
@@ -37,7 +37,6 @@ $(document).ready(function () {
         info: true, // Menampilkan informasi tabel
         scrollX: true, // Aktifkan scroll horizontal
         autoWidth: false, // Hindari ukuran otomatis
-        // order: [[0, "desc"]], // Urutkan berdasarkan kolom tanggal (index 0), descending
     });
 
     // Default filter state
@@ -149,16 +148,16 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     function loadMatkul(prodiId, semester, oldMatkulId = null) {
-        if (prodiId || semester) {
+        if (prodiId && semester) {
             fetch(`/getMatkulByProdi?prodi=${prodiId}&semester=${semester}`)
                 .then((response) => response.json())
                 .then((data) => {
                     const mataKuliahSelect = $("#matkul");
                     mataKuliahSelect.empty();
 
-                    mataKuliahSelect.append(
-                        '<option value="" hidden>Pilih Matkul</option>'
-                    );
+                    // mataKuliahSelect.append(
+                    //     '<option value="" hidden>Pilih Matkul</option>'
+                    // );
                     data.forEach((item) => {
                         mataKuliahSelect.append(
                             `<option value="${item.id}" ${
