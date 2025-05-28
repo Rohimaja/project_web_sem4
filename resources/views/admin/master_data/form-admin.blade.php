@@ -46,7 +46,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr:0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nama" id="nama" value="{{old('nama', $admin->nama ?? '')}}" required data-validate="admin">
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nama" id="nama" value="{{old('nama', $admin->nama ?? '')}}" required data-validate="admin" placeholder="contoh: Firmansyah Diega">
                         <span class="text-red-600 text-sm" id="nama_error">
                             @error('nama'){{ $message }}@enderror
                         </span>
@@ -54,7 +54,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Nomor Telepon:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="no_telp" id="no_telp" value="{{old('no_telp', $admin->no_telp ?? '')}}" data-validate="admin" required>
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="no_telp" id="no_telp" value="{{old('no_telp', $admin->no_telp ?? '')}}" data-validate="admin" required placeholder="contoh: 08xxxx">
                         <span class="text-red-600 text-sm" id="no_telp_error">
                             @error('no_telp'){{ $message }}@enderror
                         </span>
@@ -93,7 +93,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr:0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tempat_lahir" id="tempat_lahir" value="{{old('tempat_lahir', $admin->tempat_lahir ?? '')}}" required data-validate="admin">
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tempat_lahir" id="tempat_lahir" value="{{old('tempat_lahir', $admin->tempat_lahir ?? '')}}" required data-validate="admin" placeholder="Contoh: Banyuwangi">
                         <span class="text-red-600 text-sm" id="tempat_lahir_error">
                             @error('tempat_lahir'){{ $message }}@enderror
                         </span>
@@ -111,7 +111,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr:0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Email:</label>
-                        <input type="email" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="email" id="email" value="{{old('email', $admin->email ?? '')}}" required data-validate="admin">
+                        <input type="email" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="email" id="email" value="{{old('email', $admin->email ?? '')}}" required data-validate="admin" placeholder="contoh: admin@gmail.com">
                         <span class="text-red-600 text-sm" id="email_error">
                             @error('email'){{ $message }}@enderror
                         </span>
@@ -176,7 +176,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr:0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Alamat lengkap:</lab>
-                        <textarea type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="alamat" id="alamat" required data-validate="admin">{{$admin->alamat ?? ''}}</textarea>
+                        <textarea type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="alamat" id="alamat" required data-validate="admin" placeholder="contoh: Jl.Manggar 3 No 19">{{$admin->alamat ?? ''}}</textarea>
                         <span class="text-red-600 text-sm" id="alamat_error">
                             @error('alamat'){{ $message }}@enderror
                         </span>

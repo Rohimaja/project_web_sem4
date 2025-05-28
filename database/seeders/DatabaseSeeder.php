@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use \Laravolt\Indonesia\Seeds\IndonesiaSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use Database\Seeders\UserSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +22,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(UserSeeder::class);
+        $this->call([
+            TahunAjaranSeeder::class,
+        ]);
+        $this->call([
+            RuanganSeeder::class,
+            // seeder lainnya jika ada
+        ]);
     }
 }

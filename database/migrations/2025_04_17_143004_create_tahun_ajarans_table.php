@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->year('tahun_awal');
             $table->year('tahun_akhir');
-            $table->char('keterangan','10');
+            $table->string('keterangan', 50); //diganti yang ini
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

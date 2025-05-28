@@ -56,7 +56,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nama" id="nama" value="{{old('nama', $mahasiswa->nama ?? '')}}" required data-validate="mahasiswa" placeholder="Masukkan nama lengkap">
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nama" id="nama" value="{{old('nama', $mahasiswa->nama ?? '')}}" required data-validate="mahasiswa" placeholder="contoh: Firmansyah dega">
                         <span class="text-red-600 text-sm" id="nama_error">
                             @error('nama'){{ $message }}@enderror
                         </span>
@@ -64,7 +64,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">NIM:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nim" id="nim" value="{{old('nim', $mahasiswa->nim ?? '')}}" required data-validate="mahasiswa" placeholder="Masukkan NIM">
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nim" id="nim" value="{{old('nim', $mahasiswa->nim ?? '')}}" required data-validate="mahasiswa" placeholder="contoh: E41231275">
                         <span class="text-red-600 text-sm" id="nim_error">
                             @error('nim'){{ $message }}@enderror
                         </span>
@@ -103,7 +103,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tempat_lahir" id="tempat_lahir" value="{{old('tempat_lahir', $mahasiswa->tempat_lahir ?? '')}}" required data-validate="mahasiswa" placeholder="Masukkan Tempat Lahir">
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tempat_lahir" id="tempat_lahir" value="{{old('tempat_lahir', $mahasiswa->tempat_lahir ?? '')}}" required data-validate="mahasiswa" placeholder="contoh: Banyuwangi">
                         <span class="text-red-600 text-sm" id="tempat_lahir_error">
                             @error('tempat_lahir'){{ $message }}@enderror
                         </span>
@@ -111,7 +111,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="" class="mb-1 font-semibold">Tanggal Lahir:</label>
-                        <input type="date" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tgl_lahir" id="tgl_lahir" value="{{old('tgl_lahir', $mahasiswa->tgl_lahir ?? '')}}" required data-validate="mahasiswa" placeholder="Masukkan tanggal lahir">
+                        <input type="date" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tgl_lahir" id="tgl_lahir" value="{{old('tgl_lahir', $mahasiswa->tgl_lahir ?? '')}}" required data-validate="mahasiswa" placeholder="">
                         <span class="text-red-600 text-sm" id="tgl_lahir_error">
                             @error('tgl_lahir'){{ $message }}@enderror
                         </span>
@@ -121,7 +121,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="" class="mb-1 font-semibold">Email:</label>
-                        <input type="email" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="email" id="email" value="{{old('email', $mahasiswa->email ?? '')}}" placeholder="Masukkan Email" required data-validate="mahasiswa">
+                        <input type="email" class="p-2 border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="email" id="email" value="{{old('email', $mahasiswa->email ?? '')}}" placeholder="contoh: mahasiswa@gmail.com" required data-validate="mahasiswa">
                         <span class="text-red-600 text-sm" id="email_error">
                             @error('email'){{ $message }}@enderror
                         </span>
