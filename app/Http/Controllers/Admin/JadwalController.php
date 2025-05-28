@@ -15,12 +15,10 @@ use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class JadwalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = 'Data Jadwal';
@@ -28,27 +26,19 @@ class JadwalController extends Controller
         return view('admin.master_data.jadwal', compact('jadwal','title'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $title = 'Data Jadwal';
-        $prodi = Prodi::all(); // Ambil semua data prodi
-        $ruangan = Ruangan::all(); // Ambil semua data prodi
-        $matkul = Matkul::all(); // Ambil semua data prodi
-        $dosen = Dosen::all(); // Ambil semua data prodi
-        // $prodi = Prodi::all();
+        $prodi = Prodi::all();
+        $ruangan = Ruangan::all();
+        $matkul = Matkul::all();
+        $dosen = Dosen::all();
         return view('admin.master_data.form-jadwal', compact('title','prodi','ruangan','matkul','dosen'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreMasterJadwal $request)
     {
         try {
-
             DB::transaction(function () use ($request) {
                 $tahunAjaranAktif = TahunAjaran::where('status', true)->first();
 
@@ -80,14 +70,12 @@ class JadwalController extends Controller
                 }
             });
 
-
-
             return redirect()->route('admin.master-jadwal.index')->with([
                 'status' => 'success',
                 'message' => 'Jadwal Berhasil Ditambahkan'
             ]);
         } catch (\Exception $e) {
-            Log::error('Gagal menambahkan Jadwal', [
+            Log::error('Gagal menambahkan Data', [
                 'error' => $e->getMessage(),
                 'stack' => $e->getTraceAsString(),
             ]);
@@ -99,9 +87,6 @@ class JadwalController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $title = 'Data Jadwal';
@@ -133,5 +118,26 @@ class JadwalController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+        public function validateField(Request $request)
+    {
+        {
+            // $id = $request->input('id');
+            $rules = (new StoreMasterJadwal())->rules();
+            $messages = (new StoreMasterJadwal())->messages();
+            $field = $request->input('field');
+            $value = $request->input('value');
+
+            $validator = Validator::make([$field => $value], [
+                $field => $rules[$field] ?? '',
+            ],$messages);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first($field)], 422);
+            }
+
+            return response()->json(['success' => true]);
+        }
     }
 }

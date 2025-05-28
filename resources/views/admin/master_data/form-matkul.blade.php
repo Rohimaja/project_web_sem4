@@ -58,7 +58,7 @@
                         <label class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Semester:</label>
                         <select class="p-2 mt-1 py-[10.5px] w-full border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white" name="semester" id="semester" required>
                             <option value="" hidden selected>Pilih Semester</option>
-                            @for($i = 1; $i <= 14; $i++)
+                            @for($i = 1; $i <= 8; $i++)
                                 <option value="{{ $i }}" @if (old('semester', $matkul->semester ?? '') == $i) selected @endif>
                                     Semester {{$i}}
                                 </option>

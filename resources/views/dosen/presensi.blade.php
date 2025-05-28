@@ -37,13 +37,11 @@
                 <table id="data-presensi" class="text-sm text-left w-full display pt-2 dark:text-white">
                     <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
                         <tr>
-                            <th class=" dark:border-gray-600 px-4 py-2">No</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Tanggal</th>
-                            <th class=" dark:border-gray-600 px-4 py-2">Dosen</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Jam Perkuliahan</th>
+                            <th class=" dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Program Studi</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Semester</th>
-                            <th class=" dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Ruangan</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Aksi</th>
                         </tr>
@@ -51,13 +49,11 @@
                     <tbody>
                         @foreach ($presensi as $p)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class=" dark:border-gray-600 px-4 py-2">{{ $loop->iteration }}</td>
                                 <td class=" dark:border-gray-600 px-4 py-2">{{ $p->tgl_presensi }}</td>
-                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->dosen->nama }}</td>
-                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->jam_awal .' - '.$p->jam_akhir }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ substr($p->jam_awal,0,5) .' - '. substr($p->jam_akhir,0,5) }}</td>
+                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->matkul->nama_matkul }}</td>
                                 <td class=" dark:border-gray-600 px-4 py-2">{{ $p->prodi->jenjang .' '.$p->prodi->nama_prodi }}</td>
                                 <td class=" dark:border-gray-600 px-4 py-2">{{ $p->semester }}</td>
-                                <td class=" dark:border-gray-600 px-4 py-2">{{ $p->matkul->nama_matkul }}</td>
                                 <td class=" dark:border-gray-600 px-4 py-2">{{ $p->ruangan->nama_ruangan }}</td>
                                 <td class=" dark:border-gray-600 px-4 py-2 text-center">
                                     <div class="flex justify-center gap-2">

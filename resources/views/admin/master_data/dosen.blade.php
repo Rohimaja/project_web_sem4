@@ -2,7 +2,7 @@
     @vite(['resources/js/pages/admin/data-dosen.js'])
     <div class="relative dark:text-white">
     <x-slot:title>{{ $title }}</x-slot:title>
-    <p class="dark:text-gray-300">Lihat data Dosen hari ini</p>
+    <p class="dark:text-gray-300">Daftar Seluruh Dosen</p>
         <div x-data="{openImport: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl dark:shadow-gray-800">
 
             <div class="mt-2 mb-5 flex gap-4">
@@ -45,15 +45,17 @@
 
             <div x-data="{openView: false}">
                 <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
-                    <table id="data-dosen" class="text-sm text-left w-full pt-1 border-collapse  dark:border-gray-700">
+                    <table id="data-dosen" class="text-sm text-left w-full pt-1 dark:border-gray-700 display nowrap">
                         <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 sticky top-0 z-10">
                             <tr>
-                                <th class=" dark:border-gray-600 px-4">No</th>
-                                <th class=" dark:border-gray-600 px-4">Foto</th>
-                                <th class=" dark:border-gray-600 px-4">NIP</th>
-                                <th class=" dark:border-gray-600 px-4">Nama</th>
-                                <th class=" dark:border-gray-600 px-4">Email</th>
-                                <th class=" dark:border-gray-600 px-4 text-center">Aksi</th>
+                                <th class="dark:border-gray-600 px-4">No</th>
+                                <th class="dark:border-gray-600 px-4">Foto</th>
+                                <th class="dark:border-gray-600 px-4">NIP</th>
+                                <th class="dark:border-gray-600 px-4">Nama Lengkap</th>
+                                <th class="dark:border-gray-600 px-4">Email</th>
+                                <th class="dark:border-gray-600 px-4">Telepon</th>
+                                <th class="dark:border-gray-600 px-4">Program Studi</th>
+                                <th class="dark:border-gray-600 px-4 text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,10 +67,12 @@
                                             <img src="{{ $d->foto ? asset('storage/' . $d->foto) : asset('images/profil-kosong.png') }}" alt="Photo" class="object-cover w-full h-full">
                                         </div>
                                     </td>
-                                    <td class=" dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nip}}</td>
-                                    <td class=" dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nama}}</td>
-                                    <td class=" dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->email}}</td>
-                                    <td class=" dark:border-gray-700 px-4 py-2 text-center">
+                                    <td class="dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nip}}</td>
+                                    <td class="dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->nama}}</td>
+                                    <td class="dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->email}}</td>
+                                    <td class="dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->no_telp}}</td>
+                                    <td class="dark:border-gray-700 px-4 py-2 text-gray-800 dark:text-gray-200">{{$d->prodi->jenjang .' '. $d->prodi->nama_prodi}}</td>
+                                    <td class="dark:border-gray-700 px-4 py-2 text-center">
                                         <div class="flex justify-center gap-2">
                                             <button @click="openView = true; $nextTick(() => loadDosenDetail({{ $d->id }}))" class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md dark:bg-gray-700 dark:hover:bg-gray-600 dark:active:bg-gray-500">
                                                 <i class="bi bi-eye text-lg"></i>

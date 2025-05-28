@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    table = $("#data-ruangan").DataTable({
+    table = $("#data-kalender").DataTable({
         searching: true, // Aktifkan pencarian
         paging: true, // Aktifkan pagination
         info: true, // Menampilkan informasi tabel

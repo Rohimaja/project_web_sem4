@@ -24,6 +24,7 @@ Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->grou
     Route::get('/dashboard',[DashboardController::class,'indexDosen'])->name('dashboard');
 
     Route::get('/jadwal',[JadwalController::class,'index'])->name('jadwal');
+    Route::get('/getFilterJadwal', [JadwalController::class, 'getFilterJadwal']);
 
 
 
@@ -43,9 +44,7 @@ Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->grou
     Route::resource('presensi', PresensiController::class);
     Route::post('/presensi/info-presensi', [PresensiController::class, 'updateDetailPresensi'])
     ->name('update-detail-presensi');
-    // Route::get('/presensi/info-presensi',function(){
-    //     return view('dosen.info-presensi',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']);
-    // })->name('info-presensi');
+
     Route::post('/validate-field/presensi', [PresensiController::class, 'validateField'])->name('admin.validate.field.presensi');
 
     // // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');

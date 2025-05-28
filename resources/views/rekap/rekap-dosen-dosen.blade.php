@@ -51,12 +51,8 @@
         </a>
       </div>
 
-
-
-
-
       <div x-data="{ hovering: false }" class="overflow-x-auto w-60 sm:w-150 md:w-240 xl:min-w-full mt-1 pb-3">
-        <table id="data-rekap-dosen" class="text-sm text-left w-full pt-4 display nowrap dark:text-white dark:bg-gray-800">
+        <table id="data-rekap-dosen" class="table-auto text-sm text-left w-full pt-4 display nowrap dark:text-white dark:bg-gray-800">
             <thead class="bg-gray-200 text-gray-700 sticky top-0 z-10 dark:bg-gray-700 dark:text-gray-100">
                 <tr>
                     <th @mouseenter="hovering = true" @mouseleave="hovering = false"
@@ -68,7 +64,7 @@
                     @for ($i = 1; $i <= $totalPertemuan; $i++)
                         <th class="border border-gray-300 px-4 py-2 text-center dark:border-gray-600">{{ $i }}</th>
                     @endfor
-                    <th class="border border-gray-300 px-4 py-2 dark:border-gray-600">%hadir</th>
+                    <th class="border border-gray-300 px-4 py-2 dark:border-gray-600">%Mengajar</th>
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -84,8 +80,8 @@
                                 $tanggal = $item['tanggal_pertemuan'][$i] ?? null;
                                 $status = $tanggal ? 'M' : '-';
                                 $bg = match($status) {
-                                    'M' => 'bg-green-500 text-white',
-                                    '-' => 'bg-gray-500 text-white',
+                                    'M' => 'text-green-500',
+                                    '-' => 'text-gray-500',
                                 };
                             @endphp
                             <td class="border px-4 py-2 font-semibold {{ $bg }} dark:border-gray-600" title="{{$tanggal}}">{{ $status }}</td>
@@ -96,13 +92,17 @@
                 </tbody>
                 @endif
         </table>
-        
+
       </div>
       <div class="mt-6">
         <h2 class="text-2xl font-semibold text-gray-800 mb-5">Keterangan:</h2>
-        <p class="mt-2"><span class="text-white font-bold p-1 bg-green-500">M</span> = Mengajar</p>
-        <p class="mt-2"><span class="text-white font-bold p-1 bg-gray-500">-</span> = Tidak Terselenggara Perkuliahan</p>
+        <p class="mt-2"><span class="text-green-500 text-lg font-bold p-1">M</span> = Mengajar</p>
+        <p class="mt-2"><span class="text-gray-500 font-bold text-xl p-1">-</span> = Tidak Terselenggara Perkuliahan</p>
       </div>
 
     </div>
 </x-layout>
+
+<div class="hidden">
+    bg-green-500 bg-gray-500 text-white
+</div>

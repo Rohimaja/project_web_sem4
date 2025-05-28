@@ -30,6 +30,10 @@ class PresensiController extends Controller
         $title = 'Data Presensi';
         $mahasiswa = Auth::user()->mahasiswa;
         $biodata = Mahasiswa::findOrFail($mahasiswa->id);
+
+        $presensiHariIni = Presensi::with(['prodi','dosen','matkul','tahunAjaran','ruangan','detailPresensi' => function ($q) use ($mahasiswa){
+            $q->where('mahasiswa_id', $mahasiswa->id);
+        }])->whereDate('tgl_presensi', Carbon::today())->get();
         // $presensi = Presensi::with('dosen','prodi','ruangan','matkul','detailPresensi.mahasiswa')->whereDate('tgl_presensi', Carbon::today())->whereTime('jam_awal', Carbon::now())->whereHas('detailPresensi',function ($query) use ($mahasiswa){
         //     $query->where('mahasiswa_id',$mahasiswa->id);
         // })->get();

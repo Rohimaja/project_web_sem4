@@ -30,10 +30,7 @@
                     @for ($i = 1; $i <= 16; $i++)
                         <th class="border border-gray-300 px-4 py-2 text-center">{{ $i }}</th>
                     @endfor
-                    <th class="border border-gray-300 px-4 py-2">%Hadir</th>
-                    <th class="border border-gray-300 px-4 py-2">%Izin</th>
-                    <th class="border border-gray-300 px-4 py-2">%Sakit</th>
-                    <th class="border border-gray-300 px-4 py-2">%Alpha</th>
+                    <th class="border border-gray-300 px-4 py-2">%Kehadiran</th>
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -69,9 +66,6 @@
                             <td class="border px-4 py-2 font-semibold {{ $bg }}" title="{{$tanggal .' '. $dosen}}">{{ $status }}</td>
                     @endfor
                     <td class="border border-gray-300 px-4 py-2">{{$item['kehadiran']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{$item['izin_persentase']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{$item['sakit_persentase']}}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{$item['alpha_persentase']}}</td>
                 </tr>
                 @endforeach
             </tbody>

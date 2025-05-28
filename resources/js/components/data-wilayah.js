@@ -84,15 +84,3 @@ document.addEventListener("DOMContentLoaded", async function () {
         );
     });
 });
-
-// $("#provinsi").select2({
-//     placeholder: "Cari Provinsi",
-//     width: "100%", // agar lebar mengikuti class seperti w-full
-//     allowClear: true,
-// });
-
-// $("#kota").select2({
-//     placeholder: "Cari Kota",
-//     width: "100%", // agar lebar mengikuti class seperti w-full
-//     allowClear: true,
-// });

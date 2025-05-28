@@ -36,15 +36,6 @@
     border: grey;
 }
 
-/* .select2-container--default
-  .select2-selection--single
-  .select2-selection__arrow {
-  height: 100%;
-  right: 4rem;
-  top: 50%;
-  transform: translateY(-50%);
-} */
-
 /* Tambahan untuk dark mode Select2 */
 /* Aktif saat <html class="dark"> */
 .dark .select2-container--default .select2-selection--single {

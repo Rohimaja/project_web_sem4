@@ -1,17 +1,14 @@
 <x-layout>
-  <x-slot:title>{{ $title ?? 'Kalender Akademik' }}</x-slot:title>
+  <x-slot:title>{{ $title }}</x-slot:title>
 
-  <!-- FullCalendar & Alpine.js -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-  <div 
-    x-data="calendarComponent(@js($events))" 
-    x-init="initCalendar" 
-    class="w-[310px] md:w-full mt-5 p-5 bg-white dark:bg-gray-800 dark:text-white rounded-xl shadow-md transition-colors duration-300"
-  >
-    <!-- Dropdown Bulan & Tahun -->
+  <div
+    x-data="calendarComponent(@js($events))"
+    x-init="initCalendar"
+    class="w-[310px] md:w-full mt-5 p-5 bg-white dark:bg-gray-800 dark:text-white rounded-xl shadow-md transition-colors duration-300">
     <div class="mb-6 flex flex-col md:flex-row md:items-end gap-4">
       <div class="w-full md:w-1/2">
         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">Tahun</label>
@@ -34,11 +31,9 @@
       </div>
     </div>
 
-    <!-- Kalender -->
     <div id="calendar" class="overflow-x-auto rounded-lg dark:text-white"></div>
   </div>
 
-  <!-- Alpine Logic -->
   <script>
     function calendarComponent(events) {
       return {

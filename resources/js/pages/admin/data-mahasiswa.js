@@ -66,23 +66,7 @@ $(document).ready(function () {
                             `${item.prodi?.jenjang ?? ""} ${
                                 item.prodi?.nama_prodi ?? ""
                             }` || "-",
-
-                            // `<td class="border border-gray-300 px-4 py-2 text-center">${
-                            //     index + 1
-                            // }</td>`,
-                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">
-                            //     <div class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
-                            //         <img src="/storage/${item.foto}" alt="Photo" class="w-full h-full object-cover">
-                            //     </div>
-                            // </td>`,
-                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.nim}</td>`,
-                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.nama}</td>`,
-                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.jenis_kelamin}</td>`,
-                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${item.email}</td>`,
-                            // `<td style="border: 1px solid #d1d5db; padding: 8px;">${
-                            //     item.prodi?.jenjang ?? ""
-                            // } ${item.prodi?.nama_prodi ?? ""}</td>`, // item.prodi?.jenjang & item.prodi?.nama_prodi ?? "-",
-                            // `<div style="text-align:center;">${item.semester}</div>`, // Semester ditengah
+                            item.semester,
                             `<div class="flex gap-2 justify-center">
                                 <button @click="openView = true; $nextTick(() => loadMahasiswaDetail(${item.id}))"
                                         class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">

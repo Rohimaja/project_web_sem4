@@ -41,7 +41,7 @@ class KalenderAkademikController extends Controller
         ]);
 
         try {
-            KalenderAkademik::create($request->only(['judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai']));
+            KalenderAkademik::create($request->only(['judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai','status']));
 
             return redirect()->route('admin.kalender-akademik.index')->with([
                 'status' => 'success',
@@ -60,10 +60,11 @@ class KalenderAkademikController extends Controller
         }
     }
 
-    public function edit(KalenderAkademik $kalender_akademik)
+    public function edit(string $id)
     {
         $title = 'Edit Kalender Akademik';
-        return view('admin.master_data.form-kalender', compact('kalender_akademik', 'title'));
+        $kalender = KalenderAkademik::findOrFail($id);
+        return view('admin.master_data.form-kalender', compact('kalender', 'title'));
     }
 
     public function update(Request $request, KalenderAkademik $kalender_akademik)
@@ -83,7 +84,7 @@ class KalenderAkademikController extends Controller
         ]);
 
         try {
-            $kalender_akademik->update($request->only(['judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai']));
+            $kalender_akademik->update($request->only(['judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai','status']));
 
             return redirect()->route('admin.kalender-akademik.index')->with([
                 'status' => 'success',
@@ -136,10 +137,11 @@ class KalenderAkademikController extends Controller
                 'start' => $item->tanggal_mulai,
                 'end' => $item->tanggal_selesai ? Carbon::parse($item->tanggal_selesai)->addDay()->toDateString() : null,
                 'description' => $item->deskripsi,
+                'color' => $item->status == 0 ? '#ef4444' : '#2563eb', // 🔴 Merah utk libur, 🔵 biru utk kegiatan
             ];
         })->values();
 
-        return view('admin.view-kalender', compact('title', 'events'));
+        return view('view-kalender', compact('title', 'events'));
     }
 
 }

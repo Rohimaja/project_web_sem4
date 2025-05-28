@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('deskripsi')->nullable();
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai')->nullable();
+            $table->boolean('status');
             $table->timestamps();
         });
     }

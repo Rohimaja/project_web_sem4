@@ -2,8 +2,8 @@
     @vite(['resources/js/pages/admin/data-admin.js'])
     <div class="relative dark:text-white">
     <x-slot:title>{{ $title }}</x-slot:title>
-    <p>Lihat data Admin hari ini</p>
-        <div x-data="{openImport: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
+    <p class="dark:text-gray-300">Daftar Seluruh Admin</p>
+        <div x-data="{openImport: false, openView: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
             <div class="mt-2 mb-5 flex gap-4">
                 <a href="{{route('admin.master-admin.create')}}">
                     <button class="flex items-center px-4 py-2.5 text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold cursor-pointer">
@@ -41,14 +41,15 @@
 
             <div x-data="{openView: false}">
                 <div class="overflow-x-auto w-[270px] sm:w-150 md:w-full mt-3 pb-3">
-                    <table id="data-admin" class="text-sm text-left w-full pt-2">
+                    <table id="data-admin" class="text-sm text-left w-full pt-1 display nowrap">
                         <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
                             <tr>
                             <th class=" dark:border-gray-500 px-4 py-2">No</th>
                             <th class=" dark:border-gray-500 px-4 py-2">Foto</th>
-                            <th class=" dark:border-gray-500 px-4 py-2">Nama</th>
+                            <th class=" dark:border-gray-500 px-4 py-2">Nama Lengkap</th>
                             <th class=" dark:border-gray-500 px-4 py-2">Jenis Kelamin</th>
                             <th class=" dark:border-gray-500 px-4 py-2">Email</th>
+                            <th class=" dark:border-gray-500 px-4 py-2">Telepon</th>
                             <th class=" dark:border-gray-500 px-4 py-2 text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -65,6 +66,7 @@
                                     <td class=" dark:border-gray-500 px-4 py-2">{{$a->nama}}</td>
                                     <td class=" dark:border-gray-500 px-4 py-2">{{$a->jenis_kelamin}}</td>
                                     <td class=" dark:border-gray-500 px-4 py-2">{{$a->email}}</td>
+                                    <td class=" dark:border-gray-500 px-4 py-2">{{$a->no_telp}}</td>
                                     <td class=" dark:border-gray-500 px-4 py-2 text-center">
                                         <div class="flex justify-center gap-2">
                                             <button @click="openView = true; $nextTick(() => loadAdminDetail({{ $a->id }}))" class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">
@@ -99,11 +101,11 @@
                                 <i class="bi bi-x-lg text-3xl"></i>
                             </button>
                         </div>
-                
+
                         <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-indigo-500 shadow-lg mb-6 cursor-pointer">
                             <img id="foto" class="w-full h-full object-cover" alt="Photo">
                         </div>
-                
+
                         <!-- INPUT FIELDS -->
                         <div class="flex flex-col md:flex-row">
                             <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
@@ -115,7 +117,7 @@
                                 <input type="text" readonly id="jenis_kelamin" class="bg-gray-100 dark:bg-gray-700 dark:text-white w-full p-2 border-2 border-gray-300 dark:border-gray-600 rounded-sm">
                             </div>
                         </div>
-                
+
                         <div class="flex flex-col md:flex-row">
                             <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                 <label class="mb-1 font-semibold dark:text-gray-200">Agama:</label>
@@ -126,7 +128,7 @@
                                 <input type="text" readonly id="tempat_lahir" class="bg-gray-100 dark:bg-gray-700 dark:text-white w-full p-2 border-2 border-gray-300 dark:border-gray-600 rounded-sm">
                             </div>
                         </div>
-                
+
                         <div class="flex flex-col md:flex-row">
                             <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                 <label class="mb-1 font-semibold dark:text-gray-200">Tanggal Lahir:</label>
@@ -137,7 +139,7 @@
                                 <input type="text" readonly id="email" class="bg-gray-100 dark:bg-gray-700 dark:text-white w-full p-2 border-2 border-gray-300 dark:border-gray-600 rounded-sm">
                             </div>
                         </div>
-                
+
                         <div class="flex flex-col md:flex-row">
                             <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                 <label class="mb-1 font-semibold dark:text-gray-200">Nomor Telepon:</label>
@@ -145,10 +147,10 @@
                             </div>
                             <div class="w-full md:w-1/2 mb-4"></div>
                         </div>
-                
+
                         <h1 class="font-bold text-gray-800 dark:text-white text-lg my-2 text-center xl:text-left mt-3">Alamat</h1>
                         <hr class="my-2 border-gray-600 mb-6">
-                
+
                         <div class="flex flex-col md:flex-row">
                             <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                 <label class="mb-1 font-semibold dark:text-gray-200">Provinsi:</label>
@@ -159,7 +161,7 @@
                                 <input type="text" readonly id="kota" class="bg-gray-100 dark:bg-gray-700 dark:text-white w-full p-2 border-2 border-gray-300 dark:border-gray-600 rounded-sm">
                             </div>
                         </div>
-                
+
                         <div class="flex flex-col md:flex-row">
                             <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                 <label class="mb-1 font-semibold dark:text-gray-200">Kecamatan:</label>
@@ -170,7 +172,7 @@
                                 <input type="text" readonly id="kelurahan" class="bg-gray-100 dark:bg-gray-700 dark:text-white w-full p-2 border-2 border-gray-300 dark:border-gray-600 rounded-sm">
                             </div>
                         </div>
-                
+
                         <div class="flex flex-col md:flex-row">
                             <div class="flex flex-col items-start w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                                 <label class="mb-1 font-semibold dark:text-gray-200">Alamat:</label>
@@ -179,7 +181,7 @@
                             <div class="w-full md:w-1/2 mb-4"></div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </div>

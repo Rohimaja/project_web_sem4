@@ -27,11 +27,9 @@ class StoreMasterProdi extends FormRequest
         $id = $id ?? $this->route('master_prodi');
 
         return [
-            // 'kode_prodi' => 'required|max:8|regex:/^[A-Z0-9]+$/|unique:prodis,kode_prodi',
-            'kode_prodi' => ['required','max:8','regex:/^[A-Za-z0-9]+$/',Rule::unique('prodis', 'kode_prodi')->ignore($id)],
+            'kode_prodi' => ['required','max:10','regex:/^[A-Za-z0-9]+$/',Rule::unique('prodis', 'kode_prodi')->ignore($id)],
             'jenjang' => 'required',
             'nama_prodi' => ['required','max:40',Rule::unique('prodis', 'nama_prodi')->ignore($id),],
-            // 'nama_prodi' => 'required|max:40|unique:prodis,nama_prodi',
         ];
     }
 
@@ -40,11 +38,12 @@ class StoreMasterProdi extends FormRequest
             'kode_prodi.required' => 'Kode Prodi tidak boleh kosong',
             'kode_prodi.max' => 'Kode Prodi hanya maksimal 8 karakter',
             'kode_prodi.unique' => 'Kode Prodi sudah terdaftar',
+            'kode_prodi.regex' => 'Kode Prodi tidak boleh mengandung simbol',
 
             'jenjang.required' => 'Silahkan pilih jenjang pendidikan',
 
             'nama_prodi.required' => 'Nama Program Studi tidak boleh kosong.',
-            'nama_prodi.max' => 'Nama Program Studi maksimal 40 karakter.',
+            'nama_prodi.max' => 'Nama Program Studi tidak boleh melebihi 40 karakter.',
             'nama_prodi.unique' => 'Nama Program Studi sudah terdaftar.',
         ];
     }

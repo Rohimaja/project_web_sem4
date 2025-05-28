@@ -17,25 +17,19 @@ use App\Http\Requests\Admin\StoreMasterDosen;
 
 class DosenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = 'Data Dosen';
         $dosen = Dosen::all();
-        $prodi = Dosen::with( ['prodi'])->get();
+        $prodi = Dosen::with( 'prodi')->get();
         return view('admin.master_data.dosen',compact('title','dosen','prodi'));
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $prodi = Prodi::all(); // Ambil semua data prodi
-        $title = 'Tambah Data'; // Ambil semua data prodi
+        $prodi = Prodi::all();
+        $title = 'Tambah Data';
         return view('admin.master_data.form-dosen', compact('prodi', 'title'));
     }
 
@@ -46,9 +40,9 @@ class DosenController extends Controller
     {
         $request->merge([
             'nip' => trim($request->nip),
-            'nama' => trim($request->nama),
-            'tempat_lahir' => trim($request->tempat_lahir),
-            'email' => trim($request->email),
+            'nama' => ucwords(trim($request->nama)),
+            'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
+            'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
             'alamat' => trim($request->alamat),
         ]);
@@ -57,23 +51,21 @@ class DosenController extends Controller
 
             DB::transaction(function () use ($request) {
 
-                // Insert ke tabel users dulu
                 $user = User::create([
                     'name' => $request->nama,
                     'email' => $request->email,
-                    'role' => 'dosen', // default role admin
-                    'password' => Hash::make('password123'), // default password sementara
+                    'role' => 'dosen',
+                    'password' => Hash::make('password123'),
                 ]);
 
                 $fotoPath = null;
                 if ($request->hasFile('foto')) {
                     $filename = 'profile/dosen/profile_' . $request->nip . '.' . $request->file('foto')->extension();
-                    $fotoPath = $request->file('foto')->storeAs( 'foto_dosen', $filename, 'public'); // folder: storage/app/public/foto_admin
+                    $fotoPath = $request->file('foto')->storeAs( 'foto_dosen', $filename, 'public');
                 }
 
-                // Insert ke tabel admins
                 Dosen::create([
-                    'user_id' => $user->id, // hubungkan ke user yang baru dibuat
+                    'user_id' => $user->id,
                     'nip' => $request->nip,
                     'nama' => $request->nama,
                     'jenis_kelamin' => $request->jenis_kelamin,
@@ -111,19 +103,13 @@ class DosenController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         try {
-            // Cari data mahasiswa berdasarkan ID
             $dosen = Dosen::with('prodi','province','regency','district','village')->findOrFail($id);
 
-            // Kirimkan data mahasiswa sebagai response JSON
             return response()->json($dosen);
         } catch (\Exception $e) {
-            // Jika ada kesalahan, kembalikan pesan error
             return response()->json([
                 'status' => 'error',
                 'message' => 'Data tidak ditemukan'
@@ -131,20 +117,14 @@ class DosenController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $prodi = Prodi::all(); // Ambil semua data prodi
+        $prodi = Prodi::all();
         $dosen = Dosen::findOrFail($id);
-        $title = 'Edit Data'; // Ambil semua data prodi
+        $title = 'Edit Data';
         return view('admin.master_data.form-dosen', compact('dosen','prodi', 'title'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreMasterDosen $request, $id)
     {
         $request->merge([
@@ -154,6 +134,7 @@ class DosenController extends Controller
             'email' => trim($request->email),
             'no_telp' => trim($request->no_telp),
             'alamat' => trim($request->alamat),
+            'password' => trim($request->new_password),
         ]);
 
         try {
@@ -163,21 +144,16 @@ class DosenController extends Controller
                 $dosen = Dosen::findOrFail($id);
                 $user = $dosen->user;
 
-                // Kalau ada foto baru diupload
                 if ($request->hasFile('foto')) {
-                    // Hapus foto lama kalau ada
                     if ($dosen->foto && Storage::disk('public')->exists($dosen->foto)) {
                         Storage::disk('public')->delete($dosen->foto);
                     }
-
-                    // Simpan foto baru
 
                     $filename = 'profile/dosen/profile_' . $request->nip . '.' . $request->file('foto')->extension();
                     $fotoPath = $request->file('foto')->storeAs('foto_dosen', $filename, 'public');
                     $dosen->foto = $fotoPath;
                 }
 
-                // Update data admin
                 $dosen->update([
                     'nip' => $request->nip,
                     'nama' => $request->nama,
@@ -188,15 +164,14 @@ class DosenController extends Controller
                     'email' => $request->email,
                     'no_telp' => $request->no_telp,
                     'alamat' => $request->alamat,
-                    'foto' => $dosen->foto, // foto baru atau tetap lama
-                    'prodi_id' => $request->prodi_id, // foto baru atau tetap lama
+                    'foto' => $dosen->foto,
+                    'prodi_id' => $request->prodi_id,
                     'province_id' => $request->province_id,
                     'regency_id' => $request->regency_id,
                     'district_id' => $request->district_id,
                     'village_id' => $request->village_id,
                 ]);
 
-                // Update juga data user terkait
                 $userData =[
                     'name' => $request->nama,
                     'email' => $request->email,
@@ -209,11 +184,11 @@ class DosenController extends Controller
                 $user->update($userData);
             });
 
-
             return redirect()->route('admin.master-dosen.index')->with([
                 'status' => 'success',
                 'message' => 'Data Berhasil Diperbarui'
             ]);
+
         } catch (\Exception $e) {
             Log::error('Gagal Memperbarui Dosen', [
                 'error' => $e->getMessage(),
@@ -227,18 +202,29 @@ class DosenController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $dosen = Dosen::findOrFail($id);
-        $dosen->delete();
-        // return redirect()->route('admin.master-prodi.index')->with('success', 'Prodi berhasil dihapus.');
-        return redirect()->route('admin.master-dosen.index')->with([
-            'status' => 'success',
-            'message' => 'Data Berhasil Dihapus'
-        ]);
+        try {
+            $dosen = Dosen::findOrFail($id);
+            $dosen->delete();
+
+            return redirect()->route('admin.master-dosen.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Dihapus'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Menghapus Dosen', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()
+            ]);
+        }
+
     }
 
     public function validateField(Request $request)
@@ -248,12 +234,6 @@ class DosenController extends Controller
         $messages = (new StoreMasterDosen())->messages();
         $field = $request->input('field');
         $value = $request->input('value');
-
-        // $rules = [
-        //     'nama' => 'required|max:100',
-        //     'email' => 'required|email|max:100|unique:admins,email',
-        //     // tambahkan field lain sesuai kebutuhan
-        // ];
 
         $validator = Validator::make([$field => $value], [
             $field => $rules[$field] ?? '',

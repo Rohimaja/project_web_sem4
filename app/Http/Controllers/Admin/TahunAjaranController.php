@@ -12,30 +12,25 @@ use Illuminate\Support\Facades\Validator;
 
 class TahunAjaranController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = 'Data Tahun Ajaran';
         $tahun = TahunAjaran::orderBy('tahun_awal')->get();
         return view('admin.master_data.tahunAjaran',compact('title','tahun'));
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.master_data.form-tahunAjaran',['title' =>'Tambah Data']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreMasterTahun $request)
     {
+
+        $request->merge([
+            'tahun_awal' => trim($request->tahun_awal),
+            'tahun_akhir' => trim($request->tahun_akhir),
+        ]);
 
         if ($request->tahun_awal >= $request->tahun_akhir) {
             return redirect()->back()->withInput()->withErrors([
@@ -64,17 +59,11 @@ class TahunAjaranController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $title = 'Edit Tahun Ajaran';
@@ -82,9 +71,6 @@ class TahunAjaranController extends Controller
         return view('admin.master_data.form-tahunAjaran', compact('title', 'tahun'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreMasterTahun $request, $id)
     {
         $request->merge([
@@ -103,7 +89,6 @@ class TahunAjaranController extends Controller
                 TahunAjaran::where('status', 1)->update(['status' => 0]);
             }
 
-            // Update atau create data tahun ajaran
             $tahun = TahunAjaran::findOrFail($id);
             $tahun->update($request->only(['tahun_awal', 'tahun_akhir', 'keterangan', 'status']));
 
@@ -125,18 +110,27 @@ class TahunAjaranController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $tahun = TahunAjaran::findOrFail($id);
-        $tahun->delete();
-        // return redirect()->route('admin.master-prodi.index')->with('success', 'Prodi berhasil dihapus.');
-        return redirect()->route('admin.master-tahun.index')->with([
-            'status' => 'success',
-            'message' => 'Data Berhasil Dihapus'
-        ]);
+        try {
+            $tahun = TahunAjaran::findOrFail($id);
+            $tahun->delete();
+
+            return redirect()->route('admin.master-tahun.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Dihapus'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Gagal Menghapus Data', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()
+            ]);
+        }
     }
 
     public function validateField(Request $request)

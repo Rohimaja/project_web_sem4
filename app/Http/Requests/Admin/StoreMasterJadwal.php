@@ -26,7 +26,7 @@ class StoreMasterJadwal extends FormRequest
         return [
             'hari' => 'required',
             'jam' => 'required',
-            'durasi' => 'required|integer|min:1|max:8',
+            'durasi' => 'required|integer|min:1|max:10',
             'dosen_id' => 'required',
             'prodi_id' => 'required',
             'semester' => 'required',

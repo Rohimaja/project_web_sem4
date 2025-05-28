@@ -17,22 +17,15 @@ use App\Http\Requests\Admin\StoreMasterMahasiswa;
 
 class MahasiswaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = 'Data Mahasiswa';
         $prodi = Prodi::all();
-        $mahasiswa = Mahasiswa::with(relations: ['prodi', 'tahun','province','regency','district','village'])->get();
+        $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','province','regency','district','village'])->get();
 
         return view('admin.master_data.mahasiswa',compact('title','prodi','mahasiswa'));
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $title = 'Tambah Data';
@@ -40,44 +33,38 @@ class MahasiswaController extends Controller
         return view('admin.master_data.form-mahasiswa', compact('title','prodi'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreMasterMahasiswa $request)
     {
         $request->merge([
-            'nim' => trim($request->nim),
+            'nim' => strtoupper(trim($request->nim)),
             'rfid' => trim($request->rfid),
-            'nama' => trim($request->nama),
-            'tempat_lahir' => trim($request->tempat_lahir),
-            'email' => trim($request->email),
+            'nama' => ucwords(trim($request->nama)),
+            'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
+            'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
             'alamat' => trim($request->alamat),
             'tahun_masuk' => trim($request->tahun_masuk),
         ]);
 
         try {
-
             DB::transaction(function () use ($request) {
-                // Insert ke tabel users dulu
                 $user = User::create([
                     'name' => $request->nama,
                     'nim' => $request->nim,
-                    'role' => 'mahasiswa', // default role admin
-                    'password' => Hash::make($request->nim), // default password sementara
+                    'role' => 'mahasiswa',
+                    'password' => Hash::make($request->nim),
                 ]);
 
                 $fotoPath = null;
                 if ($request->hasFile('foto')) {
                     $filename = 'profile/student/profile_' . $request->nim . '.' . $request->file('foto')->extension();
-                    $fotoPath = $request->file('foto')->storeAs( 'foto_mahasiswa', $filename, 'public'); // folder: storage/app/public/foto_admin
+                    $fotoPath = $request->file('foto')->storeAs( 'foto_mahasiswa', $filename, 'public');
                 }
 
                 $tahunAjaranAktif = TahunAjaran::where('status', true)->first();
 
-                // Insert ke tabel admins
                 Mahasiswa::create([
-                    'user_id' => $user->id, // hubungkan ke user yang baru dibuat
+                    'user_id' => $user->id,
                     'nim' => $request->nim,
                     'nama' => $request->nama,
                     'jenis_kelamin' => $request->jenis_kelamin,
@@ -97,13 +84,12 @@ class MahasiswaController extends Controller
                     'district_id' => $request->district_id,
                     'village_id' => $request->village_id,
                 ]);
-
-
-                return redirect()->route('admin.master-mahasiswa.index')->with([
-                    'status' => 'success',
-                    'message' => 'Data Berhasil Ditambahkan'
-                ]);
             });
+
+            return redirect()->route('admin.master-mahasiswa.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Ditambahkan'
+            ]);
 
         } catch (\Exception $e) {
             Log::error('Gagal menambahkan Mahasiswa', [
@@ -118,38 +104,36 @@ class MahasiswaController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','province','regency','district','village'])->findOrFail($id);
-        return response()->json($mahasiswa);
+        try {
+            $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','province','regency','district','village'])->findOrFail($id);
+            return response()->json($mahasiswa);
 
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $prodi = Prodi::all(); // Ambil semua data prodi
+        $prodi = Prodi::all();
         $mahasiswa = Mahasiswa::findOrFail($id);
-        $title = 'Edit Data'; // Ambil semua data prodi
+        $title = 'Edit Data';
         return view('admin.master_data.form-mahasiswa', compact('mahasiswa','prodi', 'title'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreMasterMahasiswa $request, $id)
     {
         $request->merge([
-            'nim' => trim($request->nim),
+            'nim' => strtoupper(trim($request->nim)),
             'rfid' => trim($request->rfid),
-            'nama' => trim($request->nama),
-            'tempat_lahir' => trim($request->tempat_lahir),
-            'email' => trim($request->email),
+            'nama' => ucwords(trim($request->nama)),
+            'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
+            'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
             'alamat' => trim($request->alamat),
             'tahun_masuk' => trim($request->tahun_masuk),
@@ -158,57 +142,52 @@ class MahasiswaController extends Controller
 
         try {
             DB::transaction(function () use ($request, $id) {
-            $mahasiswa = Mahasiswa::findOrFail($id);
-            $user = $mahasiswa->user;
+                $mahasiswa = Mahasiswa::findOrFail($id);
+                $user = $mahasiswa->user;
 
-            // Kalau ada foto baru diupload
-            if ($request->hasFile('foto')) {
-                // Hapus foto lama kalau ada
-                if ($mahasiswa->foto && Storage::disk('public')->exists($mahasiswa->foto)) {
-                    Storage::disk('public')->delete($mahasiswa->foto);
+                if ($request->hasFile('foto')) {
+                    if ($mahasiswa->foto && Storage::disk('public')->exists($mahasiswa->foto)) {
+                        Storage::disk('public')->delete($mahasiswa->foto);
+                    }
+
+                    // Simpan foto baru
+                    $filename = 'profile/student/profile_' . $request->nim . '.' . $request->file('foto')->extension();
+                    $fotoPath = $request->file('foto')->storeAs('foto_mahasiswa',$filename, 'public');
+                    $mahasiswa->foto = $fotoPath;
                 }
 
-                // Simpan foto baru
-                $filename = 'profile/student/profile_' . $request->nim . '.' . $request->file('foto')->extension();
-                $fotoPath = $request->file('foto')->storeAs('foto_mahasiswa',$filename, 'public');
-                $mahasiswa->foto = $fotoPath;
-            }
+                $tahunAjaranAktif = TahunAjaran::where('status', true)->first();
 
-            $tahunAjaranAktif = TahunAjaran::where('status', true)->first();
+                $mahasiswa->update([
+                    'nim' => $request->nim,
+                    'rfid' => $request->rfid,
+                    'nama' => $request->nama,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'agama' => $request->agama,
+                    'tempat_lahir' => $request->tempat_lahir,
+                    'tgl_lahir' => $request->tgl_lahir,
+                    'email' => $request->email,
+                    'no_telp' => $request->no_telp,
+                    'alamat' => $request->alamat,
+                    'prodi_id' => $request->prodi_id,
+                    'tahun_masuk' => $request->tahun_masuk,
+                    'tahun_ajaran_id' => $tahunAjaranAktif->id,
+                    'semester' => $request->semester,
+                    'foto' => $mahasiswa->foto,
+                    'province_id' => $request->province_id,
+                    'regency_id' => $request->regency_id,
+                    'district_id' => $request->district_id,
+                    'village_id' => $request->village_id,
+                ]);
 
+                $userData =[
+                    'name' => $request->nama,
+                    'nim' => $request->nim,
+                ];
 
-            // Update data admin
-            $mahasiswa->update([
-                'nim' => $request->nim,
-                'rfid' => $request->rfid,
-                'nama' => $request->nama,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-                'tempat_lahir' => $request->tempat_lahir,
-                'tgl_lahir' => $request->tgl_lahir,
-                'email' => $request->email,
-                'no_telp' => $request->no_telp,
-                'alamat' => $request->alamat,
-                'prodi_id' => $request->prodi_id,
-                'tahun_masuk' => $request->tahun_masuk,
-                'tahun_ajaran_id' => $tahunAjaranAktif->id,
-                'semester' => $request->semester,
-                'foto' => $mahasiswa->foto,
-                'province_id' => $request->province_id,
-                'regency_id' => $request->regency_id,
-                'district_id' => $request->district_id,
-                'village_id' => $request->village_id,
-            ]);
-
-            // Update juga data user terkait
-            $userData =[
-                'name' => $request->nama,
-                'nim' => $request->nim,
-            ];
-
-            if ($request->filled('new_password')) {
-                $userData['password'] = Hash::make($request->new_password);
-            }
+                if ($request->filled('new_password')) {
+                    $userData['password'] = Hash::make($request->new_password);
+                }
 
                 $user->update($userData);
             });
@@ -217,6 +196,7 @@ class MahasiswaController extends Controller
                 'status' => 'success',
                 'message' => 'Data Berhasil Diperbarui'
             ]);
+
         } catch (\Exception $e) {
             Log::error('Gagal memperbarui Mahasiswa', [
                 'error' => $e->getMessage(),
@@ -230,18 +210,28 @@ class MahasiswaController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $mahasiswa = Mahasiswa::findOrFail($id);
-        $mahasiswa->delete();
-        // return redirect()->route('admin.master-prodi.index')->with('success', 'Prodi berhasil dihapus.');
-        return redirect()->route('admin.master-mahasiswa.index')->with([
-            'status' => 'success',
-            'message' => 'Data Berhasil Dihapus'
-        ]);
+        try {
+            $mahasiswa = Mahasiswa::findOrFail($id);
+            $mahasiswa->delete();
+
+            return redirect()->route('admin.master-mahasiswa.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Dihapus'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Menghapus Data', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()
+            ]);
+        }
     }
 
     public function getFilterMahasiswa(Request $request){
@@ -265,7 +255,7 @@ class MahasiswaController extends Controller
 
     public function validateField(Request $request)
     {
-        $id = $request->input('id'); // ambil id dari form (edit mode)
+        $id = $request->input('id');
         $rules = (new StoreMasterMahasiswa())->rules($id);
         $messages = (new StoreMasterMahasiswa())->messages();
         $field = $request->input('field');

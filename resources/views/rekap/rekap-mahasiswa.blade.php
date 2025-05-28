@@ -12,7 +12,7 @@
        <!-- Program Studi -->
        <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4">
            <label class="mb-1 font-semibold dark:text-white">Pilih Program Studi:</label>
-           <select id="prodi" name="prodi" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border">
+           <select id="prodi" name="prodi" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border" required>
                <option value="" hidden selected>Pilih Program Studi</option>
                @foreach ($prodi as $p)
                    <option value="{{ $p->id }}">
@@ -25,9 +25,9 @@
        <!-- Semester -->
        <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4">
            <label class="mb-1 font-semibold dark:text-white">Pilih Semester:</label>
-           <select id="semester" name="semester" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border">
+           <select id="semester" name="semester" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border" required>
                <option value="" hidden selected>Pilih Semester</option>
-               @for ($i = 1; $i <= 14; $i++)
+               @for ($i = 1; $i <= 8; $i++)
                <option value="{{$i}}"> Semester {{$i}} </option>
                @endfor
            </select>
@@ -37,7 +37,7 @@
    @if (Auth::user()->role === 'dosen')
        <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4">
            <label class="mb-1 font-semibold dark:text-white">Pilih Program Studi:</label>
-           <select id="prodi-dosen" name="prodi" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border">
+           <select id="prodi-dosen" name="prodi" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border" required>
                <option value="" hidden selected>Pilih Program Studi</option>
                @foreach ($prodi as $p)
                    <option value="{{ $p->id }}">
@@ -49,9 +49,9 @@
 
        <div class="flex flex-col w-full mb-4 xl:w-1/3 mr-0 md:mr-4">
            <label class="mb-1 font-semibold dark:text-white">Pilih Semester:</label>
-           <select id="semester-dosen" name="semester" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border">
+           <select id="semester-dosen" name="semester" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border" required>
                <option value="" hidden selected>Pilih Semester</option>
-               @for ($i = 1; $i <= 14; $i++)
+               @for ($i = 1; $i <= 8; $i++)
                <option value="{{$i}}"> Semester {{$i}} </option>
                @endfor
            </select>
@@ -60,7 +60,7 @@
 
        <div class="flex flex-col w-full mb-4 xl:w-1/3">
            <label class="mb-1 font-semibold dark:text-white">Pilih Mata Kuliah:</label>
-           <select id="matkul" name="matkul" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border">
+           <select id="matkul" name="matkul" class="dark:bg-gray-700 dark:text-white dark:border-gray-600 border" required>
            </select>
        </div>
    </div>
@@ -103,23 +103,23 @@
        <div class="flex flex-col gap-3 mt-3">
            <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
                <label class="w-20 font-semibold dark:text-white">Program Studi:</label>
-               <span class="border border-gray-300 dark:border-gray-600 bg-gray-300 dark:bg-gray-700 rounded px-3 py-2 w-full dark:text-white">{{$prodiTerpilih->nama_prodi ?? ''}}</span>
+               <span class="border border-gray-100 dark:border-gray-600 bg-gray-150 dark:bg-gray-700 rounded px-3 py-2 w-full dark:text-white">{{$prodiTerpilih->nama_prodi ?? ''}}</span>
            </div>
 
            <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
                <label class="w-20 font-semibold dark:text-white">Semester:</label>
-               <span class="border border-gray-300 dark:border-gray-600 bg-gray-300 dark:bg-gray-700 rounded px-3 py-2 w-full dark:text-white">{{$semesterTerpilih ?? ''}}</span>
+               <span class="border border-gray-100 dark:border-gray-600 bg-gray-150 dark:bg-gray-700 rounded px-3 py-2 w-full dark:text-white">{{$semesterTerpilih ?? ''}}</span>
            </div>
 
            <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
                <label class="w-20 font-semibold dark:text-white">Mata Kuliah:</label>
-               <span class="border border-gray-300 dark:border-gray-600 bg-gray-300 dark:bg-gray-700 rounded px-3 py-2 w-full dark:text-white">{{$matkulTerpilih->nama_matkul ?? ''}}</span>
+               <span class="border border-gray-100 dark:border-gray-600 bg-gray-150 dark:bg-gray-700 rounded px-3 py-2 w-full dark:text-white">{{$matkulTerpilih->nama_matkul ?? ''}}</span>
            </div>
        </div>
 @endif
 
  <div x-data="{ hovering: false }" class="overflow-x-auto w-60 sm:w-150 md:w-240 xl:min-w-full pb-3">
-   <table id="data-rekap-mahasiswa" class="text-sm text-left w-full pt-4 dark:text-white">
+   <table id="data-rekap-mahasiswa" class="text-sm text-left w-full pt-4 dark:text-white display nowrap">
        <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
            <tr>
                <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
@@ -129,16 +129,13 @@
                @for ($i = 1; $i <= 16; $i++)
                    <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">{{ $i }}</th>
                @endfor
-               <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Hadir</th>
-               <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Izin</th>
-               <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Sakit</th>
-               <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Alpha</th>
+               <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">%Kehadiran</th>
            </tr>
        </thead>
        <tbody class="text-center">
            @if (count($rekap))
                @foreach ($rekap as $index => $item)
-           <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
+           <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$loop->iteration}}</td>
                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['nim'] ?? ''}}</td>
                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['nama_mahasiswa'] ?? ''}}</td>
@@ -149,28 +146,25 @@
                        $dosen = $item['nama_dosen'][$i] ?? '';
                        switch ($status) {
                            case 'H':
-                               $bg = 'bg-green-500 text-white';
+                               $bg = 'text-green-500';
                                break;
                            case 'I':
-                               $bg = 'bg-yellow-500 text-white';
+                               $bg = 'text-blue-500';
                                break;
                            case 'S':
-                               $bg = 'bg-blue-500 text-white';
+                               $bg = 'text-yellow-500';
                                break;
                            case 'A':
-                               $bg = 'bg-red-600 text-white';
+                               $bg = 'text-red-500';
                                break;
                            default:
-                               $bg = 'bg-gray-400 text-white';
+                               $bg = 'text-gra-500';
                                break;
                        };
                    @endphp
-                       <td class="border px-4 py-2 font-semibold {{ $bg }}" title="{{$tanggal .' '. $dosen}}">{{ $status }}</td>
+                       <td class="px-4 py-2 font-semibold {{ $bg }}" title="{{$tanggal .' '. $dosen}}">{{ $status }}</td>
                @endfor
                <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['kehadiran']}}</td>
-               <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['izin_persentase']}}</td>
-               <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['sakit_persentase']}}</td>
-               <td class="border border-gray-300 dark:border-gray-600 px-4 py-2">{{$item['alpha_persentase']}}</td>
            </tr>
            @endforeach
        </tbody>
@@ -179,9 +173,11 @@
  </div>
  <div class="mt-6">
    <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-5">Keterangan:</h2>
-   <p class="mt-2 dark:text-white"><span class="text-white font-bold p-1 bg-green-500">H</span> = Hadir Kuliah</p>
-   <p class="mt-2 dark:text-white"><span class="text-white font-bold py-1 px-2 bg-yellow-500">I</span> = Izin Kuliah</p>
-   <p class="mt-2 dark:text-white"><span class="text-white font-bold p-1 bg-red-500">A</span> = Alpha Kuliah</p>
+        <p class="mt-2 dark:text-white"><span class="text-green-500 font-bold p-1">H  = Hadir</span></p>
+        <p class="mt-2 dark:text-white"><span class="text-blue-500 font-bold py-1 px-2">I  = Tidak masuk dengan Izin</span></p>
+        <p class="mt-2 dark:text-white"><span class="text-yellow-500 font-bold py-1 px-2">S  = Tidak masuk karena sakit</span></p>
+        <p class="mt-2 dark:text-white"><span class="text-red-500 font-bold p-1">A  = Tidak masuk tanpa keterangan</span></p>
+        <p class="mt-2 dark:text-white"><span class="text-gray-500 font-bold p-1">-  = Tidak terselenggara perkuliahan</span></p>
  </div>
 </div>
 </div>

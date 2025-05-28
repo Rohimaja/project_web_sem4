@@ -19,11 +19,6 @@ use App\Http\Controllers\Auth\PasswordController;
 use Illuminate\Support\Facades\Route;
 
 
-// Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-//     Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
-//     Route::resource('mahasiswa', MahasiswaController::class);
-// });
-
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('kalender-akademik', KalenderAkademikController::class)
     ->except(['show']);
@@ -59,6 +54,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/validate-field/ruangan', [RuanganController::class, 'validateField'])->name('admin.validate.field.ruangan');
 
     Route::resource('master-jadwal', JadwalController::class);
+    Route::post('/validate-field/jadwal', [JadwalController::class, 'validateField'])->name('admin.validate.field.jadwal');
 
     Route::resource('presensi', PresensiController::class);
     Route::post('/presensi/info-presensi', [PresensiController::class, 'updateDetailPresensi'])
@@ -86,7 +82,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+    Route::get('/change-password', [PasswordController::class, 'changePassword'])->name('change-password');
     Route::put('/change-password', [PasswordController::class, 'update'])->name('password.update');
     Route::post('/validate-field/password', [PasswordController::class, 'validateField'])->name('admin.validate.field.password');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

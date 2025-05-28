@@ -23,17 +23,6 @@ class StorePresensi extends FormRequest
      */
     public function rules(): array
     {
-        // return [
-        //     'tgl_presensi' => 'required',
-        //     'jam_awal' => 'required',
-        //     'jam_akhir' => 'required|after:jam_awal',
-        //     'dosen_id' => 'required',
-        //     'prodi_id' => 'required',
-        //     'semester' => 'required',
-        //     'matkul_id' => 'required',
-        //     'ruangan_id' => 'required',
-        // ];
-
         $rules = [
             'tgl_presensi' => 'required',
             'jam_awal' => 'required',
@@ -55,20 +44,20 @@ class StorePresensi extends FormRequest
     public function messages(){
         return [
             'tgl_presensi.required' => 'Pilih tanggal presensi dahulu.',
-            'jam_awal.required' => 'Tentukan Jam Awal Presensi.',
+            'jam_awal.required' => 'Tentukan Jam Mulai Presensi.',
 
             'jam_akhir.required' => 'Tentukan Jam Selesai Presensi.',
             'jam_akhir.after' => 'Jam Selesai Presensi harus lebih besar',
 
-            'dosen_id.required' => 'Dosen wajib dipilih',
+            'dosen_id.required' => 'Silahkah pilih dosen',
 
-            'prodi_id.required' => 'Program Studi wajib dipilih',
+            'prodi_id.required' => 'Silahkah pilih Program Studi',
 
-            'semester.required' => 'Semester wajib dipilih',
+            'semester.required' => 'Silahkah pilih semester',
 
-            'matkul_id.required' => 'Mata Kuliah harus dipilih.',
+            'matkul_id.required' => 'Silahkah pilih Mata Kuliah',
 
-            'ruangan_id.required' => 'Ruangan harus dipilih.',
+            'ruangan_id.required' => 'Silahkah pilih ruangan',
         ];
     }
 

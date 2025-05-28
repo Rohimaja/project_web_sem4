@@ -28,13 +28,13 @@ class StoreMasterDosen extends FormRequest
 
         return [
             'nip' => ['required', 'max:20', Rule::unique('dosens', 'nip')->ignore($id),],
-            'nama' => 'required|max:100',
+            'nama' => 'required|max:100|regex:/^[A-Za-z\s]+$/',
             'jenis_kelamin' => 'required',
             'agama' => 'required',
-            'tempat_lahir' => 'required|max:100',
+            'tempat_lahir' => 'required|max:100|regex:/^[A-Za-z\s]+$/',
             'tgl_lahir' => 'required|before:today',
             'no_telp' => 'required|max:20|regex:/^[0-9]+$/',
-            'email' => ['required','email','max:100',Rule::unique('dosens', 'email')->ignore($id),],
+            'email' => ['required','email:rfc,dns','max:100',Rule::unique('dosens', 'email')->ignore($id),],
             'alamat' => 'required|max:200',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
             'province_id' => 'required',
@@ -47,17 +47,19 @@ class StoreMasterDosen extends FormRequest
     public function messages(){
         return [
             'nip.required' => 'Nip tidak boleh kosong',
-            'nip.max' => 'Nip Maksimal 18 Karakter',
+            'nip.max' => 'Nip tidak boleh melebihi 18 Karakter',
             'nip.unique' => 'Nip sudah terdaftar',
 
             'nama.required' => 'Nama tidak boleh kosong',
             'nama.max' => 'Nama maksimal 100 karakter',
+            'nama.regex' =>'Nama hanya boleh mengandung huruf',
 
             'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih',
             'agama.required' => 'Agama harus dipilih',
 
             'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
-            'tempat_lahir.max' => 'Tempat Lahir maksimal 100 karakter',
+            'tempat_lahir.max' => 'Tempat Lahir tidak boleh melebihi 100 karakter',
+            'tempat_lahir.regex' =>'Nama hanya boleh mengandung huruf',
 
             'tgl_lahir.required' => 'Tanggal Lahir wajib diisi',
             'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
