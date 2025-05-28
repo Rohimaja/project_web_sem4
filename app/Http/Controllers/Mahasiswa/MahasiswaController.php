@@ -297,6 +297,22 @@ class MahasiswaController extends Controller
 
 
 
+    public function getFilterJadwal(Request $request){
+        $tahun = $request->query('tahun_ajaran');
+
+        $query = Jadwal::query()->with('prodi','tahunAjaran','dosen','matkul','ruangan');
+
+        if ($tahun) {
+            $query->where('tahun_ajaran_id', $tahun);
+        }
+
+        $jadwal = $query->get();
+
+        return response()->json($jadwal);
+    }
+
+
+
 
 
 
