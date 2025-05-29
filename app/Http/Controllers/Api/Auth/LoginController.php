@@ -47,11 +47,18 @@ class LoginController extends Controller
         if ($role === 'mahasiswa' && $user->mahasiswa->email_verified_at === null) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Akun anda belum aktif. Silahkan verifikasi terlebih dahulu.',
+                'message' => 'Akun anda belum aktif. Silahkan aktivasi terlebih dahulu.',
             ], 403);
         }
 
         $token = auth('api')->login($user);
+        $originalTTL = auth('api')->factory()->getTTL();
+        // Set TTL melalui factory
+        auth('api')->factory()->setTTL(60 * 24 * 14);
+        $refreshToken = JWTAuth::customClaims(['type' => 'refresh'])->fromUser($user);
+
+        // Reset TTL ke original
+        auth('api')->factory()->setTTL($originalTTL);
 
         // Ambil data profil berdasarkan role
         $data = ['user_id' => $user->id];
@@ -83,9 +90,38 @@ class LoginController extends Controller
             'status' => 'success',
             'message' => 'Login berhasil',
             'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 43200,
+            'refresh_token' => $refreshToken,
+            'token_type' => 'Bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
             'data' => $data,
         ]);
+    }
+
+    public function refresh(Request $request)
+    {
+        $refreshToken = $request->bearerToken();
+
+        try {
+            $payload = JWTAuth::setToken($refreshToken)->getPayload();
+
+            if ($payload->get('type') !== 'refresh') {
+                return response()->json(['error' => 'Invalid token type'], 401);
+            }
+
+            $user = JWTAuth::setToken($refreshToken)->toUser();
+            $newAccessToken = JWTAuth::fromUser($user);
+
+            return response()->json([
+                'token' => $newAccessToken,
+                'token_type' => 'Bearer',
+                'expires_in' => auth('api')->factory()->getTTL() * 60,
+            ]);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'Refresh token expired'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'Invalid token'], 401);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Token error'], 401);
+        }
     }
 }

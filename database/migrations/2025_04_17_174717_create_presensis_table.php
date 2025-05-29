@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('presensis', function (Blueprint $table) {
             $table->id();
-            $table->string('presensi_id','30');
+            $table->string('presensi_id', '30');
             $table->date('tgl_presensi');
             $table->time('jam_awal');
             $table->time('jam_akhir');
@@ -21,9 +20,9 @@ return new class extends Migration
             $table->foreignId('prodi_id')->constrained('prodis');
             $table->tinyInteger('semester');
             $table->foreignId('matkul_id')->constrained('matkuls');
-            $table->foreignId('ruangan_id')->constrained('ruangans');
+            $table->foreignId('ruangan_id')->constrained('ruangans')->nullable();
             $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans');
-            $table->string('link_zoom','100')->nullable();
+            $table->string('link_zoom', '255')->nullable();
             $table->timestamps();
         });
     }
