@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.float-animation {
+    animation: float 3s ease-in-out infinite;
+}
+
 .select2-container .select2-selection--single {
     @apply border-2 border-gray-700 mt-1 rounded-sm p-2 py-[7px] text-sm font-normal text-gray-800 w-full;
     height: auto !important;
