@@ -22,8 +22,11 @@ class JadwalController extends Controller
     public function index()
     {
         $title = 'Data Jadwal';
-        $jadwal = Jadwal::with('dosen','prodi','ruangan','matkul')->get();
-        return view('admin.master_data.jadwal', compact('jadwal','title'));
+        $prodi = Prodi::all();
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
+        $dosen = Dosen::all();
+        $jadwal = Jadwal::with('dosen','prodi','ruangan','matkul','tahun')->get();
+        return view('admin.master_data.jadwal', compact('jadwal','title','dosen','prodi','tahun'));
     }
 
     public function create()
@@ -33,14 +36,14 @@ class JadwalController extends Controller
         $ruangan = Ruangan::all();
         $matkul = Matkul::all();
         $dosen = Dosen::all();
-        return view('admin.master_data.form-jadwal', compact('title','prodi','ruangan','matkul','dosen'));
+        $tahun = TahunAjaran::orderBy('tahun_awal')->get();
+        return view('admin.master_data.form-jadwal', compact('title','prodi','ruangan','matkul','dosen','tahun'));
     }
 
     public function store(StoreMasterJadwal $request)
     {
         try {
             DB::transaction(function () use ($request) {
-                $tahunAjaranAktif = TahunAjaran::where('status', true)->first();
 
                 $jadwal = Jadwal::create([
                     'jam' => $request->jam,
@@ -50,7 +53,7 @@ class JadwalController extends Controller
                     'prodi_id' => $request->prodi_id,
                     'matkul_id' => $request->matkul_id,
                     'ruangan_id' => $request->ruangan_id,
-                    'tahun_ajaran_id' => $tahunAjaranAktif->id,
+                    'tahun_ajaran_id' => $request->tahun_ajaran,
                     'semester' => $request->semester,
                 ]);
 
@@ -90,7 +93,6 @@ class JadwalController extends Controller
     public function show(string $id)
     {
         $title = 'Data Jadwal';
-        // $presensi = Presensi::findOrFail($id);
         $jadwal = Jadwal::with('dosen','prodi','ruangan','matkul','tahun')->findOrFail($id);
         $detail = DetailJadwal::with('mahasiswa')->where('jadwal_id', $id)->get();
         return view('admin.master_data.info-jadwal', compact('title','jadwal','detail'));
@@ -139,5 +141,56 @@ class JadwalController extends Controller
 
             return response()->json(['success' => true]);
         }
+    }
+
+        public function getMatkulByTahun(Request $request)
+    {
+        $prodi = $request->query('prodi');
+        $semester = $request->query('semester');
+        $tahun = $request->query('tahun');
+
+        // $tahunAjaranAktif = TahunAjaran::where('status',  true)->first();
+
+        $query = Matkul::query();
+
+        if ($tahun) {
+            $query->where('tahun_ajaran_id', $tahun);
+        }
+
+        if ($prodi) {
+            $query->where('prodi_id', $prodi);
+        }
+
+        if ($semester) {
+            $query->where('semester', $semester);
+        }
+
+        $matkul = $query->get(['id', 'nama_matkul']);
+
+        return response()->json($matkul);
+    }
+
+    public function getFilterJadwal(Request $request){
+        $tahun = $request->query('tahun_ajaran');
+        $dosen = $request->query('dosen');
+        $prodi = $request->query('prodi');
+
+        $query = Jadwal::query()->with('prodi','tahun','dosen','matkul','ruangan');
+
+        if ($tahun) {
+            $query->where('tahun_ajaran_id', $tahun);
+        }
+
+        if ($dosen) {
+            $query->where('dosen_id', $dosen);
+        }
+
+        if ($prodi) {
+            $query->where('prodi_id', $prodi);
+        }
+
+        $jadwal = $query->get();
+
+        return response()->json($jadwal);
     }
 }

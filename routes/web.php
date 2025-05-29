@@ -5,6 +5,10 @@ use App\Http\Controllers\Admin\KalenderAkademikController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Mahasiswa\MahasiswaController;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
+use App\Models\Kota;
+use App\Models\Provinsi;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -90,10 +94,10 @@ Route::get('/kalender-akademik', [KalenderAkademikController::class, 'viewCalend
 
 Route::get('/wilayah/{type}/{id?}', function ($type, $id = null) {
     return match ($type) {
-        'provinces' => \App\Models\Province::select('id', 'name')->get(),
-        'regencies' => \App\Models\Regency::where('province_id', $id)->select('id', 'name')->get(),
-        'districts' => \App\Models\District::where('regency_id', $id)->select('id', 'name')->get(),
-        'villages' => \App\Models\Village::where('district_id', $id)->select('id', 'name')->get(),
+        'provinsis' => Provinsi::select('id', 'name')->get(),
+        'kotas' => Kota::where('provinsi_id', $id)->select('id', 'name')->get(),
+        'kecamatans' => Kecamatan::where('kota_id', $id)->select('id', 'name')->get(),
+        'kelurahans' => Kelurahan::where('kecamatan_id', $id)->select('id', 'name')->get(),
         default => abort(404),
     };
 });

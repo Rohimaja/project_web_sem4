@@ -38,10 +38,10 @@ class StoreAdminRequest extends FormRequest
             'tahun_masuk' => 'required|max:4|regex:/^[0-9]+$/',
             'semester' => 'required',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-            'province_id' => 'required',
-            'regency_id' => 'required',
-            'district_id' => 'required',
-            'village_id' => 'required',
+            'provinsi_id' => 'required',
+            'kota_id' => 'required',
+            'kecamatan_id' => 'required',
+            'kelurahan_id' => 'required',
 
             'nama_matkul' => 'required|max:100',
             'tahun_ajaran_id' => 'required',

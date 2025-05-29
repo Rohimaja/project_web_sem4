@@ -175,7 +175,7 @@ class DashboardController extends Controller
         // $admin = Admin::with(relations: ['province','regency','district','village'])->get();
         $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();
         $mahasiswa = Auth::user()->mahasiswa;
-        $biodata = Mahasiswa::with('prodi','province','regency','district','village')->findOrFail($mahasiswa->id);
+        $biodata = Mahasiswa::with('prodi','provinsi','kota','kecamatan','kelurahan')->findOrFail($mahasiswa->id);
 
 
         return view('mahasiswa.dashboard',compact('title','presensiHariIni','biodata'));

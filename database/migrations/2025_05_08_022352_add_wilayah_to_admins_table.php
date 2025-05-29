@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->char('province_id', 2); // ← pastikan ini ADA sebelum foreign()
-            $table->char('regency_id', 4); // ← pastikan ini ADA sebelum foreign()
-            $table->char('district_id', 7); // ← pastikan ini ADA sebelum foreign()
-            $table->char('village_id', 10); // ← pastikan ini ADA sebelum foreign()
+            $table->char('provinsi_id', 2); // ← pastikan ini ADA sebelum foreign()
+            $table->char('kota_id', 4); // ← pastikan ini ADA sebelum foreign()
+            $table->char('kecamatan_id', 7); // ← pastikan ini ADA sebelum foreign()
+            $table->char('kelurahan_id', 10); // ← pastikan ini ADA sebelum foreign()
 
 
-            $table->foreign('province_id')->references('id')->on('provinces');
-            $table->foreign('regency_id')->references('id')->on('regencies');
-            $table->foreign('district_id')->references('id')->on('districts');
-            $table->foreign('village_id')->references('id')->on('villages');
+            $table->foreign('provinsi_id')->references('id')->on('provinsis');
+            $table->foreign('kota_id')->references('id')->on('kotas');
+            $table->foreign('kecamatan_id')->references('id')->on('kecamatans');
+            $table->foreign('kelurahan_id')->references('id')->on('kelurahans');
         });
     }
 

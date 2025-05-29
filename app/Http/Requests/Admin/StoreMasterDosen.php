@@ -37,10 +37,10 @@ class StoreMasterDosen extends FormRequest
             'email' => ['required','email:rfc,dns','max:100',Rule::unique('dosens', 'email')->ignore($id),],
             'alamat' => 'required|max:200',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-            'province_id' => 'required',
-            'regency_id' => 'required',
-            'district_id' => 'required',
-            'village_id' => 'required',
+            'provinsi_id' => 'required',
+            'kota_id' => 'required',
+            'kecamatan_id' => 'required',
+            'kelurahan_id' => 'required',
         ];
     }
 

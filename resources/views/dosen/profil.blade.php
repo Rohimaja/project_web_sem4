@@ -79,7 +79,7 @@
                       </div>
                       <div class="flex flex-col w-full mb-4">
                           <label class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Alamat:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-sm" value="{{ $user->dosen->province->name . ', ' . $user->dosen->regency->name . ', ' . $user->dosen->district->name . ', ' . $user->dosen->village->name .', '. $user->dosen->alamat }}">
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-sm" value="{{ $user->dosen->provinsi->name . ', ' . $user->dosen->kota->name . ', ' . $user->dosen->kecamatan->name . ', ' . $user->dosen->kelurahan->name .', '. $user->dosen->alamat }}">
                       </div>
                   </div>
               </div>

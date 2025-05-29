@@ -31,10 +31,10 @@ window.loadAdminDetail = function (id) {
             $("#no_telp").val(res.no_telp);
             $("#alamat").val(res.alamat);
             $("#no_telp").val(res.no_telp);
-            $("#provinsi").val(res.province.name);
-            $("#kota").val(res.regency.name);
-            $("#kecamatan").val(res.district.name);
-            $("#kelurahan").val(res.village.name);
+            $("#provinsi").val(res.provinsi.name);
+            $("#kota").val(res.kota.name);
+            $("#kecamatan").val(res.kecamatan.name);
+            $("#kelurahan").val(res.kelurahan.name);
             // Tambah field lainnya sesuai response JSON
         },
         error: function () {

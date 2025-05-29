@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('regencies', function (Blueprint $table) {
+        Schema::create('kotas', function (Blueprint $table) {
             $table->char('id', 4); // atau bisa pakai varchar juga
-            $table->char('province_id', 2); // ← pastikan ini ADA sebelum foreign()
+            $table->char('provinsi_id', 2); // ← pastikan ini ADA sebelum foreign()
             $table->string('name');
             $table->primary('id'); // menjadikan kolom ini primary key
-            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->foreign('provinsi_id')->references('id')->on('provinsis');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('regencies');
+        Schema::dropIfExists('kotas');
     }
 };

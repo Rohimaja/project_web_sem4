@@ -86,7 +86,9 @@ $(document).ready(function () {
                             `${item.prodi?.jenjang ?? ""} ${
                                 item.prodi?.nama_prodi ?? ""
                             }` || "",
-                            `<div style="text-align:left;">${item.durasi_matkul}</div>`, // Semester ditengah
+                            `<div style="text-align:left;">${
+                                item.durasi_matkul + " SKS"
+                            }</div>`, // Semester ditengah
                             `${item.tahun_ajaran?.tahun_awal + "/" ?? ""} ${
                                 item.tahun_ajaran?.tahun_akhir ?? ""
                             } ${item.tahun_ajaran?.keterangan ?? ""}` || "", // `<div style="text-align:left;">${

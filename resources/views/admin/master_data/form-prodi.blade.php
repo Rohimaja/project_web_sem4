@@ -17,7 +17,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 md:mr-8">
                         <label for="kode_prodi" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Kode Program Studi:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" placeholder="Masukkan nama lengkap" name="kode_prodi" id="kode_prodi" value="{{old('kode_prodi', $prodi->kode_prodi ?? '')}}" required>
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" placeholder="Contoh: KEP" name="kode_prodi" id="kode_prodi" value="{{old('kode_prodi', $prodi->kode_prodi ?? '')}}" required>
                         <span class="text-red-600 text-sm" id="kode_prodi_error">
                             @error('kode_prodi'){{ $message }}@enderror
                         </span>
@@ -38,7 +38,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 md:mr-8">
                         <label for="nama_prodi" class="mb-1 font-semibold text-gray-700 dark:text-gray-300">Nama Program Studi:</label>
-                        <input type="text" name="nama_prodi" id="nama_prodi" value="{{old('nama_prodi', $prodi->nama_prodi ?? '')}}" required class="p-2 mt-1 w-full border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm">
+                        <input type="text" name="nama_prodi" id="nama_prodi" value="{{old('nama_prodi', $prodi->nama_prodi ?? '')}}" required class="p-2 mt-1 w-full border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" placeholder="Contoh: Keperawatan">
                         <span class="text-red-600 text-sm" id="nama_prodi_error">
                             @error('nama_prodi'){{ $message }}@enderror
                         </span>

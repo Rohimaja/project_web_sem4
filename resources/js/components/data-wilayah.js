@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Load Provinsi
     await loadWilayah(
-        "/wilayah/provinces",
+        "/wilayah/provinsis",
         provinsi,
         "Pilih Provinsi",
         selectedProvinsi
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (selectedProvinsi) {
         await loadWilayah(
-            `/wilayah/regencies/${selectedProvinsi}`,
+            `/wilayah/kotas/${selectedProvinsi}`,
             kota,
             "Pilih Kota",
             selectedKota
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     if (selectedKota) {
         await loadWilayah(
-            `/wilayah/districts/${selectedKota}`,
+            `/wilayah/kecamatans/${selectedKota}`,
             kecamatan,
             "Pilih Kecamatan",
             selectedKecamatan
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     if (selectedKecamatan) {
         await loadWilayah(
-            `/wilayah/villages/${selectedKecamatan}`,
+            `/wilayah/kelurahans/${selectedKecamatan}`,
             kelurahan,
             "Pilih Kelurahan",
             selectedKelurahan
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Event listeners
     provinsi.addEventListener("change", async () => {
         const id = provinsi.value;
-        await loadWilayah(`/wilayah/regencies/${id}`, kota, "Pilih Kota");
+        await loadWilayah(`/wilayah/kotas/${id}`, kota, "Pilih Kota");
         kecamatan.innerHTML = `<option hidden selected>Pilih Kecamatan</option>`;
         kelurahan.innerHTML = `<option hidden selected>Pilih Kelurahan</option>`;
     });
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     kota.addEventListener("change", async () => {
         const id = kota.value;
         await loadWilayah(
-            `/wilayah/districts/${id}`,
+            `/wilayah/kecamatans/${id}`,
             kecamatan,
             "Pilih Kecamatan"
         );
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     kecamatan.addEventListener("change", async () => {
         const id = kecamatan.value;
         await loadWilayah(
-            `/wilayah/villages/${id}`,
+            `/wilayah/kelurahans/${id}`,
             kelurahan,
             "Pilih Kelurahan"
         );

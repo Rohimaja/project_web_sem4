@@ -21,10 +21,10 @@ class Admin extends Model
         'no_telp',
         'alamat',
         'foto',
-        'province_id',
-        'regency_id',
-        'district_id',
-        'village_id',
+        'provinsi_id',
+        'kota_id',
+        'kecamatan_id',
+        'kelurahan_id',
     ];
 
     public function user()
@@ -32,22 +32,22 @@ class Admin extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function province()
+    public function provinsi()
     {
-        return $this->belongsTo(Province::class, 'province_id', 'id');
+        return $this->belongsTo(Provinsi::class, 'provinsi_id', 'id');
     }
-    public function regency()
+    public function kota()
     {
-        return $this->belongsTo(Regency::class, 'regency_id', 'id');
+        return $this->belongsTo(Kota::class, 'kota_id', 'id');
     }
-    public function district()
+    public function kecamatan()
     {
-        return $this->belongsTo(District::class, 'district_id', 'id');
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id', 'id');
     }
 
-    public function village()
+    public function kelurahan()
     {
-        return $this->belongsTo(Village::class, 'village_id', 'id');
+        return $this->belongsTo(Kelurahan::class, 'kelurahan_id', 'id');
     }
 
     protected static function booted()

@@ -54,7 +54,7 @@ class ProfileController extends Controller
         // $user = User::with('dosen')->find($request->user()->id);
 
         // $user = $request->user()->load('dosen','province','regency','district','village');
-        $user = $request->user()->load(['dosen.province', 'dosen.regency', 'dosen.district', 'dosen.village']);
+        $user = $request->user()->load(['dosen.provinsi', 'dosen.kota', 'dosen.kecamatan', 'dosen.kelurahan']);
 
         return view('dosen.profil', compact('title', 'user'));
     }

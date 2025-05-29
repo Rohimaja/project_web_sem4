@@ -22,7 +22,7 @@ class AdminController extends Controller
     public function index()
     {
         $title = 'Data Admin';
-        $admin = Admin::with(relations: ['province','regency','district','village'])->get();
+        $admin = Admin::with(relations: ['provinsi','kota','kecamatan','kelurahan'])->get();
         return view('admin.master_data.admin',compact('title','admin'));
     }
 
@@ -69,10 +69,10 @@ class AdminController extends Controller
                     'no_telp' => $request->no_telp,
                     'alamat' => $request->alamat,
                     'foto' => $fotoPath,
-                    'province_id' => $request->province_id,
-                    'regency_id' => $request->regency_id,
-                    'district_id' => $request->district_id,
-                    'village_id' => $request->village_id,
+                    'provinsi_id' => $request->provinsi_id,
+                    'kota_id' => $request->kota_id,
+                    'kecamatan_id' => $request->kecamatan_id,
+                    'kelurahan_id' => $request->kelurahan_id,
                 ]);
             });
 
@@ -98,7 +98,7 @@ class AdminController extends Controller
     public function show(string $id)
     {
         try {
-            $admin = Admin::with('province','regency','district','village')->findOrFail($id);
+            $admin = Admin::with('provinsi','kota','kecamatan','kelurahan')->findOrFail($id);
 
             return response()->json( $admin);
         } catch (\Exception $e) {
@@ -153,10 +153,10 @@ class AdminController extends Controller
                 'no_telp' => $request->no_telp,
                 'alamat' => $request->alamat,
                 'foto' => $admin->foto, // foto baru atau tetap lama
-                'province_id' => $request->province_id,
-                'regency_id' => $request->regency_id,
-                'district_id' => $request->district_id,
-                'village_id' => $request->village_id,
+                'provinsi_id' => $request->provinsi_id,
+                'kota_id' => $request->kota_id,
+                'kecamatan_id' => $request->kecamatan_id,
+                'kelurahan_id' => $request->kelurahan_id,
             ]);
 
             $userData =[

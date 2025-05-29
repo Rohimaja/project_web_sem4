@@ -10,19 +10,6 @@ $(document).ready(function () {
         scrollX: true, // Aktifkan scroll horizontal
         autoWidth: false, // Hindari ukuran otomatis
     });
-    $("div.dt-search").hide();
-    // });
-
-    $("#prodi").select2({
-        placeholder: "Cari Program Studi",
-        width: "100%", // agar lebar mengikuti class seperti w-full
-        allowClear: true,
-    });
-    $("#semester").select2({
-        placeholder: "Cari Semester",
-        width: "100%", // agar lebar mengikuti class seperti w-full
-        allowClear: true,
-    });
 
     // function getMahasiswaFiltered() {
     // $(document).ready(function () {
@@ -135,10 +122,10 @@ window.loadMahasiswaDetail = function (id) {
             $("#no_telp").val(res.no_telp);
             $("#tahun_masuk").val(res.tahun_masuk);
             $("#semester-mahasiswa").val(res.semester);
-            $("#provinsi").val(res.province.name);
-            $("#kota").val(res.regency.name);
-            $("#kecamatan").val(res.district.name);
-            $("#kelurahan").val(res.village.name);
+            $("#provinsi").val(res.provinsi.name);
+            $("#kota").val(res.kota.name);
+            $("#kecamatan").val(res.kecamatan.name);
+            $("#kelurahan").val(res.kelurahan.name);
             // Tambah field lainnya sesuai response JSON
         },
         error: function () {

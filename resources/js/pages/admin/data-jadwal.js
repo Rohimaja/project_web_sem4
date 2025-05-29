@@ -1,74 +1,96 @@
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
+
 $("#prodi").select2({
     placeholder: "Cari Program Studi",
-    width: "100%", // agar lebar mengikuti class seperti w-full
+    width: "100%",
     allowClear: true,
 });
 
 $("#dosen").select2({
     placeholder: "Cari Dosen",
-    width: "100%", // agar lebar mengikuti class seperti w-full
+    width: "100%",
     allowClear: true,
 });
 
 $("#matkul").select2({
-    placeholder: "Cari Matkul",
-    width: "100%", // agar lebar mengikuti class seperti w-full
+    placeholder: "Pilih Prodi dan semester dahulu",
+    width: "100%",
     allowClear: true,
 });
 
 $("#ruangan").select2({
     placeholder: "Cari Ruangan",
-    width: "100%", // agar lebar mengikuti class seperti w-full
+    width: "100%",
     allowClear: true,
 });
 
 $("#semester").select2({
     placeholder: "Cari Semester",
-    width: "100%", // agar lebar mengikuti class seperti w-full
+    width: "100%",
+    allowClear: true,
+});
+
+$("#tahun-ajaran").select2({
+    placeholder: "Cari Tahun Ajaran",
+    width: "100%",
     allowClear: true,
 });
 
 $(document).ready(function () {
     const table = $("#data-jadwal").DataTable({
-        searching: true, // Aktifkan pencarian
-        paging: true, // Aktifkan pagination
-        info: true, // Menampilkan informasi tabel
-        scrollX: true, // Aktifkan scroll horizontal
-        autoWidth: false, // Hindari ukuran otomatis
+        searching: true,
+        paging: true,
+        info: true,
+        scrollX: true,
+        autoWidth: false,
     });
 
-    $("#tahun-ajaran").on("change", function () {
+    $("#dosen ,#prodi, #tahun-ajaran").on("change", function () {
+        const dosenId = $("#dosen").val();
+        const prodiId = $("#prodi").val();
         const tahunId = $("#tahun-ajaran").val();
 
-        if (tahunId) {
-            // Buat URL untuk mengirim filter sebagai parameter query
-            fetch(`/dosen/getFilterJadwal?tahun_ajaran=${tahunId}`)
+        if (dosenId || prodiId || tahunId) {
+            fetch(
+                `/admin/getFilterJadwal?dosen=${dosenId}&prodi=${prodiId}&tahun_ajaran=${tahunId}`
+            )
                 .then((response) => response.json())
                 .then((data) => {
-                    // Hapus data sebelumnya dari DataTable
                     table.clear();
 
-                    // Tambahkan data yang baru dari hasil filter
                     data.forEach((item, index) => {
                         table.row.add([
-                            // `<div style="text-align:left;">${item.nim}</div>`, // Semester ditengah
-                            // `<div style="text-align:left;">${item.nama}</div>`, // Semester ditengah
-                            // `<div style="text-align:left;">${
-                            //     item.rfid ? item.rfid : "-"
-                            // }</div>`, // Semester ditengah
+                            index + 1,
                             item.hari,
                             item.jam,
                             item.durasi + " SKS",
-                            `${item.matkul?.nama_matkul ?? ""}`,
+                            item.dosen?.nama ?? "",
                             `${item.prodi?.jenjang ?? ""} ${
                                 item.prodi?.nama_prodi ?? ""
                             }` || "-",
+                            `${item.tahun?.tahun_awal + " /"} ${
+                                item.tahun?.tahun_akhir ?? ""
+                            } ${item.tahun?.keterangan ?? ""}` || "-",
                             item.semester,
+                            `${item.matkul?.nama_matkul ?? ""}`,
                             `${item.ruangan?.nama_ruangan ?? ""}`,
+                            `<div class="flex gap-2 justify-center">
+                                <a href="/admin/master-jadwal/${item.id}" class="cursor-pointer px-2 py-1 bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white rounded-md">
+                                    <i class="bi bi-card-text text-lg"></i>
+                                </a>
+                                <form action="/admin/master-jadwal/${item.id}" method="POST" class="form-hapus inline-block">
+                                    <input type="hidden" name="_token" value="${csrfToken}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="px-2 py-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-md">
+                                        <i class="bi bi-trash text-lg"></i>
+                                    </button>
+                                </form>
+                              </div>`,
                         ]);
                     });
 
-                    // Perbarui tampilan tabel setelah menambahkan data
                     table.draw();
                 })
                 .catch((error) => console.error("Error fetching data:", error));
@@ -76,53 +98,11 @@ $(document).ready(function () {
     });
 });
 
-// $(document).ready(function () {
-//     function filterJadwalMahasiswa(tahunId) {
-//         if (tahunId) {
-//             // Buat URL untuk mengirim filter sebagai parameter query
-//             fetch(`/mahasiswa/getFilterJadwal?tahun_ajaran=${tahunId}`)
-//                 .then((response) => response.json())
-//                 .then((data) => {
-//                     // Hapus data sebelumnya dari DataTable
-//                     table.clear();
-
-//                     // Tambahkan data yang baru dari hasil filter
-//                     data.forEach((item, index) => {
-//                         table.row.add([
-//                             // `<div style="text-align:left;">${item.nim}</div>`, // Semester ditengah
-//                             // `<div style="text-align:left;">${item.nama}</div>`, // Semester ditengah
-//                             // `<div style="text-align:left;">${
-//                             //     item.rfid ? item.rfid : "-"
-//                             // }</div>`, // Semester ditengah
-//                             item.hari,
-//                             item.jam,
-//                             item.durasi + " SKS",
-//                             item.dosen?.nama_dosen,
-//                             `${item.matkul?.nama_matkul ?? ""}`,
-//                             `${item.prodi?.jenjang ?? ""} ${
-//                                 item.prodi?.nama_prodi ?? ""
-//                             }` || "-",
-//                             `${item.ruangan?.nama_ruangan ?? ""}`,
-//                         ]);
-//                     });
-
-//                     // Perbarui tampilan tabel setelah menambahkan data
-//                     table.draw();
-//                 })
-//                 .catch((error) => console.error("Error fetching data:", error));
-//         }
-//     }
-//     $("#tahun-ajaran").on("change", function () {
-//         const tahunId = $("#tahun-ajaran").val();
-//         filterJadwalMahasiswa(tahunId);
-//     });
-// });
-
 $(document).ready(function () {
-    function loadMatkul(prodiId, semester, oldMatkulId = null) {
-        if (prodiId || semester) {
+    function loadMatkul(prodiId, semester, tahunAjaran, oldMatkulId = null) {
+        if (prodiId && semester && tahunAjaran) {
             fetch(
-                `/admin/getMatkulByProdi?prodi=${prodiId}&semester=${semester}`
+                `/admin/getMatkulByTahun?prodi=${prodiId}&semester=${semester}&tahun=${tahunAjaran}`
             )
                 .then((response) => response.json())
                 .then((data) => {
@@ -147,21 +127,66 @@ $(document).ready(function () {
     }
 
     // Trigger saat user ganti
-    $("#prodi, #semester").on("change", function () {
+    $("#prodi, #semester, #tahun-ajaran").on("change", function () {
         const prodiId = $("#prodi").val();
         const semester = $("#semester").val();
-        loadMatkul(prodiId, semester);
+        const tahunAjaran = $("#tahun-ajaran").val();
+        loadMatkul(prodiId, semester, tahunAjaran);
     });
 
     // Trigger otomatis saat halaman reload karena error validasi
     const oldProdi = $("#prodi").val();
     const oldSemester = $("#semester").val();
+    const oldTahunAjaran = $("#tahun-ajaran").val();
     const oldMatkul = $("#matkul").data("old");
 
-    if (oldProdi && oldSemester) {
-        loadMatkul(oldProdi, oldSemester, oldMatkul);
+    if (oldProdi && oldSemester && oldTahunAjaran) {
+        loadMatkul(oldProdi, oldSemester, oldTahunAjaran, oldMatkul);
     }
 });
+
+// $(document).ready(function () {
+//     function loadMatkul(prodiId, semester, oldMatkulId = null) {
+//         if (prodiId && semester) {
+//             fetch(`/getMatkulByProdi?prodi=${prodiId}&semester=${semester}`)
+//                 .then((response) => response.json())
+//                 .then((data) => {
+//                     const mataKuliahSelect = $("#matkul");
+//                     mataKuliahSelect.empty();
+
+//                     // mataKuliahSelect.append(
+//                     //     '<option value="" hidden>Pilih Matkul</option>'
+//                     // );
+//                     data.forEach((item) => {
+//                         mataKuliahSelect.append(
+//                             `<option value="${item.id}" ${
+//                                 item.id == oldMatkulId ? "selected" : ""
+//                             }>${item.nama_matkul}</option>`
+//                         );
+//                     });
+//                 })
+//                 .catch((error) => {
+//                     console.error("Error fetching mata kuliah:", error);
+//                 });
+//         }
+//     }
+
+//     // Trigger saat user ganti
+//     $("#prodi, #semester").on("change", function () {
+//         const prodiId = $("#prodi").val();
+//         const semester = $("#semester").val();
+//         loadMatkul(prodiId, semester);
+//     });
+
+//     // Trigger otomatis saat halaman reload karena error validasi
+//     const oldProdi = $("#prodi").val();
+//     const oldSemester = $("#semester").val();
+//     const oldMatkul = $("#matkul").data("old");
+
+//     if (oldProdi && oldSemester) {
+//         loadMatkul(oldProdi, oldSemester, oldMatkul);
+//     }
+// });
 
 // $(document).ready(function () {
 //     $("#prodi, #semester").on("change", function () {

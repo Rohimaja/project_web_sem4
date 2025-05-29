@@ -17,7 +17,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="judul" class="mb-1 font-semibold dark:text-white">Judul:</label>
-                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="judul" id="judul" value="{{ old('judul', $kalender->judul ?? '') }}" required>
+                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="judul" id="judul" value="{{ old('judul', $kalender->judul ?? '') }}" required placeholder="Contoh: Kegiatan KRS">
                         <span class="text-red-600 text-sm" id="judul_error">
                             @error('judul'){{ $message }}@enderror
                         </span>
@@ -25,7 +25,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="deskripsi" class="mb-1 font-semibold dark:text-white">Deskripsi:</label>
-                        <textarea class="p-2 mt-1 w-full border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="deskripsi" id="deskripsi">{{ old('deskripsi', $kalender->deskripsi ?? '') }}</textarea>
+                        <textarea class="p-2 mt-1 w-full border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="deskripsi" id="deskripsi" placeholder="Contoh:">{{ old('deskripsi', $kalender->deskripsi ?? '') }}</textarea>
                         <span class="text-red-600 text-sm" id="deskripsi_error">
                             @error('deskripsi'){{ $message }}@enderror
                         </span>

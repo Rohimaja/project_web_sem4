@@ -21,7 +21,7 @@ class MahasiswaController extends Controller
     {
         $title = 'Data Mahasiswa';
         $prodi = Prodi::all();
-        $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','province','regency','district','village'])->get();
+        $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','provinsi','kota','kecamatan','kelurahan'])->get();
 
         return view('admin.master_data.mahasiswa',compact('title','prodi','mahasiswa'));
     }
@@ -79,10 +79,10 @@ class MahasiswaController extends Controller
                     'tahun_ajaran_id' => $tahunAjaranAktif->id,
                     'semester' => $request->semester,
                     'foto' => $fotoPath,
-                    'province_id' => $request->province_id,
-                    'regency_id' => $request->regency_id,
-                    'district_id' => $request->district_id,
-                    'village_id' => $request->village_id,
+                    'provinsi_id' => $request->provinsi_id,
+                    'kota_id' => $request->kota_id,
+                    'kecamatan_id' => $request->kecamatan_id,
+                    'kelurahan_id' => $request->kelurahan_id,
                 ]);
             });
 
@@ -107,7 +107,7 @@ class MahasiswaController extends Controller
     public function show(string $id)
     {
         try {
-            $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','province','regency','district','village'])->findOrFail($id);
+            $mahasiswa = Mahasiswa::with( ['prodi', 'tahun','provinsi','kota','kecamatan','kelurahan'])->findOrFail($id);
             return response()->json($mahasiswa);
 
         } catch (\Exception $e) {
@@ -174,10 +174,10 @@ class MahasiswaController extends Controller
                     'tahun_ajaran_id' => $tahunAjaranAktif->id,
                     'semester' => $request->semester,
                     'foto' => $mahasiswa->foto,
-                    'province_id' => $request->province_id,
-                    'regency_id' => $request->regency_id,
-                    'district_id' => $request->district_id,
-                    'village_id' => $request->village_id,
+                    'provinsi_id' => $request->provinsi_id,
+                    'kota_id' => $request->kota_id,
+                    'kecamatan_id' => $request->kecamatan_id,
+                    'kelurahan_id' => $request->kelurahan_id,
                 ]);
 
                 $userData =[

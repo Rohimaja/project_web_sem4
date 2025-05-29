@@ -55,6 +55,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('master-jadwal', JadwalController::class);
     Route::post('/validate-field/jadwal', [JadwalController::class, 'validateField'])->name('admin.validate.field.jadwal');
+    Route::get('/getMatkulByTahun', [JadwalController::class, 'getMatkulByTahun']);
+    Route::get('/getFilterJadwal', [JadwalController::class, 'getFilterJadwal']);
+
 
     Route::resource('presensi', PresensiController::class);
     Route::post('/presensi/info-presensi', [PresensiController::class, 'updateDetailPresensi'])
@@ -62,7 +65,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/presensi/info-presensi',function(){
         return view('admin.info-presensi',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']);
     })->name('info-presensi');
-    // Route::get('/getMatkulByProdi', [PresensiController::class, 'getMatkulByProdi']);
     Route::post('/validate-field/presensi', [PresensiController::class, 'validateField'])->name('admin.validate.field.presensi');
 
     // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');

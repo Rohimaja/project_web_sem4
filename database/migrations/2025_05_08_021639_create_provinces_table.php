@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('provinces', function (Blueprint $table) {
+        Schema::create('provinsis', function (Blueprint $table) {
             $table->char('id', 2); // atau bisa pakai varchar juga
             $table->string('name');
             $table->primary('id'); // menjadikan kolom ini primary key
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('provinces');
+        Schema::dropIfExists('provinsis');
     }
 };

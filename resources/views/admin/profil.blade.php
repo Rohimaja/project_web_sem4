@@ -67,7 +67,7 @@
                   <div class="flex flex-col md:flex-row">
                       <div class="flex flex-col w-full mb-4">
                           <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Alamat:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->province->name .', '. $user->admin->regency->name .', '. $user->admin->district->name .', '. $user->admin->village->name .', '. $user->admin->alamat  }}">
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->provinsi->name .', '. $user->admin->kota->name .', '. $user->admin->kecamatan->name .', '. $user->admin->kelurahan->name .', '. $user->admin->alamat  }}">
                       </div>
                   </div>
               </div>

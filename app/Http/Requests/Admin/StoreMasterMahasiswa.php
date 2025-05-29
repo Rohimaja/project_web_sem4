@@ -40,10 +40,10 @@ class StoreMasterMahasiswa extends FormRequest
             'tahun_masuk' => 'required|max:4|regex:/^[0-9]+$/',
             'semester' => 'required',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-            'province_id' => 'required',
-            'regency_id' => 'required',
-            'district_id' => 'required',
-            'village_id' => 'required',
+            'provinsi_id' => 'required',
+            'kota_id' => 'required',
+            'kecamatan_id' => 'required',
+            'kelurahan_id' => 'required',
         ];
     }
 
@@ -84,9 +84,9 @@ class StoreMasterMahasiswa extends FormRequest
 
             'semester.required' => 'Semester wajib dipilih',
 
-            'tahun_masuk.required' => 'Tahun Akhir tidak boleh kosong.',
-            'tahun_masuk.max' => 'Tahun Akhir maksimal 4 angka.',
-            'tahun_masuk.regex' => 'Tahun Akhir hanya boleh berupa angka.',
+            'tahun_masuk.required' => 'Tahun Masuk tidak boleh kosong.',
+            'tahun_masuk.max' => 'Tahun Masuk maksimal 4 angka.',
+            'tahun_masuk.regex' => 'Tahun Masuk hanya boleh berupa angka.',
 
             'foto.image' => 'File harus berupa gambar',
             'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg',

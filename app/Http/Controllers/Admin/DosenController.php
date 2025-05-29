@@ -77,10 +77,10 @@ class DosenController extends Controller
                     'alamat' => $request->alamat,
                     'prodi_id' => $request->prodi_id,
                     'foto' => $fotoPath,
-                    'province_id' => $request->province_id,
-                    'regency_id' => $request->regency_id,
-                    'district_id' => $request->district_id,
-                    'village_id' => $request->village_id,
+                    'provinsi_id' => $request->provinsi_id,
+                    'kota_id' => $request->kota_id,
+                    'kecamatan_id' => $request->kecamatan_id,
+                    'kelurahan_id' => $request->kelurahan_id,
                 ]);
             });
 
