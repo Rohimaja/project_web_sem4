@@ -33,7 +33,7 @@
 
               <div class="flex items-center justify-between text-sm">
                   <label class="flex items-center">
-                      <input type="checkbox" class="mr-2" name="remember" id="remember" {{ request()->cookie('cookie_ingat') ? 'checked' : '' }}>
+                      <input type="checkbox" class="mr-2" name="remember_me" id="remember_me" {{ request()->cookie('cookie_ingat') ? 'checked' : '' }}>
                       Remember me
                   </label>
                   @if (Route::has('password.request'))

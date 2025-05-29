@@ -19,14 +19,15 @@
     </main>
 </body>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init({
-    duration: 1000,
-    offset: 120,
-    once: true,
-    mirror: false,
-  });
-</script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+        duration: 500,
+        offset: 120,
+        once: true,
+        mirror: false,
+    });
+    </script>
+
 </body>
 </html>
