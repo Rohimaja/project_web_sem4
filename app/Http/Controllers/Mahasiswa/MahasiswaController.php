@@ -33,10 +33,17 @@ class MahasiswaController extends Controller
     }
 
     public function rekap(Request $request, RekapMahasiswaService $service){
-        $mahasiswa = Auth::user()->mahasiswa->id;
+        $mahasiswa = Auth::user()->mahasiswa;
         $data['title'] = "Rekap Presensi";
-        $data['tahun'] = TahunAjaran::orderBy('tahun_awal')->get();
-        $hasil = $service->getRekap($mahasiswa);
+        $tahunAktif = TahunAjaran::where('status', 1)->first();
+        // $data['tahun'] = TahunAjaran::orderBy('tahun_awal')->get();
+        $data['tahun'] = TahunAjaran::where('tahun_awal', '>=', $mahasiswa->tahun_masuk)
+            ->when($tahunAktif, function ($query) use ($tahunAktif) {
+                $query->where('tahun_awal', '<=', $tahunAktif->tahun_awal);
+            })
+            ->orderBy('tahun_awal')
+            ->get();
+        $hasil = $service->getRekap($mahasiswa->id);
         $data['rekap'] = $hasil['rekap'];
         $data['totalPertemuan'] = $hasil['totalPertemuan'];
         return view('mahasiswa.rekap_mahasiswa',$data);
@@ -104,45 +111,6 @@ class MahasiswaController extends Controller
         return Excel::download($export, 'Rekap Kehadiran Mahasiswa.xlsx');
     }
 
-    public function update(Request $request, string $id)
-    {
-        try {
-            $dosen = $request->user()->dosen;
-
-            $request->validate([
-                'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-            ]);
-
-            if ($request->hasFile('foto')) {
-                // Hapus foto lama jika ada
-                if ($dosen->foto && Storage::disk('public')->exists($dosen->foto)) {
-                    Storage::disk('public')->delete($dosen->foto);
-                }
-
-                // Simpan foto baru
-                $filename = 'profile/dosen/profile_' . $dosen->id . '.' . $request->file('foto')->extension();
-                $fotoPath = $request->file('foto')->storeAs('foto_dosen', $filename, 'public');
-                $dosen->update(['foto' => $fotoPath]);
-            }
-
-            return redirect()->route('dosen.profile.edit')->with([
-                'status' => 'success',
-                'message' => 'Data Berhasil Di Perbarui'
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('Gagal Perbarui Profile', [
-                'error' => $e->getMessage(),
-                'stack' => $e->getTraceAsString(),
-            ]);
-
-            return redirect()->back()->withInput()->with([
-                'status' => 'error',
-                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
-            ]);
-        }
-    }
-
         public function updateProfil(Request $request)
     {
         try {
@@ -159,8 +127,8 @@ class MahasiswaController extends Controller
                 }
 
                 // Simpan foto baru
-                $filename = 'profile/mahasiswa/profile_' . $mahasiswa->id . '.' . $request->file('foto')->extension();
-                $fotoPath = $request->file('foto')->storeAs('foto_mahasiswa', $filename, 'public');
+                $filename = 'mahasiswa/profile_' . $mahasiswa->id . '.' . $request->file('foto')->extension();
+                $fotoPath = $request->file('foto')->storeAs('profiles', $filename, 'public');
                 $mahasiswa->update(['foto' => $fotoPath]);
             }
 
@@ -300,7 +268,7 @@ class MahasiswaController extends Controller
     public function getFilterJadwal(Request $request){
         $tahun = $request->query('tahun_ajaran');
 
-        $query = Jadwal::query()->with('prodi','tahunAjaran','dosen','matkul','ruangan');
+        $query = Jadwal::query()->with('prodi','tahun','dosen','matkul','ruangan');
 
         if ($tahun) {
             $query->where('tahun_ajaran_id', $tahun);

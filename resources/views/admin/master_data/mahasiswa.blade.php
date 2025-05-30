@@ -4,12 +4,18 @@
     <div class="relative dark:text-white">
     <x-slot:title>{{ $title }}</x-slot:title>
     <p class="dark:text-gray-300">Daftar Seluruh Mahasiswa</p>
-        <div x-data="{openImport: false}">
+        {{-- <div x-data="{openImport: false}"> --}}
+                <div x-data="{ openImport: false, fileName: '', resetFile() {
+                    this.fileName = '';
+                    const input = document.getElementById('file');
+                    if (input) input.value = '';
+                }
+            }">
             <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
                 <div class="flex flex-col md:flex-row">
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
+                    <div class="flex flex-col w-full dark:text-gray-200 mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label class="mb-1 font-semibold">Filter By Program Studi:</label>
-                        <select id="prodi" name="prodi_id">
+                        <select id="prodi" name="prodi_id" class="dark:bg-gray-700 dark:text-white dark:border-gray-600">
                             <option value="" hidden selected>Pilih Program Studi</option>
                             @foreach ($prodi as $p)
                                 <option value="{{ $p->id }}" {{ old('prodi_id') == $p->id ? 'selected' : '' }}>
@@ -22,9 +28,9 @@
                         @enderror
                     </div>
 
-                    <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0">
+                    <div class="flex flex-col w-full dark:text-gray-200 mb-4 md:w-1/2 mr-0">
                         <label class="mb-1 font-semibold">Filter By Semester:</label>
-                        <select id="semester" name="semester" class="w-full" >
+                        <select id="semester" name="semester" class="dark:bg-gray-700 dark:text-white dark:border-gray-600" >
                             <option value="" hidden selected>Pilih Senester</option>
                                 @for($i = 1; $i <= 8; $i++)
                                     {{-- <option value="{{ $i }}"> --}}
@@ -55,26 +61,34 @@
                         <span>Import</span>
                     </button>
 
-                    {{-- tampilan import file --}}
                     <div x-show="openImport" x-cloak class="fixed inset-0 z-50 flex justify-center items-center">
-
                         <div class="absolute inset-0 bg-black opacity-50"></div>
-
-                        <div @click.outside="openImport = false" class="relative z-10 bg-white rounded-sm shadow-xl sm:w-[500px] w-[380px] max-w-full p-6" >
+                        <div @click.outside="openImport = false; resetFile()" class="relative z-10 bg-white dark:bg-gray-900 rounded-sm shadow-xl sm:w-[500px] w-[320px] max-w-full p-6">
                             <div class="flex justify-between items-center mb-4">
-                                <h1 class="text-gray-600 text-2xl font-semibold">Import Data Mahasiswa</h1>
-                                <button @click="openImport = false"><i class="bi bi-x-lg text-2xl mb-4 cursor-pointer"></i></button>
+                                <h1 class="text-gray-600 dark:text-gray-100 text-2xl font-semibold">Import Data Mahasiswa</h1>
+                                <button @click="openImport = false; resetFile()"><i class="bi bi-x-lg text-2xl mb-4 cursor-pointer text-gray-600 dark:text-gray-100"></i></button>
                             </div>
+                            <form method="POST" action="{{ route('admin.master-mahasiswa.import') }}" enctype="multipart/form-data">
+                                @csrf
                             <div class="flex flex-col items-center justify-center w-full h-50 border-4 border-gray-400 border-dashed mb-4">
-                                <i class="bi bi-upload text-gray-600 text-2xl"></i>
-                                <p class="text-gray-600">Jatuhkan dokumen anda disini atau <a href="" class="text-blue-600">pilih berkas</a></p>
-                                <p class="text-gray-400">Didukung: VSC, XLS, XML, JSON</p>
+                                <i class="bi bi-upload text-gray-600 dark:text-gray-100 text-2xl"></i>
+                                <input type="file" id="file" name="file" accept=".xls,.xlsx" required class="hidden" @change="fileName = $event.target.files[0]?.name">
+                                <label for="file" class="text-blue-600 dark:text-blue-600 text-center text-sm md:text-md cursor-pointer" >Jatuhkan dokumen anda disini</label>
+                                {{-- <p id="file-name" class="text-sm text-blue-600 dark:text-blue-400 mt-1 hidden"></p> --}}
+                                                    <!-- Preview Nama File -->
+                                <template x-if="fileName">
+                                    <p id="file-name" class="text-sm text-blue-600 dark:text-blue-400 mt-1">📄 <span x-text="fileName"></span></p>
+                                </template>
+
+                                <p class="text-gray-400 dark:text-gray-300">Didukung: VSC, XLS, XML, JSON</p>
                             </div>
+
                             <div class="mb-4 flex justify-center">
                                 <button class="cursor-pointer px-8 py-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold text-white">Impor</button>
                             </div>
+                        </form>
                             <div class="flex flex-col items-center justify-center w-full h-20 border-4 border-gray-400 border-dashed mb-4">
-                                <p class="text-gray-600">Unduh template file impor <a href="" class="text-blue-600">di sini</a></p>
+                                <p class="text-gray-600 dark:text-gray-100">Unduh template file impor <a href="" class="text-blue-600">di sini</a></p>
                             </div>
                         </div>
                     </div>
@@ -107,7 +121,7 @@
                                         </td>
                                         <td class=" px-4 py-2">{{$m->nim}}</td>
                                         <td class=" px-4 py-2">{{$m->nama}}</td>
-                                        <td class=" px-4 py-2">{{$m->jenis_kelamin}}</td>
+                                        <td class=" dark:border-gray-500 px-4 py-2">{{ $m->jenis_kelamin === 'L' ? 'Laki-laki' : ($m->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}</td>
                                         <td class=" px-4 py-2">{{$m->email}}</td>
                                         <td class=" px-4 py-2">{{$m->prodi->jenjang .' '. $m->prodi->nama_prodi}}</td>
                                         <td class=" px-4 py-2">{{$m->semester}}</td>
@@ -117,7 +131,7 @@
                                                     <i class="bi bi-eye text-lg"></i>
                                                 </button>
 
-                                                <a href="{{route('admin.master-mahasiswa.edit', $m->id)}}" class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md">
+                                                <a href="{{route('admin.master-mahasiswa.edit', $m->id)}}" class="cursor-pointer px-2 py-1 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white rounded-md dark:bg-yellow-500 dark:hover:bg-yellow-600 dark:active:bg-yellow-700">
                                                     <i class="bi bi-pencil-square text-lg"></i>
                                                 </a>
                                                 <form action="{{ route('admin.master-mahasiswa.destroy', $m->id) }}" method="POST" class="form-hapus inline-block">

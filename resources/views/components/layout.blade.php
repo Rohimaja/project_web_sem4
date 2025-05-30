@@ -79,7 +79,7 @@ document.addEventListener('submit', function (e) {
         });
     }
 
-    if (e.target.classList.contains('form-presensi')) {
+    if (e.target.classList.contains('form-validasi')) {
         e.preventDefault();
 
         Swal.fire({

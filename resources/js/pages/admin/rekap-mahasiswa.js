@@ -52,43 +52,6 @@ $(document).ready(function () {
         },
     });
 
-    // $("#tahun-ajaran").on("change", function () {
-    //     const tahunId = $(this).val();
-
-    //     if (tahunId) {
-    //         fetch(`/mahasiswa/getFilterRekap?tahun_ajaran=${tahunId}`)
-    //             .then((response) => response.json())
-    //             .then((data) => {
-    //                 table.clear(); // Kosongkan isi DataTable
-
-    //                 data.rekap.forEach((item, index) => {
-    //                     const row = [index + 1, item.nim, item.nama];
-
-    //                     for (let i = 0; i < data.totalPertemuan; i++) {
-    //                         const tanggal = item.tanggal_pertemuan[i] ?? null;
-    //                         const status = tanggal ? "H" : "-";
-
-    //                         const bgClass =
-    //                             status === "H"
-    //                                 ? "bg-green-500 text-white"
-    //                                 : "bg-gray-500 text-white";
-
-    //                         const cell = `<div class="border border-gray-300 px-4 py-2 font-semibold ${bgClass}" title="${
-    //                             tanggal ?? ""
-    //                         }">${status}</div>`;
-    //                         row.push(cell);
-    //                     }
-
-    //                     row.push(item.total_pertemuan);
-    //                     table.row.add(row);
-    //                 });
-
-    //                 table.draw(); // Refresh tampilan
-    //             })
-    //             .catch((error) => console.error("Gagal ambil data:", error));
-    //     }
-    // });
-
     $("#tahun-ajaran").on("change", function () {
         const tahunId = $(this).val();
 

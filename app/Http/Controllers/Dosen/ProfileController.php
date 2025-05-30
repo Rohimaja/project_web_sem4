@@ -62,7 +62,7 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         try {
             $dosen = $request->user()->dosen;
@@ -78,8 +78,8 @@ class ProfileController extends Controller
                 }
 
                 // Simpan foto baru
-                $filename = 'profile/dosen/profile_' . $dosen->id . '.' . $request->file('foto')->extension();
-                $fotoPath = $request->file('foto')->storeAs('foto_dosen', $filename, 'public');
+                $filename = 'dosen/profile_' . $dosen->id . '.' . $request->file('foto')->extension();
+                $fotoPath = $request->file('foto')->storeAs('profiles', $filename, 'public');
                 $dosen->update(['foto' => $fotoPath]);
             }
 

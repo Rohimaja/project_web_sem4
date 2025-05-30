@@ -25,19 +25,20 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('kalender-akademik/view', [KalenderAkademikController::class, 'viewCalendar'])->name('kalender-akademik.view');
     Route::post('/validate-field/kalender-akademik', [KalenderAkademikController::class, 'validateField'])->name('admin.validate.field.kalender');
 
-
-    // Route::get('/dashboard', fn () => view('admin.dashboard',['title'=> 'Dashboard', 'rute'=> 'admin -> Dashboard']))->name('dashboard');
     Route::get('/dashboard',[DashboardController::class,'indexAdmin'])->name('dashboard');
     Route::resource('master-admin', AdminController::class);
     Route::post('/validate-field/admin', [AdminController::class, 'validateField'])->name('admin.validate.field.admin');
+    Route::post('/master-admin/import', [AdminController::class, 'import'])->name('master-admin.import');
 
     Route::resource('master-dosen', DosenController::class);
     Route::get('/api/filter-data', [DosenController::class, 'filter']);
     Route::post('/validate-field/dosen', [DosenController::class, 'validateField'])->name('admin.validate.field.dosen');
+    Route::post('/master-dosen/import', [DosenController::class, 'import'])->name('master-dosen.import');
 
     Route::resource('master-mahasiswa', MahasiswaController::class);
     Route::post('/validate-field/mahasiswa', [MahasiswaController::class, 'validateField'])->name('admin.validate.field.mahasiswa');
     Route::get('/getFilterMahasiswa', [MahasiswaController::class, 'getFilterMahasiswa']);
+    Route::post('/master-mahasiswa/import', [MahasiswaController::class, 'import'])->name('master-mahasiswa.import');
 
     Route::resource('master-tahun', TahunAjaranController::class);
     Route::post('/validate-field/tahun', [TahunAjaranController::class, 'validateField'])->name('admin.validate.field.tahun');
@@ -67,21 +68,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     })->name('info-presensi');
     Route::post('/validate-field/presensi', [PresensiController::class, 'validateField'])->name('admin.validate.field.presensi');
 
-    // Route::get('/get-matkul/{prodi_id}/{semester}', PresensiController::class,'getMatkulByProdi');
-
     Route::resource('rekap-dosen', RekapDosenAdminController::class);
     Route::post('rekap-dosen', [RekapDosenAdminController::class, 'rekapDosen'])->name('rekap-dosen.filter');
 
     Route::resource('rekap-mahasiswa', RekapMahasiswaController::class);
     Route::post('rekap-mahasiswa', [RekapMahasiswaController::class, 'rekapMahasiswa'])->name('rekap-mahasiswa.filter');
 
-
     Route::post('/rekap-dosen/export/pdf', [RekapDosenAdminController::class, 'exportPdf'])->name('export.dosen.pdf');
     Route::post('/rekap-dosen/export/excel', [RekapDosenAdminController::class, 'exportExcel'])->name('export.dosen.excel');
 
     Route::post('/rekap-mahasiswa/export/pdf', [RekapMahasiswaController::class, 'exportPdf'])->name('export.mahasiswa.pdf');
     Route::post('/rekap-mahasiswa/export/excel', [RekapMahasiswaController::class, 'exportExcel'])->name('export.mahasiswa.excel');
-
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/change-password', [PasswordController::class, 'changePassword'])->name('change-password');

@@ -77,32 +77,36 @@
             </div>
         </div>
 
-        <div class="w-[310px] md:w-1/4 bg-white dark:bg-gray-800 rounded-md shadow-xl">
+        <div x-data="{ showAll: false }" class="w-[310px] md:w-1/4 bg-white dark:bg-gray-800 rounded-md shadow-xl">
             <div class="p-4 border-b-2 border-gray-300 dark:border-gray-600 flex flex-col justify-between items-start">
                 <h1 class="text-gray-500 dark:text-white text-lg font-semibold">Mahasiswa Hadir Hari Ini</h1>
-                <span class="text-sm text-gray-400 dark:text-gray-300">
-                    {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
-                </span>
-
-                <input type="text" id="searchMahasiswa" placeholder="Cari nama..." class="mt-3 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div id="listMahasiswa" class="p-4 max-h-[360px] overflow-y-auto space-y-3 text-sm text-gray-700 dark:text-gray-200">
-                @foreach (range(1, 10) as $i)
-                    <div class="item-mahasiswa flex items-start gap-4 p-3 rounded-md border border-gray-200 dark:border-gray-600 hover:shadow transition-all">
-                        <img src="https://ui-avatars.com/api/?name=P+Budiyanto&background=3B82F6&color=fff" alt="P Budiyanto" class="w-12 h-12 rounded-full object-cover">
+                @foreach ($hadir as $index => $h)
+                    <div x-show="showAll || {{ $index }} < 10" x-transition class="item-mahasiswa flex items-start gap-4 p-3 rounded-md border border-gray-200 dark:border-gray-600 hover:shadow transition-all">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($h->mahasiswa->nama) }}&background=3B82F6&color=fff" alt="{{$h->mahasiswa->nama}}" class="w-12 h-12 rounded-full object-cover">
                         <div class="flex-1">
-                            <p class="nama font-semibold text-gray-800 dark:text-white">P Budiyanto</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-300 mb-1">MIK - Semester 2 • English</p>
+                            <p class="nama font-semibold text-gray-800 dark:text-white">{{$h->mahasiswa->nama}}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-300 mb-1">{{$h->presensi->prodi->kode_prodi}} - {{$h->mahasiswa->semester}} • {{$h->presensi->matkul->nama_matkul}}</p>
                             <div class="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-300 mb-1">
-                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-md">Ruangan: 3.2</span>
-                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md">Datang: 08.23</span>
+                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-md">Ruangan: {{$h->presensi->ruangan->nama_ruangan}}</span>
+                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md">Datang: {{$h->waktu_presensi ?? '-'}}</span>
                             </div>
-                            <span class="inline-block text-xs font-medium text-green-700 bg-green-100 dark:bg-green-800 dark:text-green-300 px-2 py-0.5 rounded-md">Hadir Tepat Waktu</span>
+                            <span class="inline-block text-xs font-medium text-green-700 bg-green-100 dark:bg-green-800 dark:text-green-300 px-2 py-0.5 rounded-md">Hadir</span>
                         </div>
                     </div>
                 @endforeach
             </div>
+
+            @if (count($hadir) > 10)
+                <div class="p-4 text-center">
+                    <button @click="showAll = !showAll" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
+                        <span x-show="!showAll">Lihat Semua</span>
+                        <span x-show="showAll">Sembunyikan</span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -141,26 +145,88 @@
             </div>
         </div>
 
-        <div class="w-[310px] md:w-1/4 bg-white dark:bg-gray-800 rounded-md shadow-xl">
+        {{-- <div class="w-[310px] md:w-1/4 bg-white dark:bg-gray-800 rounded-md shadow-xl">
             <div class="p-4 border-b-2 border-gray-300 dark:border-gray-600 flex justify-between items-center">
                 <h1 class="text-gray-500 dark:text-white text-lg font-semibold tracking-wide">Mahasiswa Tidak Hadir Hari Ini</h1>
             </div>
             <div class="p-4 space-y-4 text-sm text-gray-700 dark:text-gray-200 max-h-[430px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                @foreach (range(1, 10) as $i)
+                @foreach ($tidakHadir as $th)
                     <div class="item-mahasiswa flex items-start gap-4 p-3 rounded-md border border-red-200 dark:border-gray-600 hover:shadow transition-all">
                         <img src="https://ui-avatars.com/api/?name=P+Budiyanto&background=EF4444&color=fff" alt="P Budiyanto" class="w-12 h-12 rounded-full object-cover">
                         <div class="flex-1">
-                        <p class="nama font-semibold text-gray-800 dark:text-white">P Budiyanto</p>
+                        <p class="nama font-semibold text-gray-800 dark:text-white">{{$th->mahasiswa->nama}}</p>
                         <p class="text-xs text-gray-500 dark:text-gray-300 mb-1">MIK - Semester 2 • English</p>
                             <div class="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-300 mb-1">
-                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-md">Ruangan: 3.2</span>
-                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md">08.00 - 10.00</span>
+                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-md">{{$th->presensi->ruangan->nama_ruangan}}</span>
+                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md">{{$th->presensi->jam_awal .' - '.$th->presensi->jam_akhir}}</span>
                             </div>
-                            <span class="inline-block text-xs font-medium text-red-700 bg-red-100 dark:bg-red-800 dark:text-red-300 px-2 py-0.5 rounded-md">Alpha</span>
+                            @switch($th->status)
+                                @case(0)
+                                <span class="inline-block text-xs font-medium text-red-700 bg-red-100 dark:bg-red-800 dark:text-red-300 px-2 py-0.5 rounded-md">Alpha</span>
+                                @break
+                                @case(2)
+                                <span class="inline-block text-xs font-medium text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-2 py-0.5 rounded-md">Izin</span>
+                                @break
+                                @case(3)
+                                <span class="inline-block text-xs font-medium text-yellow-700 bg-yellow-100 dark:bg-yellow-800 dark:text-yellow-300 px-2 py-0.5 rounded-md">Sakit</span>
+                                @break
+                                @default
+                                <span class="inline-block text-xs font-medium text-red-700 bg-red-100 dark:bg-red-800 dark:text-red-300 px-2 py-0.5 rounded-md">Alpha</span>
+                            @endswitch
                         </div>
                     </div>
                 @endforeach
             </div>
+        </div> --}}
+
+        <div x-data="{ showAll: false }" class="w-[310px] md:w-1/4 bg-white dark:bg-gray-800 rounded-md shadow-xl">
+            <div class="p-4 border-b-2 border-gray-300 dark:border-gray-600 flex justify-between items-center">
+                <h1 class="text-gray-500 dark:text-white text-lg font-semibold tracking-wide">
+                    Mahasiswa Tidak Hadir Hari Ini
+                </h1>
+            </div>
+
+            <div class="p-4 space-y-4 text-sm text-gray-700 dark:text-gray-200 max-h-[430px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                @foreach ($tidakHadir as $index => $th)
+                    <div x-show="showAll || {{ $index }} < 10" x-transition class="item-mahasiswa flex items-start gap-4 p-3 rounded-md border border-red-200 dark:border-gray-600 hover:shadow transition-all">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($th->mahasiswa->nama) }}&background=EF4444&color=fff" alt="{{ $th->mahasiswa->nama }}" class="w-12 h-12 rounded-full object-cover">
+                        <div class="flex-1">
+                            <p class="nama font-semibold text-gray-800 dark:text-white">{{ $th->mahasiswa->nama }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-300 mb-1">
+                                {{ $th->presensi->prodi->nama_prodi }} - Semester {{ $th->mahasiswa->semester }} • {{ $th->presensi->matkul->nama_matkul ?? '-' }}
+                            </p>
+                            <div class="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-300 mb-1">
+                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-1 rounded-md">
+                                    Ruangan: {{ $th->presensi->ruangan->nama_ruangan }}
+                                </span>
+                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md">
+                                    {{ $th->presensi->jam_awal }} - {{ $th->presensi->jam_akhir }}
+                                </span>
+                            </div>
+                            @switch($th->status)
+                                @case(0)
+                                    <span class="inline-block text-xs font-medium text-red-700 bg-red-100 dark:bg-red-800 dark:text-red-300 px-2 py-0.5 rounded-md">Alpha</span>
+                                    @break
+                                @case(2)
+                                    <span class="inline-block text-xs font-medium text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-2 py-0.5 rounded-md">Izin</span>
+                                    @break
+                                @case(3)
+                                    <span class="inline-block text-xs font-medium text-yellow-700 bg-yellow-100 dark:bg-yellow-800 dark:text-yellow-300 px-2 py-0.5 rounded-md">Sakit</span>
+                                    @break
+                            @endswitch
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            @if (count($tidakHadir) > 10)
+                <div class="p-4 text-center">
+                    <button @click="showAll = !showAll" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">
+                        <span x-show="!showAll">Lihat Semua</span>
+                        <span x-show="showAll">Sembunyikan</span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 </x-layout>

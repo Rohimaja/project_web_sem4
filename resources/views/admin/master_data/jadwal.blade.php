@@ -68,7 +68,7 @@
                             <th class=" dark:border-gray-600 px-4 py-2">Semester</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Ruangan</th>
-                            <th class=" dark:border-gray-600 px-4 py-2">Aksi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2 !text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="dark:text-white">

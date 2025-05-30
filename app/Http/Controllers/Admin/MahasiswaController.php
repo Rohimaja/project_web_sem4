@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\MahasiswaImport;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use App\Models\User;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Admin\StoreMasterMahasiswa;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MahasiswaController extends Controller
 {
@@ -42,7 +44,7 @@ class MahasiswaController extends Controller
             'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
             'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
-            'alamat' => trim($request->alamat),
+            'alamat' => ucwords(trim($request->alamat)),
             'tahun_masuk' => trim($request->tahun_masuk),
         ]);
 
@@ -57,8 +59,8 @@ class MahasiswaController extends Controller
 
                 $fotoPath = null;
                 if ($request->hasFile('foto')) {
-                    $filename = 'profile/student/profile_' . $request->nim . '.' . $request->file('foto')->extension();
-                    $fotoPath = $request->file('foto')->storeAs( 'foto_mahasiswa', $filename, 'public');
+                    $filename = 'mahasiswa/profile_' . $request->nim . '.' . $request->file('foto')->extension();
+                    $fotoPath = $request->file('foto')->storeAs( 'profiles', $filename, 'public');
                 }
 
                 $tahunAjaranAktif = TahunAjaran::where('status', true)->first();
@@ -135,7 +137,7 @@ class MahasiswaController extends Controller
             'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
             'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
-            'alamat' => trim($request->alamat),
+            'alamat' => ucwords(trim($request->alamat)),
             'tahun_masuk' => trim($request->tahun_masuk),
             'password' => trim($request->new_password),
         ]);
@@ -151,8 +153,8 @@ class MahasiswaController extends Controller
                     }
 
                     // Simpan foto baru
-                    $filename = 'profile/student/profile_' . $request->nim . '.' . $request->file('foto')->extension();
-                    $fotoPath = $request->file('foto')->storeAs('foto_mahasiswa',$filename, 'public');
+                    $filename = 'mahasiswa/profile_' . $request->nim . '.' . $request->file('foto')->extension();
+                    $fotoPath = $request->file('foto')->storeAs('profiles',$filename, 'public');
                     $mahasiswa->foto = $fotoPath;
                 }
 
@@ -270,5 +272,32 @@ class MahasiswaController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function import(Request $request){
+
+        try {
+            $request->validate([
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        Excel::import(new MahasiswaImport, $request->file('file'));
+
+            return redirect()->route('admin.master-mahasiswa.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Diimpor'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Import Data', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat import data: ' . $e->getMessage()
+            ]);
+        }
     }
 }

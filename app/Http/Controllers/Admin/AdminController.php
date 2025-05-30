@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\AdminImport;
 use App\Models\Admin;
 use App\Models\Mahasiswa;
 use App\Models\User;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Admin\StoreMasterAdmin;
+use Maatwebsite\Excel\Facades\Excel;
 // use Illuminate\Validation\ValidationException;
 
 
@@ -39,7 +41,7 @@ class AdminController extends Controller
             'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
             'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
-            'alamat' => trim($request->alamat),
+            'alamat' => ucwords(trim($request->alamat)),
         ]);
 
         try {
@@ -54,8 +56,8 @@ class AdminController extends Controller
 
                 $fotoPath = null;
                 if ($request->hasFile('foto')) {
-                    $filename = 'profile/admin/profile_' . $user->id . '.' . $request->file('foto')->extension();
-                    $fotoPath = $request->file('foto')->storeAs( 'foto_admin',$filename,'public');
+                    $filename = 'admin/profile_' . $user->id . '.' . $request->file('foto')->extension();
+                    $fotoPath = $request->file('foto')->storeAs( 'profiles',$filename,'public');
                 }
 
                 Admin::create([
@@ -123,7 +125,7 @@ class AdminController extends Controller
             'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
             'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
-            'alamat' => trim($request->alamat),
+            'alamat' => ucwords(trim($request->alamat)),
             'password' => trim($request->new_password),
         ]);
 
@@ -138,8 +140,8 @@ class AdminController extends Controller
                     Storage::disk('public')->delete($admin->foto);
                 }
 
-                $filename = 'profile/admin/profile_' . $user->id . '.' . $request->file('foto')->extension();
-                $fotoPath = $request->file('foto')->storeAs('foto_admin',$filename, 'public');
+                $filename = 'admin/profile_' . $user->id . '.' . $request->file('foto')->extension();
+                $fotoPath = $request->file('foto')->storeAs('profiles',$filename, 'public');
                 $admin->foto = $fotoPath;
             }
 
@@ -216,5 +218,32 @@ class AdminController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function import(Request $request){
+
+        try {
+            $request->validate([
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        Excel::import(new AdminImport, $request->file('file'));
+
+            return redirect()->route('admin.master-admin.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Diimpor'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Import Data', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat import data: ' . $e->getMessage()
+            ]);
+        }
     }
 }

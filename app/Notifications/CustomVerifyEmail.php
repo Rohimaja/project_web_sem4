@@ -48,7 +48,7 @@ class CustomVerifyEmail extends Notification
         ->line('Silakan klik tombol di bawah ini untuk memverifikasi email Anda.')
         ->action('Verifikasi Email', $verifyUrl)
         ->line('Jika Anda tidak membuat akun, Anda bisa mengabaikan email ini.')
-        ->salutation('Terima kasih, Tim Aplikasi Anda');
+        ->salutation('Terima kasih, STIPRES');
     }
 
     protected function verificationUrl($notifiable)

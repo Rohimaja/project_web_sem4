@@ -1,12 +1,11 @@
 $(document).ready(function () {
     table = $("#data-admin").DataTable({
-        searching: true, // Aktifkan pencarian
-        paging: true, // Aktifkan pagination
-        info: true, // Menampilkan informasi tabel
-        scrollX: true, // Aktifkan scroll horizontal
-        autoWidth: false, // Hindari ukuran otomatis
+        searching: true,
+        paging: true,
+        info: true,
+        scrollX: true,
+        autoWidth: false,
     });
-    // $("div.dt-search").hide();
 });
 
 window.loadAdminDetail = function (id) {
@@ -16,14 +15,15 @@ window.loadAdminDetail = function (id) {
         success: function (res) {
             console.log(res);
 
-            // Isi konten modal
             if (res.foto) {
                 $("#foto").attr("src", "/storage/" + res.foto);
             } else {
                 $("#foto").attr("src", "/images/profil-kosong.png");
             }
             $("#nama").val(res.nama);
-            $("#jenis_kelamin").val(res.jenis_kelamin);
+            $("#jenis_kelamin").val(
+                res.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan"
+            );
             $("#agama").val(res.agama);
             $("#tempat_lahir").val(res.tempat_lahir);
             $("#tgl_lahir").val(res.tgl_lahir);
@@ -35,7 +35,6 @@ window.loadAdminDetail = function (id) {
             $("#kota").val(res.kota.name);
             $("#kecamatan").val(res.kecamatan.name);
             $("#kelurahan").val(res.kelurahan.name);
-            // Tambah field lainnya sesuai response JSON
         },
         error: function () {
             alert("Gagal mengambil data dosen");

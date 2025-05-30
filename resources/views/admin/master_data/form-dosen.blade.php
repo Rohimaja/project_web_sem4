@@ -18,12 +18,7 @@
                 <div class="flex flex-col md:flex-row items-center gap-6 mb-6">
                     <!-- Preview Foto -->
                     <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gray-300 shadow-sm">
-                        <img
-                            src="{{ isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : asset('images/profil-kosong.png') }}"
-                            id="previewImage"
-                            class="w-full h-full object-cover"
-                            alt="Preview Foto"
-                        >
+                        <img src="{{ isset($dosen) && $dosen->foto ? asset('storage/' . $dosen->foto) : asset('images/profil-kosong.png') }}" id="previewImage" class="w-full h-full object-cover" alt="Preview Foto">
                     </div>
 
                     <!-- Info & Tombol -->
@@ -67,8 +62,8 @@
                         <label for="jenis_kelamin" class="mb-1 font-semibold">Jenis Kelamin:</lab>
                         <select class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white " name="jenis_kelamin" id="jenis_kelamin" required >
                             <option value="" hidden selected>Pilih jenis kelamin</option>
-                            <option value="Laki-laki" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'Perempuan' ? 'selected' : ''}}>Perempuan</option>
+                            <option value="L" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="P" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'P' ? 'selected' : ''}}>Perempuan</option>
                         </select>
                         @error('jenis_kelamin')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
@@ -214,7 +209,7 @@
                     <a href="{{route('admin.master-dosen.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
-                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Simpan</button>
                 </div>
             </form>
         </div>

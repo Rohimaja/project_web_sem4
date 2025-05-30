@@ -29,7 +29,7 @@
                             <th class=" dark:border-gray-600 px-4 py-2">Kode Prodi</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Jenjang</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Nama Program Studi</th>
-                            <th class=" dark:border-gray-600 px-4 py-2 text-center">Aksi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2 !text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

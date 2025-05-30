@@ -33,7 +33,7 @@
                     </a>
                     <button
                         class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">
-                        Submit
+                        Simpan
                     </button>
                 </div>
             </form>

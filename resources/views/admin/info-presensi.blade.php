@@ -89,7 +89,7 @@
                                         <button @click="openEdit = !openEdit;" class="cursor-pointer px-2 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md">
                                             <i class="bi bi-pencil-square text-lg"></i>
                                         </button>
-                                        <form action="{{route('dosen.update-detail-presensi')}}" method="post">
+                                        <form action="{{route('admin.update-detail-presensi')}}" method="post">
                                             @csrf
                                             <input type="hidden" name="mahasiswa_id" value="{{ $dp->mahasiswa_id }}">
                                             <input type="hidden" name="presensi_id" value="{{ $dp->presensi_id }}">
@@ -124,7 +124,14 @@
                                                         <label for="alasan" class="block text-gray-700 dark:text-gray-200 mb-1">Alasan:</label>
                                                         <textarea id="alasan" name="alasan" x-model="alasan" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" x-bind:disabled="!(status == 2 || status == 3)"></textarea>
                                                     </div>
-                                                    <div class="flex justify-end space-x-3">
+
+                                                    @if ($dp->bukti)
+                                                        <a href="{{ asset('storage/bukti/' . $dp->bukti) }}" target="_blank" class="cursor-pointer px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md" title="Download Bukti">
+                                                            <i class="bi bi-download text-lg"></i>
+                                                        </a>
+                                                    @endif
+
+                                                    <div class="flex justify-end space-x-3 mt-6">
                                                         <button type="button" @click=" status = defaultStatus; alasan = defaultAlasan; openEdit = false;" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded hover:bg-gray-300 dark:hover:bg-gray-600">
                                                             Batal
                                                         </button>

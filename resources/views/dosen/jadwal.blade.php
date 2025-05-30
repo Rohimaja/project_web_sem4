@@ -1,5 +1,5 @@
 <x-layout>
-    @vite(['resources/js/pages/admin/data-jadwal.js'])
+    @vite(['resources/js/pages/dosen/data-jadwal.js'])
     <div class="h-full dark:bg-gray-700 dark:text-white">
     <x-slot:title>{{ $title }}</x-slot:title>
     <p>Lihat Jadwal Perkuliahan</p>

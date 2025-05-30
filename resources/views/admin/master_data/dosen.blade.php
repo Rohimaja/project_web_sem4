@@ -3,7 +3,15 @@
     <div class="relative dark:text-white">
     <x-slot:title>{{ $title }}</x-slot:title>
     <p class="dark:text-gray-300">Daftar Seluruh Dosen</p>
-        <div x-data="{openImport: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl dark:shadow-gray-800">
+        {{-- <div x-data="{openImport: false}" class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl dark:shadow-gray-800"> --}}
+
+            <div x-data="{ openImport: false, fileName: '', resetFile() {
+                    this.fileName = '';
+                    const input = document.getElementById('file');
+                    if (input) input.value = '';
+                }
+            }"
+            class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
 
             <div class="mt-2 mb-5 flex gap-4">
                 <a href="{{route('admin.master-dosen.create')}}">
@@ -19,7 +27,7 @@
                 </button>
 
                 {{-- tampilan import file --}}
-                <div x-show="openImport" x-cloak class="fixed inset-0 z-50 flex justify-center items-center">
+                {{-- <div x-show="openImport" x-cloak class="fixed inset-0 z-50 flex justify-center items-center">
 
                     <div class="absolute inset-0 bg-black opacity-50"></div>
 
@@ -40,6 +48,38 @@
                             <p class="text-gray-600 dark:text-gray-300">Unduh template file impor <a href="" class="text-blue-600 dark:text-blue-400">di sini</a></p>
                         </div>
                     </div>
+                </div> --}}
+
+                <div x-show="openImport" x-cloak class="fixed inset-0 z-50 flex justify-center items-center">
+                    <div class="absolute inset-0 bg-black opacity-50"></div>
+                    <div @click.outside="openImport = false; resetFile()" class="relative z-10 bg-white dark:bg-gray-900 rounded-sm shadow-xl sm:w-[500px] w-[320px] max-w-full p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h1 class="text-gray-600 dark:text-gray-100 text-2xl font-semibold">Import Data Dosen</h1>
+                            <button @click="openImport = false; resetFile()"><i class="bi bi-x-lg text-2xl mb-4 cursor-pointer text-gray-600 dark:text-gray-100"></i></button>
+                        </div>
+                        <form method="POST" action="{{ route('admin.master-dosen.import') }}" enctype="multipart/form-data">
+                            @csrf
+                        <div class="flex flex-col items-center justify-center w-full h-50 border-4 border-gray-400 border-dashed mb-4">
+                            <i class="bi bi-upload text-gray-600 dark:text-gray-100 text-2xl"></i>
+                            <input type="file" id="file" name="file" accept=".xls,.xlsx" required class="hidden" @change="fileName = $event.target.files[0]?.name">
+                            <label for="file" class="text-blue-600 dark:text-blue-600 text-center text-sm md:text-md cursor-pointer" >Jatuhkan dokumen anda disini</label>
+                            {{-- <p id="file-name" class="text-sm text-blue-600 dark:text-blue-400 mt-1 hidden"></p> --}}
+                                                <!-- Preview Nama File -->
+                            <template x-if="fileName">
+                                <p id="file-name" class="text-sm text-blue-600 dark:text-blue-400 mt-1">📄 <span x-text="fileName"></span></p>
+                            </template>
+
+                            <p class="text-gray-400 dark:text-gray-300">Didukung: VSC, XLS, XML, JSON</p>
+                        </div>
+
+                        <div class="mb-4 flex justify-center">
+                            <button class="cursor-pointer px-8 py-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-sm font-semibold text-white">Impor</button>
+                        </div>
+                    </form>
+                        <div class="flex flex-col items-center justify-center w-full h-20 border-4 border-gray-400 border-dashed mb-4">
+                            <p class="text-gray-600 dark:text-gray-100">Unduh template file impor <a href="" class="text-blue-600">di sini</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -55,7 +95,7 @@
                                 <th class="dark:border-gray-600 px-4">Email</th>
                                 <th class="dark:border-gray-600 px-4">Telepon</th>
                                 <th class="dark:border-gray-600 px-4">Program Studi</th>
-                                <th class="dark:border-gray-600 px-4 text-right">Aksi</th>
+                                <th class="dark:border-gray-600 px-4 !text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

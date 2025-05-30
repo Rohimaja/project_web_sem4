@@ -4,51 +4,39 @@ const csrfToken = document
 
 $(document).ready(function () {
     const table = $("#data-mahasiswa").DataTable({
-        searching: true, // Aktifkan pencarian
-        paging: true, // Aktifkan pagination
-        info: true, // Menampilkan informasi tabel
-        scrollX: true, // Aktifkan scroll horizontal
-        autoWidth: false, // Hindari ukuran otomatis
+        searching: true,
+        paging: true,
+        info: true,
+        scrollX: true,
+        autoWidth: false,
     });
 
-    // function getMahasiswaFiltered() {
-    // $(document).ready(function () {
     $("#prodi, #semester").on("change", function () {
         const prodiId = $("#prodi").val();
         const semester = $("#semester").val();
-        // const semester = document.getElementById("semester").value; // Ambil semester yang dipilih
-        // const prodiId = document.getElementById("prodi").value; // Ambil prodi yang dipilih
-
-        // Pastikan salah satu filter dipilih untuk menghindari request kosong
         if (semester || prodiId) {
-            // Buat URL untuk mengirim filter sebagai parameter query
             fetch(
                 `/admin/getFilterMahasiswa?prodi=${prodiId}&semester=${semester}`
             )
                 .then((response) => response.json())
                 .then((data) => {
-                    // Hapus data sebelumnya dari DataTable
                     table.clear();
 
-                    // Tambahkan data yang baru dari hasil filter
                     data.forEach((item, index) => {
                         const fotoUrl = item.foto
                             ? `/storage/${item.foto}`
                             : "/images/profil-kosong.png";
 
                         table.row.add([
-                            `<div style="text-align:left;">${index + 1}</div>`, // Semester ditengah
+                            `<div style="text-align:left;">${index + 1}</div>`,
                             `<div class="w-10 h-10 bg-red-200 rounded-full overflow-hidden">
                                 <img src="${fotoUrl}" alt="Photo" class="w-full h-full object-cover">
                             </div>`,
-                            // `<div style="text-align:left;">${item.nim}</div>`, // Semester ditengah
-                            // `<div style="text-align:left;">${item.nama}</div>`, // Semester ditengah
-                            // `<div style="text-align:left;">${
-                            //     item.rfid ? item.rfid : "-"
-                            // }</div>`, // Semester ditengah
                             item.nim,
                             item.nama,
-                            item.jenis_kelamin,
+                            item.jenis_kelamin === "L"
+                                ? "Laki-laki"
+                                : "Perempuan",
                             item.email,
                             `${item.prodi?.jenjang ?? ""} ${
                                 item.prodi?.nama_prodi ?? ""
@@ -73,25 +61,12 @@ $(document).ready(function () {
                         ]);
                     });
 
-                    // Perbarui tampilan tabel setelah menambahkan data
                     table.draw();
                 })
                 .catch((error) => console.error("Error fetching data:", error));
         }
     });
 });
-
-// $(document).on("click", ".btn-detail", function () {
-//     const id = $(this).data("id");
-
-//     // Tampilkan modal detail (Alpine.js atau manual)
-//     if (typeof openView !== "undefined") {
-//         openView = true;
-//     }
-
-//     // Panggil fungsi untuk ambil detail mahasiswa
-//     loadMahasiswaDetail(id);
-// });
 
 window.loadMahasiswaDetail = function (id) {
     $.ajax({
@@ -100,7 +75,6 @@ window.loadMahasiswaDetail = function (id) {
         success: function (res) {
             console.log(res);
 
-            // Isi konten modal
             if (res.foto) {
                 $("#foto").attr("src", "/storage/" + res.foto);
             } else {
@@ -108,8 +82,10 @@ window.loadMahasiswaDetail = function (id) {
             }
             $("#nama").val(res.nama);
             $("#nim").val(res.nim);
-            $("#rfid").val(res.rfid);
-            $("#jenis_kelamin").val(res.jenis_kelamin);
+            $("#rfid").val(res.rfid ?? "-");
+            $("#jenis_kelamin").val(
+                res.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan"
+            );
             $("#agama").val(res.agama);
             $("#tempat_lahir").val(res.tempat_lahir);
             $("#tgl_lahir").val(res.tgl_lahir);
@@ -126,7 +102,6 @@ window.loadMahasiswaDetail = function (id) {
             $("#kota").val(res.kota.name);
             $("#kecamatan").val(res.kecamatan.name);
             $("#kelurahan").val(res.kelurahan.name);
-            // Tambah field lainnya sesuai response JSON
         },
         error: function () {
             alert("Gagal mengambil data dosen");
