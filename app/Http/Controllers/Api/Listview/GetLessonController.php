@@ -87,4 +87,48 @@ class GetLessonController extends Controller
             ], 500);
         }
     }
+
+    public function getLessonLecturer(Request $request)
+    {
+        $request->validate([
+            'dosen_id' => 'required|exists:dosens,id',
+        ]);
+
+        $jadwalHariIni = Presensi::with([
+            'matkul.prodi',
+            'ruangan',
+            'dosen',
+        ])
+            ->whereDate('tgl_presensi', now()->toDateString())
+            ->where('dosen_id', $request->dosen_id)
+            ->orderByRaw("STR_TO_DATE(jam_awal, '%H:%i:%s') ASC")
+            ->get()
+            ->map(function ($presensi) {
+                return [
+                    'presensis_id' => $presensi->id,
+                    'presensi_id' => $presensi->presensi_id,
+                    'nama_matkul' => $presensi->matkul->nama_matkul,
+                    'kode_matkul' => $presensi->matkul->kode_matkul,
+                    'durasi_matkul' => $presensi->matkul->durasi_matkul,
+                    'nama_ruangan' => optional($presensi->ruangan)->nama_ruangan,
+                    'durasi_presensi' => date('H:i', strtotime($presensi->jam_awal)) . ' - ' . date('H:i', strtotime($presensi->jam_akhir)),
+                    'link_zoom' => $presensi->link_zoom,
+                    'tgl_presensi' => $presensi->tgl_presensi,
+                    'nama_dosen' => optional($presensi->dosen)->nama,
+                ];
+            });
+
+        if ($jadwalHariIni->isEmpty()) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Data matkul tidak ditemukan',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Jadwal Hari ini ditemukan',
+            'data' => $jadwalHariIni,
+        ]);
+    }
 }

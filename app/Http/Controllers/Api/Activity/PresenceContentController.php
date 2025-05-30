@@ -40,7 +40,7 @@ class PresenceContentController extends Controller
             $file->storeAs('bukti', $filename, 'public');
 
             // Simpan path relatif ke database
-            $data['bukti'] = '/bukti/' . $filename;
+            $data['bukti'] = 'bukti/' . $filename;
         }
 
         // Jalankan update data

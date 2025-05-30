@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('presensi_id')->constrained('presensis');
             $table->foreignId('mahasiswa_id')->constrained('mahasiswas');
             $table->dateTime('waktu_presensi')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(0);
             $table->string('alasan')->nullable();
             $table->string('bukti',100)->nullable();
         });
