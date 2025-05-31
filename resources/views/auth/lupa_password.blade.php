@@ -1,4 +1,4 @@
-<x-layoutAuth title="lupa_password">
+<x-layoutAuth title="Lupa Password">
   <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-100 to-gray-100 px-4">
       <div class="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6">
           <div class="w-full flex justify-center">
@@ -27,24 +27,6 @@
                   Submit
               </button>
           </form>
-
-          {{-- <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-input-label for="email" :value="__('Email Address')" />
-                <x-text-input id="email" type="email" name="email" :value="old('email')" required autofocus class="mt-1 block w-full" placeholder="Masukkan email..."/>
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
-            </div>
-
-            <div>
-                <x-primary-button class="w-full justify-center">
-                    {{ __('Submit') }}
-                </x-primary-button>
-            </div>
-        </form> --}}
-
 
           <div class="text-center text-sm text-gray-500">
               Sudah memiliki akun?

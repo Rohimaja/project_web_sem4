@@ -27,7 +27,7 @@ class StoreMasterDosen extends FormRequest
         $id = $id ??  $this->route('master_dosen');
 
         return [
-            'nip' => ['required', 'max:20', Rule::unique('dosens', 'nip')->ignore($id),],
+            'nip' => ['required', 'max:20','regex:/^[0-9]+$/', Rule::unique('dosens', 'nip')->ignore($id),],
             'nama' => 'required|max:100|regex:/^[A-Za-z\s]+$/',
             'jenis_kelamin' => 'required',
             'agama' => 'required',
@@ -37,18 +37,19 @@ class StoreMasterDosen extends FormRequest
             'email' => ['required','email:rfc,dns','max:100',Rule::unique('dosens', 'email')->ignore($id),],
             'alamat' => 'required|max:200',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // opsional: validasi foto
-            'province_id' => 'required',
-            'regency_id' => 'required',
-            'district_id' => 'required',
-            'village_id' => 'required',
+            'provinsi_id' => 'required',
+            'kota_id' => 'required',
+            'kecamatan_id' => 'required',
+            'kelurahan_id' => 'required',
         ];
     }
 
     public function messages(){
         return [
-            'nip.required' => 'Nip tidak boleh kosong',
-            'nip.max' => 'Nip tidak boleh melebihi 18 Karakter',
-            'nip.unique' => 'Nip sudah terdaftar',
+            'nip.required' => 'NIP tidak boleh kosong',
+            'nip.max' => 'NIP tidak boleh melebihi 18 Karakter',
+            'nip.regex' =>'NIP hanya boleh mengandung angka',
+            'nip.unique' => 'NIP sudah terdaftar',
 
             'nama.required' => 'Nama tidak boleh kosong',
             'nama.max' => 'Nama maksimal 100 karakter',

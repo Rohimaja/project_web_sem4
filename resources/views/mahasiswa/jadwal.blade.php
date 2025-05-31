@@ -1,9 +1,9 @@
 <x-layout>
-  @vite(['resources/js/pages/admin/data-jadwal.js'])
+  @vite(['resources/js/pages/mahasiswa/data-jadwal.js'])
     <div class="h-full dark:bg-gray-700 dark:text-gray-100 transition">
         <x-slot:title>{{ $title }}</x-slot:title>
 
-        <p class="text-gray-800 dark:text-gray-200">Lihat jadwal hari ini</p>
+        <p class="text-gray-800 dark:text-gray-200">Lihat Jadwal Perkuliahan</p>
 
         <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
             <div class="flex flex-col md:flex-row">
@@ -40,11 +40,11 @@
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                                 <td class="px-6 py-4">{{$j->hari}}</td>
                                 <td class="px-6 py-4">{{substr($j->jam,0,5)}}</td>
-                                <td class="px-6 py-4">{{$j->durasi}} Jam</td>
+                                <td class="px-6 py-4">{{$j->durasi}} SKS</td>
                                 <td class="px-6 py-4">{{$j->matkul->nama_matkul}}</td>
-                                <td class="px-6 py-4">{{$j->ruangan->nama_ruangan}}</td>
-                                <td class="px-6 py-4">{{$j->prodi->jenjang .' '. $j->prodi->nama_prodi}}</td>
                                 <td class="px-6 py-4">{{$j->dosen->nama}}</td>
+                                <td class="px-6 py-4">{{$j->prodi->jenjang .' '. $j->prodi->nama_prodi}}</td>
+                                <td class="px-6 py-4">{{$j->ruangan->nama_ruangan}}</td>
                             </tr>
                         @endforeach
                     </tbody>

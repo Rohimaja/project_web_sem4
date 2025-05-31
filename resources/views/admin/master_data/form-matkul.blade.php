@@ -15,15 +15,15 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Nama Mata Kuliah:</label>
-                        <input type="text" class="p-2 py-[10.5px] border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nama_matkul" id="nama_matkul" value="{{old('nama_matkul', $matkul->nama_matkul ?? '')}}" required data-validate="matkul" placeholder="Masukkan nama mata kuliah">
+                        <label for="nama_matkul" class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Nama Mata Kuliah:</label>
+                        <input type="text" class="p-2 py-[10.5px] border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="nama_matkul" id="nama_matkul" value="{{old('nama_matkul', $matkul->nama_matkul ?? '')}}" required data-validate="matkul" placeholder="Contoh: Biologi">
                         <span class="text-red-600 text-sm" id="nama_matkul_error">
                             @error('nama_matkul'){{ $message }}@enderror
                         </span>
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Program Studi:</label>
+                        <label for="prodi_id" class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Program Studi:</label>
                         <select class="p-2 py-[10.5px] w-full border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white" name="prodi_id" id="prodi_id" required>
                             <option value="" hidden selected>Pilih Program Studi</option>
                             @foreach ($prodi as $p)
@@ -40,7 +40,7 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Tahun Ajaran:</label>
+                        <label for="tahun_ajaran_id" class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Tahun Ajaran:</label>
                         <select class="p-2 mt-1 py-[10.5px] w-full border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white" name="tahun_ajaran_id" id="tahun_ajaran_id" required>
                             <option value="" hidden selected>Pilih Tahun Ajaran</option>
                             @foreach ($tahun as $t)
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Semester:</label>
+                        <label for="semester" class="mb-1 font-semibold text-gray-700 dark:text-gray-200">Semester:</label>
                         <select class="p-2 mt-1 py-[10.5px] w-full border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white" name="semester" id="semester" required>
                             <option value="" hidden selected>Pilih Semester</option>
                             @for($i = 1; $i <= 8; $i++)
@@ -72,8 +72,8 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label class="mb-1 font-semibold text-gray-700 dark:text-gray-200">SKS:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white" name="durasi_matkul" id="durasi_matkul" value="{{old('durasi_matkul', $matkul->durasi_matkul ?? '')}}" required data-validate="matkul" placeholder="Masukkan jumlah SKS">
+                        <label for="durasi_matkul" class="mb-1 font-semibold text-gray-700 dark:text-gray-200">SKS:</label>
+                        <input type="number" class="p-2 border-2 border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white" name="durasi_matkul" id="durasi_matkul" value="{{old('durasi_matkul', $matkul->durasi_matkul ?? '')}}" required data-validate="matkul" placeholder="Contoh : 3">
                         <span class="text-red-600 text-sm" id="durasi_matkul_error">
                             @error('durasi_matkul'){{ $message }}@enderror
                         </span>
@@ -86,7 +86,7 @@
                         Batal
                     </a>
                     <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">
-                        Submit
+                        Simpan
                     </button>
                 </div>
             </form>

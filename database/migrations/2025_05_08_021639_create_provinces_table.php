@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('provinces', function (Blueprint $table) {
-            $table->char('id', 2);
+        Schema::create('provinsis', function (Blueprint $table) {
+            $table->char('id', 2); // atau bisa pakai varchar juga
             $table->string('name');
             $table->string('alt_name')->nullable(); // tambah kolom alt_name
             $table->decimal('latitude', 10, 6)->nullable();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('provinces');
+        Schema::dropIfExists('provinsis');
     }
 };

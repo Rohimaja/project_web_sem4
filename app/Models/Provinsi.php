@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Province extends Model
+class Provinsi extends Model
 {
     public $timestamps = false;
     public $incrementing = false;
     protected $fillable = ['id', 'name'];
 
-    public function regencies()
+    public function kota()
     {
-        return $this->hasMany(Regency::class);
+        return $this->hasMany(Kota::class);
     }
 }

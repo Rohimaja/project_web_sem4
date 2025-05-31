@@ -1,8 +1,8 @@
 <x-layout>
-    @vite(['resources/js/pages/admin/data-jadwal.js'])
+    @vite(['resources/js/pages/dosen/data-jadwal.js'])
     <div class="h-full dark:bg-gray-700 dark:text-white">
     <x-slot:title>{{ $title }}</x-slot:title>
-    <p>lihat jadwal mengajar</p>
+    <p>Lihat Jadwal Perkuliahan</p>
         <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
             <div class="flex flex-col md:flex-row">
 

@@ -4,9 +4,7 @@
     <div class="h-full dark:bg-gray-700 dark:text-white">
         <x-slot:title>{{ $title }}</x-slot:title>
 
-        <p class="dark:text-white">Tanggal Hari Ini: <span class="text-md dark:text-white">
-            {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
-          </span></p>
+        <p class="text-gray-800 dark:text-gray-200">Data Presensi Hari ini</p>
 
         <div class="w-full overflow-x-auto max-w-full mt-5 p-5 bg-white dark:bg-gray-800 rounded-sm shadow-xl">
             <div class="flex flex-col md:flex-row">

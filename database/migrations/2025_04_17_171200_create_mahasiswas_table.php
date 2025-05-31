@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nim','15')->unique();
             $table->string('rfid','30')->unique()->nullable();
             $table->string('nama','100');
-            $table->string('jenis_kelamin','10');
+            $table->char('jenis_kelamin','1');
             $table->string('agama','20');
             $table->string('tempat_lahir','100');
             $table->date('tgl_lahir');

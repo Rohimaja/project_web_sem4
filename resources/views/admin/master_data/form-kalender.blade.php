@@ -17,7 +17,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label for="judul" class="mb-1 font-semibold dark:text-white">Judul:</label>
-                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="judul" id="judul" value="{{ old('judul', $kalender->judul ?? '') }}" required>
+                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="judul" id="judul" value="{{ old('judul', $kalender->judul ?? '') }}" required placeholder="Contoh: Kegiatan KRS">
                         <span class="text-red-600 text-sm" id="judul_error">
                             @error('judul'){{ $message }}@enderror
                         </span>
@@ -25,7 +25,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label for="deskripsi" class="mb-1 font-semibold dark:text-white">Deskripsi:</label>
-                        <textarea class="p-2 mt-1 w-full border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="deskripsi" id="deskripsi">{{ old('deskripsi', $kalender->deskripsi ?? '') }}</textarea>
+                        <textarea class="p-2 mt-1 w-full border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="deskripsi" id="deskripsi" placeholder="Contoh:">{{ old('deskripsi', $kalender->deskripsi ?? '') }}</textarea>
                         <span class="text-red-600 text-sm" id="deskripsi_error">
                             @error('deskripsi'){{ $message }}@enderror
                         </span>
@@ -67,7 +67,7 @@
                     <a href="{{ route('admin.kalender-akademik.index') }}" class="inline-block px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
-                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Simpan</button>
                 </div>
             </form>
         </div>

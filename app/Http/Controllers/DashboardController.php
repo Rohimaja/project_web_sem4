@@ -28,7 +28,6 @@ class DashboardController extends Controller
         'mingguan' => [],
         ];
 
-// Hitung data kehadiran mahasiswa per minggu berdasarkan status numerik
         $statusMap = [
             1 => 'Hadir',
             2 => 'Izin',
@@ -62,30 +61,23 @@ class DashboardController extends Controller
                 $minggu[] = $count;
             }
 
-            // for ($i = 1; $i <= 4; $i++) {
-            //     $start = Carbon::now()->startOfMonth()->addWeeks($i - 1)->startOfWeek();
-            //     $end = (clone $start)->endOfWeek();
-
-            //     $count = DetailPresensi::where('status', $statusValue)
-            //         ->whereHas('presensi', function ($q) use ($start, $end) {
-            //             $q->whereBetween('tgl_presensi', [$start, $end]);
-            //         })
-            //         ->count();
-
-            //     $minggu[] = $count;
-            // }
-
             $chartData[] = [
                 'name' => $statusLabel,
                 'data' => $minggu
             ];
         }
 
+        $data['tidakHadir'] = DetailPresensi::with(['mahasiswa','presensi.matkul','presensi.ruangan','presensi.prodi'])->whereIn('status', [0,2,3])->whereHas('presensi', function ($query){
+            $query->whereDate('tgl_presensi', Carbon::today())->whereTime('jam_akhir', '<=', Carbon::now()->toTimeString());
+        })->get();
+
+        $data['hadir'] = DetailPresensi::with(['mahasiswa','presensi.matkul','presensi.ruangan','presensi.prodi'])->where('status', 1)->whereHas('presensi', function ($query){
+            $query->whereDate('tgl_presensi', Carbon::today())->whereTime('jam_akhir', '<=', Carbon::now()->toTimeString());
+        })->orderByDesc('waktu_presensi')->limit('40')->get();
+
+
         $data['mingguan'] = $chartData;
-
-
         return view('admin.dashboard',$data);
-
     }
 
 
@@ -170,13 +162,9 @@ class DashboardController extends Controller
 
     public function indexMahasiswa(){
         $title = 'Dashboard';
-        // $user = Auth::user()->mahasiswa;
-        // $admin = Admin::all();
-        // $admin = Admin::with(relations: ['province','regency','district','village'])->get();
         $presensiHariIni = Presensi::with('prodi','dosen','matkul','tahunAjaran','ruangan')->whereDate('tgl_presensi', Carbon::today())->get();
         $mahasiswa = Auth::user()->mahasiswa;
-        $biodata = Mahasiswa::with('prodi','province','regency','district','village')->findOrFail($mahasiswa->id);
-
+        $biodata = Mahasiswa::with('prodi','provinsi','kota','kecamatan','kelurahan')->findOrFail($mahasiswa->id);
 
         return view('mahasiswa.dashboard',compact('title','presensiHariIni','biodata'));
     }

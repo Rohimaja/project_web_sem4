@@ -91,9 +91,9 @@
                 <div class="flex justify-between"><span class="font-medium text-gray-500 dark:text-gray-400">Semester:</span><span class="text-right">{{$biodata->semester}}</span></div>
                 <div class="flex justify-between"><span class="font-medium text-gray-500 dark:text-gray-400">Email:</span><span class="text-right">{{$biodata->email}}</span></div>
                 <div class="flex justify-between"><span class="font-medium text-gray-500 dark:text-gray-400">No. Telepon:</span><span class="text-right">{{$biodata->no_telp}}</span></div>
-                <div class="flex justify-between"><span class="font-medium text-gray-500 dark:text-gray-400">Jenis Kelamin:</span><span class="text-right">{{$biodata->jenis_kelamin}}</span></div>
+                <div class="flex justify-between"><span class="font-medium text-gray-500 dark:text-gray-400">Jenis Kelamin:</span><span class="text-right">{{$biodata->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}}</span></div>
                 <div class="flex justify-between"><span class="font-medium text-gray-500 dark:text-gray-400">Tempat Tanggal Lahir:</span><span class="text-right">{{$biodata->tempat_lahir .' '. $biodata->tgl_lahir}}</span></div>
-                <div class="flex justify-between gap-1"><span class="font-medium text-gray-500 dark:text-gray-400">Alamat:</span><span class="text-right">{{$biodata->province->name .', '. $biodata->regency->name .', '. $biodata->district->name .', '. $biodata->village->name .', '. $biodata->alamat}}</span></div>
+                <div class="flex justify-between gap-1"><span class="font-medium text-gray-500 dark:text-gray-400">Alamat:</span><span class="text-right">{{$biodata->provinsi->name .', '. $biodata->kota->name .', '. $biodata->kecamatan->name .', '. $biodata->kelurahan->name .', '. $biodata->alamat}}</span></div>
         </div>
       </div>
 

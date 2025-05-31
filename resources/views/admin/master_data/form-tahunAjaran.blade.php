@@ -15,7 +15,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
                         <label class="mb-1 font-semibold dark:text-white">Tahun Mulai:</label>
-                        <input list="tahun-list" name="tahun_awal" class="p-2 border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" id="tahun_awal" data-validate="tahun" placeholder="Masukkan Tahun Awal" value="{{ old('tahun_awal', $tahun->tahun_awal ?? '') }}" required>
+                        <input list="tahun-list" name="tahun_awal" class="p-2 border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" id="tahun_awal" data-validate="tahun" placeholder="Contoh: 2023" value="{{ old('tahun_awal', $tahun->tahun_awal ?? '') }}" required>
                         <datalist id="tahun-list">
                             @for($i = date('Y'); $i >= 2000; $i--)
                                 <option value="{{ $i }}">
@@ -28,7 +28,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         <label class="mb-1 font-semibold dark:text-white">Tahun Selesai:</label>
-                        <input list="tahun-list" name="tahun_akhir" class="p-2 border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" id="tahun_akhir" data-validate="tahun" placeholder="Masukkan Tahun Akhir" value="{{ old('tahun_akhir', $tahun->tahun_akhir ?? '') }}" required>
+                        <input list="tahun-list" name="tahun_akhir" class="p-2 border-2 border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" id="tahun_akhir" data-validate="tahun" placeholder="Contoh: 2024" value="{{ old('tahun_akhir', $tahun->tahun_akhir ?? '') }}" required>
                         <datalist id="tahun-list">
                             @for($i = date('Y'); $i >= 2000; $i--)
                                 <option value="{{ $i }}">
@@ -72,7 +72,7 @@
                     <a href="{{ route('admin.master-tahun.index') }}" class="inline-block px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
-                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Simpan</button>
                 </div>
             </form>
         </div>

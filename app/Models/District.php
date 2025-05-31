@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravolt\Indonesia\Models\Village;
 
 class District extends Model
 {
