@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('districts', function (Blueprint $table) {
+        Schema::create('kecamatans', function (Blueprint $table) {
             $table->char('id', 7);
-            $table->char('regency_id', 4);
+            $table->char('kota_id', 4);
             $table->string('name');
             $table->string('alt_name')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             
             $table->primary('id');
-            $table->foreign('regency_id')->references('id')->on('regencies')->onDelete('cascade');
+            $table->foreign('kota_id')->references('id')->on('kotas')->onDelete('cascade');
         });
     }
 

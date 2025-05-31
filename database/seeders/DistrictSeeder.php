@@ -11,7 +11,7 @@ class DistrictSeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('districts')->truncate();
+        DB::table('kecamatans')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $json = File::get(database_path('data/districts.json'));
@@ -20,7 +20,7 @@ class DistrictSeeder extends Seeder
         $insertData = array_map(function ($item) {
             return [
                 'id' => $item['id'],
-                'regency_id' => $item['regency_id'],
+                'kota_id' => $item['kota_id'],
                 'name' => $item['name'],
                 'alt_name' => $item['alt_name'] ?? null,
                 'latitude' => $item['latitude'] ?? null,
@@ -28,7 +28,7 @@ class DistrictSeeder extends Seeder
             ];
         }, $districts);
 
-        DB::table('districts')->insert($insertData);
+        DB::table('kecamatans')->insert($insertData);
     }
 }
 

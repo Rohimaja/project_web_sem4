@@ -14,4 +14,10 @@ class Kota extends Model
     {
         return $this->hasMany(Kecamatan::class);
     }
+    public function provinsi()
+{
+    return $this->belongsTo(Provinsi::class, 'provinsi_id');
 }
+
+}
+

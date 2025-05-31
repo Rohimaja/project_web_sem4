@@ -14,7 +14,7 @@ class RegencySeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('regencies')->truncate();
+        DB::table('kotas')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $json = File::get(database_path('data/regencies.json'));
@@ -24,7 +24,7 @@ class RegencySeeder extends Seeder
         $insertData = array_map(function ($item) {
             return [
                 'id' => $item['id'],
-                'province_id' => $item['province_id'],
+                'provinsi_id' => $item['provinsi_id'],
                 'name' => $item['name'],
                 'alt_name' => $item['alt_name'] ?? null,
                 'latitude' => $item['latitude'] ?? null,
@@ -33,6 +33,6 @@ class RegencySeeder extends Seeder
         }, $regencies);
 
         // Insert data ke tabel regencies
-        DB::table('regencies')->insert($insertData);
+        DB::table('kotas')->insert($insertData);
     }
 }

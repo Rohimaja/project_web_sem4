@@ -1,31 +1,30 @@
 <?php
+
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Kelurahan;
 use App\Models\Prodi;
 use App\Models\TahunAjaran;
-use App\Models\Province;
-use App\Models\Regency;
-use App\Models\District;
-use App\Models\Village;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MahasiswaFactory extends Factory
 {
     public function definition(): array
     {
-        // Ambil lokasi yang saling berelasi
-        $village = Village::inRandomOrder()->first();
+        $village = Kelurahan::whereHas('kecamatan.kota.provinsi')->inRandomOrder()->first();
 
-        if (!$village || !$village->district || !$village->district->regency || !$village->district->regency->province) {
-            throw new \Exception("Data lokasi tidak lengkap atau tidak nyambung (relasi tidak valid).");
+        if (!$village) {
+            throw new \Exception("Tidak ditemukan kelurahan dengan relasi lokasi lengkap.");
         }
 
-        $district = $village->district;
-        $regency = $district->regency;
-        $province = $regency->province;
+        $district = $village->kecamatan;
+        $regency = $district->kota;
+        $province = $regency->provinsi;
 
-        $jenisKelamin = $this->faker->randomElement(['Laki-laki', 'Perempuan']);
+        $jenisKelaminFull = $this->faker->randomElement(['Laki-laki', 'Perempuan']);
+        $jenisKelamin = $jenisKelaminFull === 'Laki-laki' ? 'L' : 'P';
+
         $agama = $this->faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu']);
 
         return [
@@ -33,9 +32,10 @@ class MahasiswaFactory extends Factory
                 ->whereDoesntHave('mahasiswa')
                 ->inRandomOrder()
                 ->first()?->id,
+
             'nim' => $this->faker->unique()->numerify('##########'),
             'rfid' => $this->faker->optional()->regexify('[A-Z0-9]{10,30}'),
-            'nama' => $this->faker->name($jenisKelamin === 'Laki-laki' ? 'male' : 'female'),
+            'nama' => $this->faker->name($jenisKelamin === 'L' ? 'male' : 'female'),
             'jenis_kelamin' => $jenisKelamin,
             'agama' => $agama,
             'tempat_lahir' => $this->faker->city(),
@@ -44,10 +44,11 @@ class MahasiswaFactory extends Factory
             'no_telp' => '+62' . $this->faker->numerify('8#########'),
             'alamat' => "$village->name, $district->name, $regency->name, $province->name",
 
-            'province_id' => $province->id,
-            'regency_id' => $regency->id,
-            'district_id' => $district->id,
-            'village_id' => $village->id,
+            // ✅ Kolom lokasi dengan nama yang sudah disesuaikan
+            'provinsi_id' => $province->id,
+            'kota_id' => $regency->id,
+            'kecamatan_id' => $district->id,
+            'kelurahan_id' => $village->id,
 
             'prodi_id' => Prodi::inRandomOrder()->first()?->id ?? Prodi::factory()->create()->id,
             'tahun_masuk' => $this->faker->year(),

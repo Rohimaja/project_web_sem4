@@ -10,8 +10,11 @@ class Provinsi extends Model
     public $incrementing = false;
     protected $fillable = ['id', 'name'];
 
-    public function kota()
+    protected $table = 'provinsis';
+
+    public function kotas()
     {
-        return $this->hasMany(Kota::class);
+        return $this->hasMany(Kota::class, 'provinsi_id');
     }
 }
+

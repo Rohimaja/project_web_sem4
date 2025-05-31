@@ -10,23 +10,27 @@ class ProvinceSeeder extends Seeder
 {
     public function run()
     {
+        // Nonaktifkan cek foreign key untuk truncate tabel
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('provinces')->truncate();
+        DB::table('provinsis')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        
+
+        // Baca file JSON provinsi dari folder database/data
         $json = File::get(database_path('data/provinces.json'));
         $provinces = json_decode($json, true);
 
+        // Map data JSON ke format tabel provinsis
         $insertData = array_map(function ($item) {
             return [
                 'id' => $item['id'],
                 'name' => $item['name'],
-                'alt_name' => $item['alt_name'] ?? null, // mapping alt_name, bisa null
+                'alt_name' => $item['alt_name'] ?? null,
                 'latitude' => $item['latitude'] ?? null,
                 'longitude' => $item['longitude'] ?? null,
             ];
         }, $provinces);
 
-        DB::table('provinces')->insert($insertData);
+        // Insert ke tabel provinsis
+        DB::table('provinsis')->insert($insertData);
     }
 }

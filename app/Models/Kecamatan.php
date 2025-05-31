@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Kecamatan extends Model
 {
     public $timestamps = false;
@@ -13,5 +14,9 @@ class Kecamatan extends Model
     public function kelurahan()
     {
         return $this->hasMany(Kelurahan::class);
+    }
+    public function kota()
+    {
+        return $this->belongsTo(Kota::class, 'kota_id');  // <-- tambahkan foreign key di sini
     }
 }

@@ -6,9 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kelurahan extends Model
 {
-    public function district()
-{
-    return $this->belongsTo(District::class);
-}
+    protected $table = 'kelurahans'; // pastikan tabelnya
 
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id'); 
+    }
+
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class, 'provinsi_id');
+    }
 }
