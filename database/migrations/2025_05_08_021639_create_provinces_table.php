@@ -12,9 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('provinces', function (Blueprint $table) {
-            $table->char('id', 2); // atau bisa pakai varchar juga
+            $table->char('id', 2);
             $table->string('name');
-            $table->primary('id'); // menjadikan kolom ini primary key
+            $table->string('alt_name')->nullable(); // tambah kolom alt_name
+            $table->decimal('latitude', 10, 6)->nullable();
+            $table->decimal('longitude', 10, 6)->nullable();
+            $table->primary('id');
         });
     }
 

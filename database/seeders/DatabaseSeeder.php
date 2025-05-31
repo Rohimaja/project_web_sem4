@@ -22,12 +22,23 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        User::factory()->count(5)->state(['role' => 'admin'])->create();
+        User::factory()->count(5)->state(['role' => 'dosen'])->create();
+        User::factory()->count(10)->state(['role' => 'mahasiswa'])->create();
+
         $this->call([
+            ProvinceSeeder::class,
+            RegencySeeder::class,
+            DistrictSeeder::class,
+            VillageSeeder::class,
+            UserSeeder::class,
+            ProdiSeeder::class,
             TahunAjaranSeeder::class,
-        ]);
-        $this->call([
             RuanganSeeder::class,
-            // seeder lainnya jika ada
+            MatkulSeeder::class,
+            MahasiswaSeeder::class,
+            DosenSeeder::class,
+            PresensiSeeder::class,
         ]);
-    }
+}
 }

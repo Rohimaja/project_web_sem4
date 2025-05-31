@@ -24,7 +24,7 @@
             
             <a href="#" class="flex items-center space-x-2">
               <img src="{{ asset('images/stipress.png') }}" class="h-8 w-auto" alt="Logo">
-              <span class="text-xl font-bold text-gray-800 dark:text-white">Stipres</span>
+              <span class="text-xl font-bold text-gray-800 dark:text-white">STIPRES</span>
             </a>
       
             <div class="hidden lg:flex space-x-8 items-center">
@@ -64,8 +64,8 @@
           <div class="lg:w-1/2">
             <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl leading-tight"
             data-aos="fade-right">
-              Stipres - Aplikasi Presensi <br class="hidden sm:inline" />
-              Modern dan Mudah Digunakan
+              STIPRES - Aplikasi Presensi <br class="hidden sm:inline" />
+              Stikes Panti Waluya
             </h1>
             <p class="mt-6 text-gray-700 dark:text-gray-300 max-w-xl text-lg leading-relaxed" data-aos="fade-right" 
             data-aos-delay="200">
@@ -94,7 +94,7 @@
       <section id="tentang" class="bg-white dark:bg-gray-800 pb-16 pt-20" data-aos="fade-up">
         <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-8">
-            Tentang Stipres
+            Tentang STIPRES
           </h2>
           <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-8">
             Stipres adalah aplikasi presensi modern yang dirancang untuk memudahkan proses absensi di lingkungan kampus, khususnya digunakan oleh mahasiswa di Setikes Panti Waluya Malang. Sistem presensi offline menggunakan teknologi RFID memungkinkan mahasiswa melakukan absensi dengan cepat dan akurat tanpa perlu koneksi internet. Selain itu, aplikasi mobile Stipres mendukung presensi via Zoom, sehingga presensi daring dapat dilakukan dengan mudah selama perkuliahan atau rapat online berlangsung.
@@ -119,7 +119,7 @@
 
       <section id="fitur" class="bg-gray-50 dark:bg-gray-900 py-16 px-6" data-aos="fade-up">
         <div class="max-w-7xl mx-auto text-center mb-12">
-          <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white">Fitur Unggulan Stipress</h2>
+          <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white">Fitur Unggulan STIPRES</h2>
           <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Stipress memberikan kemudahan dalam presensi dengan teknologi modern yang lengkap dan mudah digunakan.
           </p>
