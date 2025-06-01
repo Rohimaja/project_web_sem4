@@ -124,4 +124,82 @@ class LoginController extends Controller
             return response()->json(['error' => 'Token error'], 401);
         }
     }
+
+    public function loginBiometric(Request $request)
+    {
+        $request->validate([
+            'role' => 'required|in:mahasiswa,dosen',
+            'mahasiswa_id' => 'nullable|required_if:role,mahasiswa|exists:mahasiswas,id',
+            'dosen_id' => 'nullable|required_if:role,dosen|exists:dosens,id',
+        ]);
+
+        $user = null;
+        $data = [];
+
+        if ($request->role === 'mahasiswa') {
+            $user = User::whereHas('mahasiswa', function ($q) use ($request) {
+                $q->where('mahasiswas.id', $request->mahasiswa_id); // Pastikan pakai nama tabel `mahasiswas`
+            })
+                ->with(['mahasiswa.prodi'])
+                ->first();
+
+            if (!$user || !$user->mahasiswa) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Data mahasiswa tidak ditemukan',
+                ], 404);
+            }
+
+            if (is_null($user->mahasiswa->email_verified_at)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Akun anda belum aktif. Silahkan aktivasi terlebih dahulu.',
+                ], 403);
+            }
+
+            $mhs = $user->mahasiswa;
+
+            $data = [
+                'mahasiswa_id' => $mhs->id,
+                'nama' => $mhs->nama,
+                'nim' => $mhs->nim,
+                'email' => $mhs->email,
+                'semester' => $mhs->semester,
+                'prodi_id' => $mhs->prodi_id,
+                'nama_prodi' => optional($mhs->prodi)->nama_prodi,
+                'foto' => $mhs->foto,
+            ];
+        }
+
+        if ($request->role === 'dosen') {
+            $user = User::whereHas('dosen', function ($q) use ($request) {
+                $q->where('dosens.id', $request->dosen_id); // Pastikan pakai nama tabel `dosens`
+            })
+                ->with('dosen')
+                ->first();
+
+            if (!$user || !$user->dosen) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Data dosen tidak ditemukan',
+                ], 404);
+            }
+
+            $dsn = $user->dosen;
+
+            $data = [
+                'dosen_id' => $dsn->id,
+                'nama' => $dsn->nama,
+                'email' => $dsn->email,
+                'nip' => $dsn->nip,
+                'foto' => $dsn->foto,
+            ];
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Login berhasil',
+            'data' => $data,
+        ]);
+    }
 }

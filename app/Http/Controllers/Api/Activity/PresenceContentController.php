@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Api\activity;
 
 use App\Http\Controllers\Controller;
 use App\Models\DetailPresensi;
+use App\Models\FcmToken;
+use App\Models\Mahasiswa;
+use App\Models\Matkul;
+use App\Models\Notification;
+use App\Services\FcmV1Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -35,10 +41,8 @@ class PresenceContentController extends Controller
         if ($request->hasFile('bukti')) {
             $file = $request->file('bukti');
             $filename = 'bukti-' . $request->mahasiswa_id . '-' . now()->format('Ymd') . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-
             // Simpan ke storage/app/public/bukti
             $file->storeAs('bukti', $filename, 'public');
-
             // Simpan path relatif ke database
             $data['bukti'] = 'bukti/' . $filename;
         }
@@ -49,17 +53,48 @@ class PresenceContentController extends Controller
             ->where('mahasiswa_id', $request->mahasiswa_id)
             ->update($data);
 
-        // Respon berdasarkan hasil update
-        if ($updated > 0) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Absensi berhasil',
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Data tidak ditemukan atau tidak ada perubahan',
-            ], 404);
+        // Ambil data mahasiswa & user
+        $mahasiswa = Mahasiswa::with('user')->findOrFail($request->mahasiswa_id);
+        $user = $mahasiswa->user;
+        $matkul = Matkul::whereHas('presensi', function ($q) use ($request) {
+            $q->where('id', $request->presensi_id);
+        })->first();
+
+        $waktu = Carbon::now()->locale('id')->timezone('Asia/Jakarta');
+        $tanggal = $waktu->translatedFormat('d F Y');
+        $jam = $waktu->format('H.i');
+
+        // Simpan notifikasi
+        Notification::create([
+            'user_id' => $user->id,
+            'title' => $updated ? 'Presensi Berhasil Ditambahkan!' : 'Presensi Gagal Ditambahkan!',
+            'message' => $updated ? 'Presensi Anda berhasil direkam.' : 'Presensi Anda gagal direkam.',
+            'type' => $updated ? 'presensiBerhasil' : 'presensiGagal',
+            'nama_user' => $mahasiswa->nama,
+            'tanggal' => $tanggal,
+            'jam' => $jam,
+            'mata_kuliah' => $matkul?->nama_matkul ?? '-',
+        ]);
+
+        $fcmService = new FcmV1Service();
+
+        // Kirim notifikasi ke mahasiswa
+        $mahasiswaUserId = Mahasiswa::find($request->mahasiswa_id)->user_id;
+        $Tokens = FcmToken::where('user_id', $mahasiswaUserId)->pluck('token');
+        $namaMatkul = $matkul?->nama_matkul ?? '-';
+
+        foreach ($Tokens as $token) {
+            $fcmService->send(
+                $token,
+                'Presensi Berhasil',
+                'Presensi untuk matkul ' . $namaMatkul . ' sudah berhasil dilakukan.'
+            );
         }
+
+        // Kirim response
+        return response()->json([
+            'status' => $updated ? 'success' : 'error',
+            'message' => $updated ? 'Absensi berhasil' : 'Data tidak ditemukan atau tidak ada perubahan',
+        ], $updated ? 200 : 404);
     }
 }

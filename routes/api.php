@@ -12,7 +12,9 @@ use App\Http\Controllers\Api\ActivityLecturer\DetailPresenceLecturerController;
 use App\Http\Controllers\Api\ActivityLecturer\PresenceIncrementController;
 use App\Http\Controllers\Api\Auth\ActivationAccountController;
 use App\Http\Controllers\Api\Auth\ChangePasswordController;
+use App\Http\Controllers\Api\Auth\FcmController;
 use App\Http\Controllers\Api\Auth\ForgetPasswordController;
+use App\Http\Controllers\Api\Auth\NotificationController;
 use App\Http\Controllers\Api\Listview\AttendanceStudentController;
 use App\Http\Controllers\Api\Listview\GetLessonController;
 use App\Http\Controllers\Api\Listview\LectureLecturerController;
@@ -35,6 +37,11 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::post('auth/loginByBiometric', [LoginController::class, 'loginBiometric']); 
+    Route::post('auth/fcm-token', [FcmController::class, 'storeToken']);
+    Route::post('auth/fcm-token/delete', [FcmController::class, 'deleteToken']);
+    Route::post('notifications', [NotificationController::class, 'index']);
+    Route::post('notifications/send', [NotificationController::class, 'sendNotification']);
 
     Route::prefix('activityLecturer')->group(function () {
         Route::post('presence/check-edit', [CheckPresenceController::class, 'checkPresenceEdit']);
@@ -59,6 +66,8 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('presenceActivity', [PresenceContentController::class, 'store']);
         Route::post('upProfile', [UploadProfileController::class, 'uploadProfile']);
         Route::get('getAcademicCalendar', [AcademicCalendarController::class, 'index']);
+        Route::get('getNotification/mahasiswa/{mahasiswaId}', [NotificationController::class, 'getByMahasiswa']);
+        Route::get('getNotification/dosen/{dosenId}', [NotificationController::class, 'getByDosen']);
     });
 
 

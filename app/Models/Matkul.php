@@ -27,7 +27,7 @@ class Matkul extends Model
 
     public function presensi()
     {
-        return $this->hasMany(Presensi::class);
+        return $this->hasMany(Presensi::class, );
     }
 
     public function tahunAjaran()
