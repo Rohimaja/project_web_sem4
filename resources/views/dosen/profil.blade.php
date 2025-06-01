@@ -56,8 +56,8 @@
                           <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-sm" value="{{ $user->dosen->tempat_lahir . ', ' . $user->dosen->tgl_lahir }}">
                       </div>
                       <div class="flex flex-col w-full mb-4">
-                          <label class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Jenis Kelamin:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-sm" value="{{ $user->dosen->jenis_kelamin }}">
+                            <label class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Jenis Kelamin:</label>
+                            <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{ $user->dosen->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}">
                       </div>
                   </div>
 
@@ -79,7 +79,7 @@
                       </div>
                       <div class="flex flex-col w-full mb-4">
                           <label class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Alamat:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-sm" value="{{ $user->dosen->province->name . ', ' . $user->dosen->regency->name . ', ' . $user->dosen->district->name . ', ' . $user->dosen->village->name .', '. $user->dosen->alamat }}">
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-sm" value="{{ $user->dosen->provinsi->name . ', ' . $user->dosen->kota->name . ', ' . $user->dosen->kecamatan->name . ', ' . $user->dosen->kelurahan->name .', '. $user->dosen->alamat }}">
                       </div>
                   </div>
               </div>

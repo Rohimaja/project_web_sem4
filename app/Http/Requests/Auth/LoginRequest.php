@@ -149,10 +149,10 @@ public function authenticate(): void
         }
     }
 
-    Auth::login($user, $this->boolean('remember'));
+    Auth::login($user, false);
 
         // ✅ Simpan username/NIM ke cookie jika 'remember' dicentang
-    if ($this->boolean('remember')) {
+    if ($this->boolean('remember_me')) {
         cookie()->queue('cookie_username', $this->username, 60 * 24 * 30); // 30 hari
         cookie()->queue('cookie_ingat', true, 60 * 24 * 30);
     } else {

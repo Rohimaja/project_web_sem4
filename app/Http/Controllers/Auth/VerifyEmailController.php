@@ -55,8 +55,8 @@ class VerifyEmailController extends Controller
         $mahasiswa->save();
 
         // $user->markEmailAsVerified();
-        event(new Verified($mahasiswa));
+        // event(new Verified($mahasiswa));
 
-        return redirect()->route('login')->with('status', 'Email berhasil diverifikasi.');
+        return redirect()->route('login')->with('status', 'Email berhasil diverifikasi. Silahkan login dengan nim anda');
     }
 }

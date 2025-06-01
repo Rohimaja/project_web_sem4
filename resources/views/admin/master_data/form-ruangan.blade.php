@@ -18,15 +18,7 @@
                 <div class="w-full">
                     <div class="flex flex-col w-full mb-4">
                         <label for="nama_ruangan" class="mb-1 font-semibold text-gray-800 dark:text-gray-200">Nama Ruangan:</label>
-                        <input
-                            type="text"
-                            class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm"
-                            name="nama_ruangan"
-                            id="nama_ruangan"
-                            value="{{ old('nama_ruangan', $ruangan->nama_ruangan ?? '') }}"
-                            required
-                            data-validate="ruangan"
-                        >
+                        <input type="text" class="p-2 mt-1 w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-sm" name="nama_ruangan" id="nama_ruangan" value="{{ old('nama_ruangan', $ruangan->nama_ruangan ?? '') }}" required data-validate="ruangan" placeholder="Contoh: Ruang Rapat">
                         <span class="text-red-600 text-sm" id="nama_ruangan_error">
                             @error('nama_ruangan'){{ $message }}@enderror
                         </span>
@@ -41,7 +33,7 @@
                     </a>
                     <button
                         class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">
-                        Submit
+                        Simpan
                     </button>
                 </div>
             </form>

@@ -39,7 +39,7 @@ class EmailVerificationController extends Controller
         }
 
         if ($mahasiswa->email_verified_at) {
-            return back()->with('status', 'Email sudah diverifikasi.');
+            return redirect()->route('login')->with('status', 'Email sudah diverifikasi, Silahkan Melanjutkan login');
         }
 
         // Kirim link verifikasi email (pakai notifikasi custom)

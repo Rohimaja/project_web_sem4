@@ -6,7 +6,7 @@
       <div class="w-full flex flex-col md:flex-row gap-5 mt-5">
           <!-- Foto Profil -->
           <div class="bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-700 h-full w-full pb-5 md:basis-1/2 rounded-sm">
-              <form action="{{route('admin.profile.update')}}" enctype="multipart/form-data" method="POST">
+              <form action="{{route('admin.profile.update')}}" enctype="multipart/form-data" method="POST" class="form-validasi">
                   @csrf
                   @method('patch')
                   <div class="flex items-center p-4 border-b-2 border-gray-200 dark:border-gray-700">
@@ -20,7 +20,7 @@
                       <label for="foto" class="flex items-center px-5 py-2.5 text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-sm font-semibold cursor-pointer">Upload New Image</label>
                   </div>
                   <div class="px-8 py-4 flex justify-end">
-                      <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+                      <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Simpan</button>
                   </div>
               </form>
           </div>
@@ -45,7 +45,7 @@
                   </div>
                   <div class="flex flex-col md:flex-row">
                         <div class="flex flex-col w-full mb-4 mr-0 md:mr-4">
-                          <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">No Telp:</label>
+                          <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Telepon:</label>
                           <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->no_telp}}">
                       </div>
 
@@ -61,13 +61,13 @@
                       </div>
                       <div class="flex flex-col w-full mb-4">
                           <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Jenis Kelamin:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->jenis_kelamin}}">
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{ $user->admin->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}">
                       </div>
                   </div>
                   <div class="flex flex-col md:flex-row">
                       <div class="flex flex-col w-full mb-4">
                           <label for="" class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Alamat:</label>
-                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->province->name .', '. $user->admin->regency->name .', '. $user->admin->district->name .', '. $user->admin->village->name .', '. $user->admin->alamat  }}">
+                          <input type="text" disabled class="p-2 border-2 border-gray-700 bg-gray-100 text-gray-700 rounded-sm dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300" value="{{$user->admin->provinsi->name .', '. $user->admin->kota->name .', '. $user->admin->kecamatan->name .', '. $user->admin->kelurahan->name .', '. $user->admin->alamat  }}">
                       </div>
                   </div>
               </div>

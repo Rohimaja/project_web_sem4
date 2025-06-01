@@ -18,12 +18,7 @@
                 <div class="flex flex-col md:flex-row items-center gap-6 mb-6">
                     <!-- Preview Foto -->
                     <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gray-300 shadow-sm">
-                        <img
-                            src="{{ isset($admin) && $admin->foto ? asset('storage/' . $admin->foto) : asset('images/profil-kosong.png') }}"
-                            id="previewImage"
-                            class="w-full h-full object-cover"
-                            alt="Preview Foto"
-                        >
+                        <img src="{{ isset($dosen) && $dosen->foto ? asset('storage/' . $dosen->foto) : asset('images/profil-kosong.png') }}" id="previewImage" class="w-full h-full object-cover" alt="Preview Foto">
                     </div>
 
                     <!-- Info & Tombol -->
@@ -46,15 +41,15 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Nama Lengkap:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white " name="nama" id="nama" value="{{old('nama', $dosen->nama ?? '')}}" required data-validate="dosen" placeholder="contoh: Firmansayh Putra">
+                        <label for="nama" class="mb-1 font-semibold">Nama Lengkap:</label>
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white " name="nama" id="nama" value="{{old('nama', $dosen->nama ?? '')}}" required autocomplete="name" data-validate="dosen" placeholder="contoh: Firmansayh Putra">
                         <span class="text-red-600 text-sm" id="nama_error">
                             @error('nama'){{ $message }}@enderror
                         </span>
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">NIP:</label>
+                        <label for="nip" class="mb-1 font-semibold">NIP:</label>
                         <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white " name="nip" id="nip" value="{{old('nip', $dosen->nip ?? '')}}" required data-validate="dosen" placeholder="contoh: 199707xxxxxxxx">
                         <span class="text-red-600 text-sm" id="nip_error">
                             @error('nip'){{ $message }}@enderror
@@ -64,11 +59,11 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Jenis Kelamin:</lab>
+                        <label for="jenis_kelamin" class="mb-1 font-semibold">Jenis Kelamin:</lab>
                         <select class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white " name="jenis_kelamin" id="jenis_kelamin" required >
                             <option value="" hidden selected>Pilih jenis kelamin</option>
-                            <option value="Laki-laki" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'Perempuan' ? 'selected' : ''}}>Perempuan</option>
+                            <option value="L" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="P" {{old('jenis_kelamin', $dosen->jenis_kelamin ?? '') == 'P' ? 'selected' : ''}}>Perempuan</option>
                         </select>
                         @error('jenis_kelamin')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
@@ -76,7 +71,7 @@
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Agama:</label>
+                        <label for="agama" class="mb-1 font-semibold">Agama:</label>
                         <select class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white " name="agama" id="agama" required >
                             <option value="" hidden selected>Pilih Agama</option>
                             <option value="Islam" {{old('agama', $dosen->agama ?? '') == 'Islam' ? 'selected' : ''}}>Islam</option>
@@ -93,7 +88,7 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Tempat Lahir:</label>
+                        <label for="tempat_lahir" class="mb-1 font-semibold">Tempat Lahir:</label>
                         <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tempat_lahir" id="tempat_lahir" value="{{old('tempat_lahir', $dosen->tempat_lahir ?? '')}}" required data-validate="dosen" placeholder="contoh: Banyuwangi">
                         <span class="text-red-600 text-sm" id="tempat_lahir_error">
                             @error('tempat_lahir'){{ $message }}@enderror
@@ -101,7 +96,7 @@
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Tanggal Lahir:</label>
+                        <label for="tgl_lahir" class="mb-1 font-semibold">Tanggal Lahir:</label>
                         <input type="date" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="tgl_lahir" id="tgl_lahir" value="{{old('tgl_lahir', $dosen->tgl_lahir ?? '')}}" required data-validate="dosen">
                         <span class="text-red-600 text-sm" id="tgl_lahir_error">
                             @error('tgl_lahir'){{ $message }}@enderror
@@ -111,16 +106,16 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Email:</label>
-                        <input type="email" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="email" id="email" value="{{old('email', $dosen->email ?? '')}}" required data-validate="dosen" placeholder="contoh: dosen@gmail.com">
+                        <label for="email" class="mb-1 font-semibold">Email:</label>
+                        <input type="email" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="email" id="email" value="{{old('email', $dosen->email ?? '')}}" required autocomplete="email" data-validate="dosen" placeholder="contoh: dosen@gmail.com">
                         <span class="text-red-600 text-sm" id="email_error">
                             @error('email'){{ $message }}@enderror
                         </span>
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Nomor Telepon:</label>
-                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="no_telp" id="no_telp" value="{{old('no_telp', $dosen->no_telp ?? '')}}" required data-validate="dosen" placeholder="contoh: 08xxxxxxxxx">
+                        <label for="no_telp" class="mb-1 font-semibold">Nomor Telepon:</label>
+                        <input type="text" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="no_telp" id="no_telp" value="{{old('no_telp', $dosen->no_telp ?? '')}}" required autocomplete="tel" data-validate="dosen" placeholder="contoh: 08xxxxxxxxx">
                         <span class="text-red-600 text-sm" id="no_telp_error">
                             @error('no_telp'){{ $message }}@enderror
                         </span>
@@ -129,7 +124,7 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Pilih Prodi:</label>
+                        <label for="prodi_id" class="mb-1 font-semibold">Pilih Prodi:</label>
                         <select class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="prodi_id" id="prodi_id" required>
                             <option value="" hidden selected>Pilih Prodi</option>
                             @foreach ($prodi as $p)
@@ -145,7 +140,7 @@
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
                         @if (isset($dosen))
-                            <label for="" class="mb-1 font-semibold">Password Baru:</label>
+                            <label for="new_password" class="mb-1 font-semibold">Password Baru:</label>
                             <input type="hidden" name="old_password" id="old_password" value="{{$dosen->password ?? ''}}">
                             <input type="password" class="p-2 border-2 border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" name="new_password" id="password">
                         @endif
@@ -157,21 +152,21 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Provinsi:</lab>
-                        <select id="provinsi" name="province_id" data-selected="{{$dosen->province_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
-                            <option value="" hidden selected>Pilih Provinsi</option>
+                        <label for="provinsi" class="mb-1 font-semibold">Provinsi:</lab>
+                        <select id="provinsi" name="provinsi_id" data-selected="{{$dosen->provinsi_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
+
                         </select>
-                        @error('province_id')
+                        @error('provinsi_id')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Kota / Kabupaten:</label>
-                        <select name="regency_id" id="kota" data-selected="{{$dosen->regency_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
-                            <option value="" hidden selected>Pilih Kota / Kabupaten</option>
+                        <label for="kota" class="mb-1 font-semibold">Kota / Kabupaten:</label>
+                        <select name="kota_id" id="kota" data-selected="{{$dosen->kota_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
+
                         </select>
-                        @error('regency_id')
+                        @error('kota_id')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
@@ -179,21 +174,21 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Kecamatan:</lab>
-                        <select id="kecamatan" name="district_id" data-selected="{{$dosen->district_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
-                            <option value="" hidden selected>Pilih Kecamatan</option>
+                        <label for="kecamatan" class="mb-1 font-semibold">Kecamatan:</lab>
+                        <select id="kecamatan" name="kecamatan_id" data-selected="{{$dosen->kecamatan_id ?? ''}}" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
+
                         </select>
-                        @error('ditrict_id')
+                        @error('kecamatan_id')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="flex flex-col w-full mb-4 md:w-1/2">
-                        <label for="" class="mb-1 font-semibold">Kelurahan:</label>
-                        <select id="kelurahan" name="village_id" data-selected="{{$dosen->village_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
-                            <option value="" hidden selected>Pilih Kode pos</option>
+                        <label for="kelurahan" class="mb-1 font-semibold">Kelurahan:</label>
+                        <select id="kelurahan" name="kelurahan_id" data-selected="{{$dosen->kelurahan_id ?? ''}}" class="p-2 py-[11px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600  bg-white dark:bg-gray-700 text-black dark:text-white rounded-sm" required>
+
                         </select>
-                        @error('village_id')
+                        @error('kelurahan_id')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
@@ -201,7 +196,7 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="flex flex-col w-full mb-4 md:w-1/2 mr-0 md:mr-8">
-                        <label for="" class="mb-1 font-semibold">Alamat lengkap:</lab>
+                        <label for="alamat" class="mb-1 font-semibold">Alamat lengkap:</lab>
                         <textarea type="text" class="p-2 mt-1 py-[10.5px] w-full flex border-2 font-normal border-gray-400 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-700 text-black dark:text-white " name="alamat" id="alamat" placeholder="Contoh: Jl.Manggar 2 No 27" required data-validate="dosen" >{{old('alamat', $dosen->alamat ?? '')}}</textarea>
                         <span class="text-red-600 text-sm" id="alamat_error">
                             @error('alamat'){{ $message }}@enderror
@@ -214,7 +209,7 @@
                     <a href="{{route('admin.master-dosen.index')}}" class="px-5 py-2 mr-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold rounded-md cursor-pointer">
                         Batal
                     </a>
-                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Submit</button>
+                    <button class="px-5 py-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white rounded-md font-semibold cursor-pointer">Simpan</button>
                 </div>
             </form>
         </div>

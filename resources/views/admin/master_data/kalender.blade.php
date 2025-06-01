@@ -30,7 +30,7 @@
                             <th class=" dark:border-gray-600 px-4 py-2">Deskripsi</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Tanggal Mulai</th>
                             <th class=" dark:border-gray-600 px-4 py-2">Tanggal Selesai</th>
-                            <th class=" dark:border-gray-600 px-4 py-2 text-center">Aksi</th>
+                            <th class=" dark:border-gray-600 px-4 py-2 !text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -16,7 +16,7 @@ class TahunAjaranFactory extends Factory
             'tahun_awal' => $tahunAwal,
             'tahun_akhir' => $tahunAkhir,
             'keterangan' => $this->faker->randomElement([
-                'Semester Ganjil', 'Semester Genap', 'Tahun Ajaran Baru', 'Semester Pendek'
+                'Ganjil', 'Genap'
             ]),
             'status' => $this->faker->boolean ? 1 : 0, // 1 = aktif, 0 = nonaktif
             'created_at' => now(),

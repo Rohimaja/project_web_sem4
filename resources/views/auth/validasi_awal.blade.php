@@ -1,4 +1,4 @@
-<x-layoutAuth title="Login">
+<x-layoutAuth title="Validasi">
   <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-100 to-gray-100 px-4">
       <div class="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6">
           <div class="w-full flex justify-center">

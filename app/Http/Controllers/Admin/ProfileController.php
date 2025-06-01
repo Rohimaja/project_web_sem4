@@ -34,7 +34,7 @@ class ProfileController extends Controller
         // $user = User::with('admin')->find($request->user()->id);
 
         // $user = $request->user()->load('admin','province','regency','district','village');
-        $user = $request->user()->load(['admin.province', 'admin.regency', 'admin.district', 'admin.village']);
+        $user = $request->user()->load(['admin.provinsi', 'admin.kota', 'admin.kecamatan', 'admin.kelurahan']);
 
 
 
@@ -72,8 +72,8 @@ class ProfileController extends Controller
                 }
 
                 // Simpan foto baru
-                $filename = 'profile/admin/profile_' . $admin->id . '.' . $request->file('foto')->extension();
-                $fotoPath = $request->file('foto')->storeAs('foto_admin', $filename, 'public');
+                $filename = 'admin/profile_' . $admin->id . '.' . $request->file('foto')->extension();
+                $fotoPath = $request->file('foto')->storeAs('profiles', $filename, 'public');
                 $admin->update(['foto' => $fotoPath]);
             }
 

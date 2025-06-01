@@ -42,9 +42,7 @@
                     <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100 sticky top-0 z-10">
                         <tr>
                             <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">No</th>
-                            <th @mouseenter="hovering = true" @mouseleave="hovering = false"
-                                :class="hovering ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 dark:text-white'"
-                                class="border border-gray-300 dark:border-gray-600 px-4 py-2">Kode Mata Kuliah</th>
+                            <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Kode Mata Kuliah</th>
                             <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Mata Kuliah</th>
                             @for ($i = 1; $i <= 16; $i++)
                                 <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">{{ $i }}</th>

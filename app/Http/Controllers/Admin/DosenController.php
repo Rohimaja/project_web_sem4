@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\DosenImport;
 use Illuminate\Http\Request;
 use App\Models\Dosen;
 use App\Models\Prodi;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Admin\StoreMasterDosen;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class DosenController extends Controller
@@ -44,7 +46,7 @@ class DosenController extends Controller
             'tempat_lahir' => ucwords(trim($request->tempat_lahir)),
             'email' => strtolower(trim($request->email)),
             'no_telp' => trim($request->no_telp),
-            'alamat' => trim($request->alamat),
+            'alamat' => ucwords(trim($request->alamat)),
         ]);
 
         try {
@@ -60,8 +62,8 @@ class DosenController extends Controller
 
                 $fotoPath = null;
                 if ($request->hasFile('foto')) {
-                    $filename = 'profile/dosen/profile_' . $request->nip . '.' . $request->file('foto')->extension();
-                    $fotoPath = $request->file('foto')->storeAs( 'foto_dosen', $filename, 'public');
+                    $filename = 'dosen/profile_' . $request->nip . '.' . $request->file('foto')->extension();
+                    $fotoPath = $request->file('foto')->storeAs( 'profiles', $filename, 'public');
                 }
 
                 Dosen::create([
@@ -77,10 +79,10 @@ class DosenController extends Controller
                     'alamat' => $request->alamat,
                     'prodi_id' => $request->prodi_id,
                     'foto' => $fotoPath,
-                    'province_id' => $request->province_id,
-                    'regency_id' => $request->regency_id,
-                    'district_id' => $request->district_id,
-                    'village_id' => $request->village_id,
+                    'provinsi_id' => $request->provinsi_id,
+                    'kota_id' => $request->kota_id,
+                    'kecamatan_id' => $request->kecamatan_id,
+                    'kelurahan_id' => $request->kelurahan_id,
                 ]);
             });
 
@@ -106,7 +108,7 @@ class DosenController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = Dosen::with('prodi','province','regency','district','village')->findOrFail($id);
+            $dosen = Dosen::with('prodi','provinsi','kota','kecamatan','kelurahan')->findOrFail($id);
 
             return response()->json($dosen);
         } catch (\Exception $e) {
@@ -133,7 +135,7 @@ class DosenController extends Controller
             'tempat_lahir' => trim($request->tempat_lahir),
             'email' => trim($request->email),
             'no_telp' => trim($request->no_telp),
-            'alamat' => trim($request->alamat),
+            'alamat' => ucwords(trim($request->alamat)),
             'password' => trim($request->new_password),
         ]);
 
@@ -149,8 +151,8 @@ class DosenController extends Controller
                         Storage::disk('public')->delete($dosen->foto);
                     }
 
-                    $filename = 'profile/dosen/profile_' . $request->nip . '.' . $request->file('foto')->extension();
-                    $fotoPath = $request->file('foto')->storeAs('foto_dosen', $filename, 'public');
+                    $filename = 'dosen/profile_' . $request->nip . '.' . $request->file('foto')->extension();
+                    $fotoPath = $request->file('foto')->storeAs('profiles', $filename, 'public');
                     $dosen->foto = $fotoPath;
                 }
 
@@ -166,10 +168,10 @@ class DosenController extends Controller
                     'alamat' => $request->alamat,
                     'foto' => $dosen->foto,
                     'prodi_id' => $request->prodi_id,
-                    'province_id' => $request->province_id,
-                    'regency_id' => $request->regency_id,
-                    'district_id' => $request->district_id,
-                    'village_id' => $request->village_id,
+                    'provinsi_id' => $request->provinsi_id,
+                    'kota_id' => $request->kota_id,
+                    'kecamatan_id' => $request->kecamatan_id,
+                    'kelurahan_id' => $request->kelurahan_id,
                 ]);
 
                 $userData =[
@@ -256,4 +258,33 @@ class DosenController extends Controller
 
         return response()->json($query->get(['foto','nip','nama', 'email']));
     }
+
+    public function import(Request $request){
+
+        try {
+            $request->validate([
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        Excel::import(new DosenImport, $request->file('file'));
+
+            return redirect()->route('admin.master-dosen.index')->with([
+                'status' => 'success',
+                'message' => 'Data Berhasil Diimpor'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal Import Data', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat import data: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+
 }

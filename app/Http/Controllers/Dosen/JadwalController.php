@@ -16,14 +16,14 @@ class JadwalController extends Controller
         $title = 'Jadwal Mengajar Dosen';
         $dosen = Auth::user()->dosen;
         $tahun = TahunAjaran::orderBy('tahun_awal')->get();
-        $jadwal = Jadwal::with('prodi','dosen','ruangan','tahunAjaran','matkul')->where('dosen_id', $dosen->id)->get();
+        $jadwal = Jadwal::with('prodi','dosen','ruangan','tahun','matkul')->where('dosen_id', $dosen->id)->get();
         return view('dosen.jadwal', compact('title','jadwal','tahun'));
     }
 
     public function getFilterJadwal(Request $request){
         $tahun = $request->query('tahun_ajaran');
 
-        $query = Jadwal::query()->with('prodi','tahunAjaran','dosen','matkul','ruangan');
+        $query = Jadwal::query()->with('prodi','tahun','dosen','matkul','ruangan');
 
         if ($tahun) {
             $query->where('tahun_ajaran_id', $tahun);
