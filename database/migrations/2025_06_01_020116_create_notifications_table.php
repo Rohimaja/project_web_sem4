@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('tanggal');
             $table->string('jam');
             $table->string('mata_kuliah')->nullable();
+            $table->foreignId('presensi_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

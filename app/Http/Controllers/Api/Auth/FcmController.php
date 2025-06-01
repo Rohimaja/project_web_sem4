@@ -16,9 +16,8 @@ class FcmController extends Controller
 
         $user = auth()->user();
 
-        FcmToken::updateOrCreate(
-            ['user_id' => $user->id],
-            ['token' => $request->fcm_token]
+        FcmToken::firstOrCreate(
+            ['user_id' => $user->id, 'token' => $request->fcm_token]
         );
 
         return response()->json([

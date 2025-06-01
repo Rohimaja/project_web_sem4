@@ -32,7 +32,7 @@ class AllScheduleController extends Controller
         $jadwals = Jadwal::with(['matkul', 'ruangan'])
             ->where('prodi_id', $mahasiswa->prodi_id)
             ->where('semester', $mahasiswa->semester)
-            ->whereHas('tahunAjaran', function ($query) {
+            ->whereHas('tahun', function ($query) {
                 $query->where('status', 1); // hanya ambil tahun ajaran aktif
             })
             ->get();
@@ -73,7 +73,7 @@ class AllScheduleController extends Controller
 
         $jadwals = Jadwal::with(['matkul', 'ruangan'])
             ->where('dosen_id', $dosenId)
-            ->whereHas('tahunAjaran', function ($query) {
+            ->whereHas('tahun', function ($query) {
                 $query->where('status', 1); // hanya tahun ajaran aktif
             })
             ->get();

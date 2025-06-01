@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
     {
         // Schedule notifikasi presensi mahasiswa setiap menit
         $schedule->command('presensi:notify-mahasiswa')
-            ->everyMinute();
+            ->everyFiveMinutes()
+            ->appendOutputTo(storage_path('logs/scheduler.log'));
 
         // Schedule inspire command (opsional)
         $schedule->command('inspire')

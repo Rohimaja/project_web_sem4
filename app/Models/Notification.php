@@ -15,6 +15,7 @@ class Notification extends Model
         'tanggal',
         'jam',
         'mata_kuliah',
+        'presensi_id',
     ];
 
     public function user()

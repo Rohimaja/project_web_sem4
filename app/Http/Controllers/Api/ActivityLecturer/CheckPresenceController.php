@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\ActivityLecturer;
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
 use App\Models\FcmToken;
+use App\Models\Mahasiswa;
 use App\Models\Notification;
 use App\Models\Presensi;
 use App\Services\FcmV1Service;
@@ -48,6 +49,50 @@ class CheckPresenceController extends Controller
             'message' => 'Notifikasi dikirim ke mahasiswa dengan presensi < 1 jam.',
         ]);
     }
+    public function checkRecentNotificationByDosenId(Request $request)
+    {
+        $request->validate([
+            'dosen_id' => 'required|integer|exists:dosens,id',
+        ]);
+
+        $dosen = \App\Models\Dosen::with('user')->findOrFail($request->dosen_id);
+        $userId = $dosen->user_id;
+
+        $now = now()->timezone('Asia/Jakarta');
+        $oneHourAgo = $now->copy()->subHour();
+
+        $hasRecent = \App\Models\Notification::where('user_id', $userId)
+            ->whereBetween('created_at', [$oneHourAgo, $now])
+            ->exists();
+
+        return response()->json([
+            'hasNotification' => $hasRecent,
+        ]);
+    }
+
+
+    public function checkRecentNotificationByMahasiswaId(Request $request)
+    {
+        $request->validate([
+            'mahasiswa_id' => 'required|integer|exists:mahasiswas,id',
+        ]);
+
+        $mahasiswa = \App\Models\Mahasiswa::with('user')->findOrFail($request->mahasiswa_id);
+        $userId = $mahasiswa->user_id;
+
+        $now = now()->timezone('Asia/Jakarta');
+        $oneHourAgo = $now->copy()->subHour();
+
+        $hasRecent = \App\Models\Notification::where('user_id', $userId)
+            ->whereBetween('created_at', [$oneHourAgo, $now])
+            ->exists();
+
+        return response()->json([
+            'hasNotification' => $hasRecent,
+        ]);
+    }
+
+
     public function checkPresenceEdit(Request $request)
     {
         $request->validate([
@@ -73,13 +118,24 @@ class CheckPresenceController extends Controller
             ->where('id', '!=', $presensi->id)
             ->where(function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
+                    // Kasus 1: Jam baru dimulai selama jam yang ada
                     $q->where('jam_awal', '<', $request->jam_akhir)
                         ->where('jam_akhir', '>', $request->jam_awal);
                 })->orWhere(function ($q) use ($request) {
+                    // Kasus 2: Jam baru mencakup seluruh jam yang ada
+                    $q->where('jam_awal', '>=', $request->jam_awal)
+                        ->where('jam_akhir', '<=', $request->jam_akhir);
+                })->orWhere(function ($q) use ($request) {
+                    // Kasus 3: Jam baru dimulai sebelum dan berakhir selama jam yang ada
                     $q->where('jam_awal', '<', $request->jam_awal)
                         ->where('jam_akhir', '>', $request->jam_awal);
+                })->orWhere(function ($q) use ($request) {
+                    // Kasus 4: Jam baru dimulai selama dan berakhir setelah jam yang ada
+                    $q->where('jam_awal', '<', $request->jam_akhir)
+                        ->where('jam_akhir', '>', $request->jam_akhir);
                 });
-            })->first();
+            })
+            ->first();
 
         if ($conflict) {
             // Ambil data dosen & user
@@ -91,7 +147,7 @@ class CheckPresenceController extends Controller
             $tanggal = $waktu->translatedFormat('d F Y');
             $jam = $waktu->format('H.i');
 
-            $tgl_presensi = Carbon::parse($conflict->tgl_presensi)->translatedFormat('d F Y');
+            $tgl_presensi = Carbon::parse($conflict->tgl_presensi)->locale('id')->translatedFormat('d F Y');
 
             $message = "Presensi Anda gagal ditambahkan karena bentrok dengan jadwal lain pada " .
                 Carbon::parse($conflict->jam_awal)->format('H:i') . " - " .
@@ -171,7 +227,7 @@ class CheckPresenceController extends Controller
             $tanggal = $waktu->translatedFormat('d F Y');
             $jam = $waktu->format('H.i');
 
-            $tgl_presensi = Carbon::parse($conflict->tgl_presensi)->translatedFormat('d F Y');
+            $tgl_presensi = Carbon::parse($conflict->tgl_presensi)->locale('id')->translatedFormat('d F Y');
 
             $message = "Presensi Anda gagal ditambahkan karena bentrok dengan jadwal lain pada " .
                 Carbon::parse($conflict->jam_awal)->format('H:i') . " - " .

@@ -2,6 +2,7 @@
 use App\Http\Controllers\Api\activity\AcademicCalendarController;
 use App\Http\Controllers\Api\activity\AllScheduleController;
 use App\Http\Controllers\Api\activity\PresenceContentController;
+use App\Http\Controllers\Api\Activity\SummaryController;
 use App\Http\Controllers\Api\activity\TransactionController;
 use App\Http\Controllers\Api\activity\UploadProfileController;
 use App\Http\Controllers\Api\Activity\ViewProfileController;
@@ -37,7 +38,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::post('auth/loginByBiometric', [LoginController::class, 'loginBiometric']); 
+    Route::post('auth/loginByBiometric', [LoginController::class, 'loginBiometric']);
     Route::post('auth/fcm-token', [FcmController::class, 'storeToken']);
     Route::post('auth/fcm-token/delete', [FcmController::class, 'deleteToken']);
     Route::post('notifications', [NotificationController::class, 'index']);
@@ -46,6 +47,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('activityLecturer')->group(function () {
         Route::post('presence/check-edit', [CheckPresenceController::class, 'checkPresenceEdit']);
         Route::post('presence/check-upload', [CheckPresenceController::class, 'checkPresenceUpload']);
+        Route::get('checkNotificationMahasiswa', [CheckPresenceController::class, 'checkRecentNotificationByMahasiswaId']);
+        Route::get('checkNotificationDosen', [CheckPresenceController::class, 'checkRecentNotificationByDosenId']);
         Route::get('getMajor', [AttendanceLecturerController::class, 'showMajor']);
         Route::get('getStudent', [AttendanceLecturerController::class, 'showStudent']);
         Route::get('presence/header', [DetailPresenceLecturerController::class, 'showHeader']);
@@ -68,6 +71,8 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('getAcademicCalendar', [AcademicCalendarController::class, 'index']);
         Route::get('getNotification/mahasiswa/{mahasiswaId}', [NotificationController::class, 'getByMahasiswa']);
         Route::get('getNotification/dosen/{dosenId}', [NotificationController::class, 'getByDosen']);
+        Route::get('presensi-summary/{mahasiswaId}', [SummaryController::class, 'countByMahasiswa']);
+        Route::get('presensi-summary/dosen/{dosenId}', [SummaryController::class, 'countByDosen']);
     });
 
 

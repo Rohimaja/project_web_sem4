@@ -102,7 +102,7 @@ class ActivationAccountController extends Controller
         if (!Hash::check($request->otp, $otpRecord->token)) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Invalid or expired OTP'
+                'message' => 'OTP tidak valid atau telah kedaluwarsa'
             ]);
         }
 

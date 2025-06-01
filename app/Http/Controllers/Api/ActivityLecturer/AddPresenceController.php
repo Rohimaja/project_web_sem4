@@ -129,6 +129,9 @@ class AddPresenceController extends Controller
 
         $matkuls = Matkul::where('prodi_id', $request->prodi_id)
             ->where('semester', $request->semester)
+            ->whereHas('tahunAjaran', function ($query) {
+                $query->where('status', 1);
+            })
             ->select('id as id_matkul', 'kode_matkul', 'nama_matkul')
             ->get();
 
