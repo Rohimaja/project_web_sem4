@@ -55,7 +55,7 @@ class DetailPresenceLecturerController extends Controller
                 'nim' => $item->mahasiswa->nim,
                 'nama' => $item->mahasiswa->nama,
                 'jenis_kelamin' => $mahasiswa->jenis_kelamin,
-                'status' => $item->status,
+                'status' => (int) $item->status,
             ];
         });
 
@@ -92,7 +92,7 @@ class DetailPresenceLecturerController extends Controller
             'status' => 'success',
             'message' => 'Data detail mahasiswa berhasil ditampilkan',
             'data' => [
-                'status' => $detail->status,
+                'status' => (int) $detail->status,
                 'waktu_presensi' => $detail->waktu_presensi,
                 'alasan' => $detail->alasan,
                 'bukti' => $detail->bukti,
@@ -119,7 +119,7 @@ class DetailPresenceLecturerController extends Controller
             'data' => [
                 'nim' => $mahasiswa->nim,
                 'nama' => $mahasiswa->nama,
-                'semester' => $mahasiswa->semester,
+                'semester' => (int) $mahasiswa->semester,
                 'nama_prodi' => $mahasiswa->prodi->nama_prodi,
                 'foto' => $mahasiswa->foto,
             ]

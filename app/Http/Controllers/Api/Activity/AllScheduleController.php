@@ -59,7 +59,6 @@ class AllScheduleController extends Controller
             }),
         ]);
     }
-
     public function scheduleLecturer(Request $request)
     {
         $dosenId = $request->query('dosen_id');
@@ -94,7 +93,7 @@ class AllScheduleController extends Controller
                     'durasi' => $jadwal->durasi,
                     'hari' => $jadwal->hari,
                     'jam' => $jadwal->jam,
-                    'semester' => $jadwal->semester,
+                    'semester' => (int) $jadwal->semester,
                     'nama_matkul' => optional($jadwal->matkul)->nama_matkul,
                     'kode_matkul' => optional($jadwal->matkul)->kode_matkul,
                     'nama_ruangan' => optional($jadwal->ruangan)->nama_ruangan,

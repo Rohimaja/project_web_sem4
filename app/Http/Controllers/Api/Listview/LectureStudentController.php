@@ -31,7 +31,7 @@ class LectureStudentController extends Controller
                     return [
                         'presensis_id' => $item->presensi->id,
                         'nama_matkul' => $item->presensi->matkul->nama_matkul,
-                        'semester' => $item->mahasiswa->semester,
+                        'semester' => (int) $item->mahasiswa->semester,
                         'nama_dosen' => $item->presensi->dosen->nama,
                         'durasi_presensi' => date('H:i', strtotime($item->presensi->jam_awal)) . ' - ' . date('H:i', strtotime($item->presensi->jam_akhir)),
                         'link_zoom' => $item->presensi->link_zoom,
@@ -55,7 +55,7 @@ class LectureStudentController extends Controller
         }
     }
 
-     public function lectureContent(Request $request)
+    public function lectureContent(Request $request)
     {
         $presensiId = $request->query('presensis_id');
         if (!$presensiId) {
@@ -84,13 +84,13 @@ class LectureStudentController extends Controller
             'code' => 200,
             'message' => 'Data presensi online berhasil diambil',
             'data' => [
-                'presensis_id'    => $detail->presensi->id,
-                'nama_matkul'     => $detail->presensi->matkul->nama_matkul,
-                'semester'        => $detail->presensi->matkul->semester,
-                'nama_dosen'      => $detail->presensi->dosen->nama,
+                'presensis_id' => $detail->presensi->id,
+                'nama_matkul' => $detail->presensi->matkul->nama_matkul,
+                'semester' => (int) $detail->presensi->matkul->semester,
+                'nama_dosen' => $detail->presensi->dosen->nama,
                 'durasi_presensi' => date('H:i', strtotime($detail->presensi->jam_awal)) . ' - ' . date('H:i', strtotime($detail->presensi->jam_akhir)),
-                'link_zoom'       => $detail->presensi->link_zoom,
-                'tgl_presensi'    => $detail->presensi->tgl_presensi,
+                'link_zoom' => $detail->presensi->link_zoom,
+                'tgl_presensi' => $detail->presensi->tgl_presensi,
             ]
         ]);
     }

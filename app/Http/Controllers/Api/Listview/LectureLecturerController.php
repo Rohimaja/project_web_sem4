@@ -34,7 +34,7 @@ class LectureLecturerController extends Controller
                 'link_zoom' => $item->link_zoom,
                 'nama_dosen' => '', // bisa ambil dari relasi dosen jika dibutuhkan
                 'tgl_presensi' => Carbon::parse($item->tgl_presensi)->format('d-m-Y'),
-                'semester' => $item->semester
+                'semester' => (int) $item->semester
             ];
         });
 
@@ -69,7 +69,7 @@ class LectureLecturerController extends Controller
             'data' => [
                 'presensis_id' => $presensi->id,
                 'nama_matkul' => optional($presensi->matkul)->nama_matkul,
-                'semester' => $presensi->semester,
+                'semester' => (int) $presensi->semester,
                 'nama_dosen' => '', // bisa relasi
                 'durasi_presensi' => Carbon::parse($presensi->jam_awal)->format('H:i') . ' - ' . Carbon::parse($presensi->jam_akhir)->format('H:i'),
                 'link_zoom' => $presensi->link_zoom,

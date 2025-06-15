@@ -72,7 +72,7 @@ class ViewProfileController extends Controller
                     'tempat_lahir' => $mahasiswa->tempat_lahir,
                     'tgl_lahir' => $mahasiswa->tgl_lahir,
                     'alamat' => $mahasiswa->alamat,
-                    'semester' => $mahasiswa->semester,
+                    'semester' => (int) $mahasiswa->semester,
                     'no_telp' => $mahasiswa->no_telp,
                     'nama_prodi' => $mahasiswa->prodi->nama_prodi ?? null,
                 ]

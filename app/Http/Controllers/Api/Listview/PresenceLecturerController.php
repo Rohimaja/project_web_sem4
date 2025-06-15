@@ -29,7 +29,7 @@ class PresenceLecturerController extends Controller
             ->get()
             ->map(function ($item) {
                 return [
-                    'semester' => $item->semester,
+                    'semester' => (int) $item->semester,
                     'presensis_id' => $item->id,
                     'jam_awal' => Carbon::parse($item->jam_awal)->format('H:i'),
                     'jam_akhir' => Carbon::parse($item->jam_akhir)->format('H:i'),

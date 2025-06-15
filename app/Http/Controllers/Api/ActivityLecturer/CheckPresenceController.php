@@ -70,7 +70,6 @@ class CheckPresenceController extends Controller
         ]);
     }
 
-
     public function checkRecentNotificationByMahasiswaId(Request $request)
     {
         $request->validate([
@@ -91,7 +90,6 @@ class CheckPresenceController extends Controller
             'hasNotification' => $hasRecent,
         ]);
     }
-
 
     public function checkPresenceEdit(Request $request)
     {

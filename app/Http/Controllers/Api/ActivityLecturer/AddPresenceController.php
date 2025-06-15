@@ -123,7 +123,7 @@ class AddPresenceController extends Controller
     public function showMatkuls(Request $request)
     {
         $request->validate([
-            'prodi_id' => 'required|integer',
+            'prodi_id' => 'required|integer|exists:prodis,id',
             'semester' => 'required|integer',
         ]);
 
@@ -132,8 +132,14 @@ class AddPresenceController extends Controller
             ->whereHas('tahunAjaran', function ($query) {
                 $query->where('status', 1);
             })
-            ->select('id as id_matkul', 'kode_matkul', 'nama_matkul')
-            ->get();
+            ->get()
+            ->map(function ($matkul) {
+                return [
+                    'id_matkul' => (int) $matkul->id, // cast ke int
+                    'kode_matkul' => $matkul->kode_matkul,
+                    'nama_matkul' => $matkul->nama_matkul,
+                ];
+            });
 
         return response()->json([
             'status' => 'success',

@@ -11,13 +11,17 @@ class NotificationController extends Controller
 {
     public function getByMahasiswa($mahasiswaId)
     {
-        $mahasiswa = Mahasiswa::with('user.notifications')->findOrFail($mahasiswaId);
+        $mahasiswa = Mahasiswa::with([
+            'user.notifications' => function ($query) {
+                $query->orderBy('created_at', 'desc'); // Urutkan dari yang terbaru
+            }
+        ])->findOrFail($mahasiswaId);
 
         $notifications = $mahasiswa->user->notifications->map(function ($notif) {
             return [
                 'title' => $notif->title,
                 'message' => $notif->message,
-                'time' => $notif->jam, // atau format waktu sebenarnya jika tersedia
+                'time' => $notif->jam,
                 'type' => $notif->type,
                 'nama_user' => $notif->nama_user,
                 'tanggal' => $notif->tanggal,
@@ -33,15 +37,20 @@ class NotificationController extends Controller
         ]);
     }
 
+
     public function getByDosen($dosenId)
     {
-        $dosen = Dosen::with('user.notifications')->findOrFail($dosenId);
+        $dosen = Dosen::with([
+            'user.notifications' => function ($query) {
+                $query->orderBy('created_at', 'desc'); // Urutkan dari yang terbaru
+            }
+        ])->findOrFail($dosenId);
 
         $notifications = $dosen->user->notifications->map(function ($notif) {
             return [
                 'title' => $notif->title,
                 'message' => $notif->message,
-                'time' => $notif->jam, // atau format waktu sebenarnya jika tersedia
+                'time' => $notif->jam,
                 'type' => $notif->type,
                 'nama_user' => $notif->nama_user,
                 'tanggal' => $notif->tanggal,
@@ -56,4 +65,5 @@ class NotificationController extends Controller
             'data' => $notifications,
         ]);
     }
+
 }

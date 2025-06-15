@@ -79,8 +79,8 @@ class LoginController extends Controller
                 'nama' => $mahasiswa->nama ?? null,
                 'nim' => $mahasiswa->nim ?? null,
                 'email' => $mahasiswa->email ?? null,
-                'semester' => $mahasiswa->semester ?? null,
-                'prodi_id' => $mahasiswa->prodi_id ?? null,
+                'semester' => (int) $mahasiswa->semester ?? null,
+                'prodi_id' => (int) $mahasiswa->prodi_id ?? null,
                 'nama_prodi' => $mahasiswa->prodi->nama_prodi ?? null,
                 'foto' => $mahasiswa->foto ?? null,
             ];
@@ -164,8 +164,8 @@ class LoginController extends Controller
                 'nama' => $mhs->nama,
                 'nim' => $mhs->nim,
                 'email' => $mhs->email,
-                'semester' => $mhs->semester,
-                'prodi_id' => $mhs->prodi_id,
+                'semester' => (int) $mhs->semester,
+                'prodi_id' => (int) $mhs->prodi_id,
                 'nama_prodi' => optional($mhs->prodi)->nama_prodi,
                 'foto' => $mhs->foto,
             ];

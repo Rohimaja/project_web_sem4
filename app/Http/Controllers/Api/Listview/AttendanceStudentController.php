@@ -32,7 +32,17 @@ class AttendanceStudentController extends Controller
                 'detail_presensis.status',
                 'matkuls.semester'
             )
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'mahasiswa_id' => (int) $item->mahasiswa_id,
+                    'nim' => $item->nim,
+                    'nama_matkul' => $item->nama_matkul,
+                    'kode_matkul' => $item->kode_matkul,
+                    'status' => (int) $item->status,
+                    'semester' => (int) $item->semester,
+                ];
+            });
 
         if ($rekap->isEmpty()) {
             return response()->json([
@@ -45,6 +55,6 @@ class AttendanceStudentController extends Controller
             'status' => 'success',
             'message' => 'Data Rekap semester sekarang ditemukan',
             'data' => $rekap
-        ], 200);
+        ]);
     }
 }
